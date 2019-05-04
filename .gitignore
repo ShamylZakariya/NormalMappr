@@ -61,3 +61,8 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
+
+# 3rd party stuff
+src/UKKQueue
+src/CTBadge
+

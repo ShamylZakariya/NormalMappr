@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+    <dependencies>
+        <deployment version="101000" identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="BatchController">
+            <connections>
+                <outlet property="batchWindow" destination="3" id="43"/>
+                <outlet property="bumpmapCollectionView" destination="22" id="48"/>
+                <outlet property="bumpmapCollectionViewLabel" destination="14" id="47"/>
+                <outlet property="bumpmapsArrayController" destination="5" id="44"/>
+                <outlet property="collectionStack" destination="12" id="46"/>
+                <outlet property="nonBumpmapCollectionView" destination="17" id="51"/>
+                <outlet property="nonBumpmapCollectionViewLabel" destination="13" id="49"/>
+                <outlet property="nonBumpmapsArrayController" destination="6" id="45"/>
+                <outlet property="progressSheet" destination="4" id="137"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application"/>
+        <collectionViewItem id="1" userLabel="Bumpmap Tile Item">
+            <connections>
+                <outlet property="view" destination="2" id="34"/>
+            </connections>
+        </collectionViewItem>
+        <box autoresizesSubviews="NO" boxType="custom" borderType="none" title="Box" titlePosition="noTitle" transparent="YES" id="2" userLabel="Bumpmap Tile" customClass="BatchItemView">
+            <rect key="frame" x="0.0" y="0.0" width="150" height="177"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <view key="contentView" id="mVJ-dA-1mp">
+                <rect key="frame" x="0.0" y="0.0" width="150" height="177"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <subviews>
+                    <imageView id="26" customClass="ThumbView">
+                        <rect key="frame" x="11" y="39" width="128" height="128"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="27"/>
+                        <connections>
+                            <binding destination="1" name="value" keyPath="representedObject.thumb" id="30"/>
+                        </connections>
+                    </imageView>
+                    <textField verticalHuggingPriority="750" id="25" customClass="BatchItemLabel">
+                        <rect key="frame" x="8" y="3" width="134" height="33"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="28">
+                            <font key="font" metaFont="smallSystemBold"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <binding destination="1" name="value" keyPath="representedObject.displayTitle" id="39"/>
+                        </connections>
+                    </textField>
+                </subviews>
+            </view>
+            <connections>
+                <binding destination="1" name="transparent" keyPath="selected" id="40">
+                    <dictionary key="options">
+                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                    </dictionary>
+                </binding>
+            </connections>
+        </box>
+        <window title="Batch Processing" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="_batch_window_" animationBehavior="default" id="3">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="335" y="130" width="783" height="620"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
+            <value key="minSize" type="size" width="780" height="620"/>
+            <view key="contentView" id="11">
+                <rect key="frame" x="0.0" y="0.0" width="783" height="620"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <userGuides>
+                    <userLayoutGuide location="151" affinity="minY"/>
+                </userGuides>
+                <subviews>
+                    <customView id="12" customClass="StackView">
+                        <rect key="frame" x="0.0" y="171" width="783" height="449"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="16" customClass="StackViewScrollView">
+                                <rect key="frame" x="20" y="20" width="457" height="104"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="TWG-ZY-Igh">
+                                    <rect key="frame" x="0.0" y="0.0" width="457" height="104"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <collectionView selectable="YES" allowsMultipleSelection="YES" id="17" customClass="BatchView">
+                                            <rect key="frame" x="0.0" y="0.0" width="457" height="104"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="primaryBackgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <connections>
+                                                <binding destination="6" name="content" keyPath="arrangedObjects" id="38"/>
+                                                <outlet property="itemPrototype" destination="1" id="29"/>
+                                                <outlet property="nextKeyView" destination="15" id="42"/>
+                                            </connections>
+                                        </collectionView>
+                                    </subviews>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="18">
+                                    <rect key="frame" x="-100" y="-100" width="556" height="15"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="19">
+                                    <rect key="frame" x="407" y="0.0" width="15" height="72"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <connections>
+                                    <outlet property="nextKeyView" destination="62" id="124"/>
+                                </connections>
+                            </scrollView>
+                            <customView id="13" customClass="BatchLabel">
+                                <rect key="frame" x="20" y="132" width="457" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button horizontalHuggingPriority="750" verticalHuggingPriority="750" imageHugsTitle="YES" id="23">
+                                        <rect key="frame" x="0.0" y="0.0" width="34" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
+                                        <buttonCell key="cell" type="disclosureTriangle" bezelStyle="disclosure" imagePosition="above" alignment="left" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="24">
+                                            <behavior key="behavior" pushIn="YES" changeBackground="YES" changeGray="YES" lightByContents="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <outlet property="nextKeyView" destination="17" id="123"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <connections>
+                                    <outlet property="toggleSwitch" destination="23" id="50"/>
+                                </connections>
+                            </customView>
+                            <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="15" customClass="StackViewScrollView">
+                                <rect key="frame" x="20" y="281" width="457" height="117"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Sfd-Vu-qKI">
+                                    <rect key="frame" x="0.0" y="0.0" width="457" height="117"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <collectionView selectable="YES" allowsMultipleSelection="YES" id="22" customClass="BatchView">
+                                            <rect key="frame" x="0.0" y="0.0" width="457" height="117"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="primaryBackgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <connections>
+                                                <binding destination="5" name="content" keyPath="arrangedObjects" id="41"/>
+                                                <outlet property="itemPrototype" destination="1" id="33"/>
+                                                <outlet property="nextKeyView" destination="23" id="122"/>
+                                            </connections>
+                                        </collectionView>
+                                    </subviews>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="21">
+                                    <rect key="frame" x="-100" y="-100" width="556" height="15"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="20">
+                                    <rect key="frame" x="419" y="0.0" width="15" height="117"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <connections>
+                                    <outlet property="nextKeyView" destination="22" id="32"/>
+                                </connections>
+                            </scrollView>
+                            <customView id="14" customClass="BatchLabel">
+                                <rect key="frame" x="20" y="406" width="457" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            </customView>
+                        </subviews>
+                    </customView>
+                    <customView id="57" customClass="BatchControlsView">
+                        <rect key="frame" x="0.0" y="0.0" width="783" height="171"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textField verticalHuggingPriority="750" id="141">
+                                <rect key="frame" x="199" y="106" width="53" height="14"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0.00" id="142">
+                                    <numberFormatter key="formatter" formatterBehavior="custom10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" minimumFractionDigits="2" maximumFractionDigits="2" id="144">
+                                        <nil key="negativeInfinitySymbol"/>
+                                        <nil key="positiveInfinitySymbol"/>
+                                    </numberFormatter>
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <binding destination="-2" name="value" keyPath="batchSettings.strength" id="143"/>
+                                </connections>
+                            </textField>
+                            <box autoresizesSubviews="NO" borderType="none" title="Box" titlePosition="noTitle" id="118">
+                                <rect key="frame" x="444" y="15" width="200" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <view key="contentView" id="Y1N-SH-EV5">
+                                    <rect key="frame" x="0.0" y="0.0" width="200" height="26"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <slider verticalHuggingPriority="750" id="116">
+                                            <rect key="frame" x="93" y="1" width="96" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <sliderCell key="cell" controlSize="small" state="on" alignment="left" maxValue="1" doubleValue="0.80000000000000004" tickMarkPosition="below" numberOfTickMarks="20" sliderType="linear" id="117">
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </sliderCell>
+                                            <connections>
+                                                <binding destination="-2" name="value" keyPath="batchSettings.saveQuality" id="120"/>
+                                                <outlet property="nextKeyView" destination="108" id="133"/>
+                                            </connections>
+                                        </slider>
+                                        <textField verticalHuggingPriority="750" id="114">
+                                            <rect key="frame" x="8" y="7" width="78" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="with quality" id="115">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                    </subviews>
+                                </view>
+                                <connections>
+                                    <binding destination="-2" name="hidden" keyPath="batchSettings.showSaveQualityControls" id="121">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
+                                </connections>
+                            </box>
+                            <button verticalHuggingPriority="750" imageHugsTitle="YES" id="108">
+                                <rect key="frame" x="661" y="12" width="108" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Run" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="109">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="executeBatch:" target="-2" id="138"/>
+                                    <outlet property="nextKeyView" destination="22" id="134"/>
+                                </connections>
+                            </button>
+                            <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" id="102">
+                                <rect key="frame" x="342" y="16" width="100" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <popUpButtonCell key="cell" type="push" title="JPEG2000" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="5" imageScaling="proportionallyDown" inset="2" selectedItem="107" id="103">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <menu key="menu" title="OtherViews" id="104">
+                                        <items>
+                                            <menuItem title="PNG" tag="4" id="105"/>
+                                            <menuItem title="JPEG" tag="3" id="106"/>
+                                            <menuItem title="JPEG2000" state="on" tag="5" id="107"/>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                                <connections>
+                                    <binding destination="-2" name="selectedTag" keyPath="batchSettings.saveFormat" id="113"/>
+                                    <outlet property="nextKeyView" destination="116" id="132"/>
+                                </connections>
+                            </popUpButton>
+                            <textField verticalHuggingPriority="750" id="100">
+                                <rect key="frame" x="262" y="22" width="78" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="and save as" id="101">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField verticalHuggingPriority="750" id="98">
+                                <rect key="frame" x="148" y="18" width="111" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="99">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <binding destination="-2" name="value" keyPath="batchSettings.nameDecoration" id="112"/>
+                                    <outlet property="nextKeyView" destination="102" id="131"/>
+                                </connections>
+                            </textField>
+                            <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" id="92">
+                                <rect key="frame" x="18" y="16" width="125" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <popUpButtonCell key="cell" type="push" title="Append" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" imageScaling="proportionallyDown" inset="2" selectedItem="96" id="93">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <menu key="menu" title="OtherViews" id="94">
+                                        <items>
+                                            <menuItem title="Prepend" id="95"/>
+                                            <menuItem title="Append" state="on" tag="1" id="96"/>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                                <connections>
+                                    <binding destination="-2" name="selectedTag" keyPath="batchSettings.nameDecorationStyle" id="111"/>
+                                    <outlet property="nextKeyView" destination="98" id="130"/>
+                                </connections>
+                            </popUpButton>
+                            <box autoresizesSubviews="NO" verticalHuggingPriority="750" boxType="separator" id="91">
+                                <rect key="frame" x="0.0" y="58" width="783" height="5"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            </box>
+                            <button imageHugsTitle="YES" id="82">
+                                <rect key="frame" x="663" y="78" width="63" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Resize" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="mini" state="on" inset="2" id="83">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="miniSystem"/>
+                                </buttonCell>
+                                <connections>
+                                    <binding destination="-2" name="value" keyPath="batchSettings.resizeOutput" id="84"/>
+                                    <outlet property="nextKeyView" destination="60" id="128"/>
+                                </connections>
+                            </button>
+                            <textField verticalHuggingPriority="750" id="63">
+                                <rect key="frame" x="18" y="106" width="99" height="14"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Sample Size" id="64">
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" id="62">
+                                <rect key="frame" x="17" y="120" width="100" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <popUpButtonCell key="cell" type="push" title="5x5" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="2" imageScaling="proportionallyDown" inset="2" selectedItem="67" id="65">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <menu key="menu" title="OtherViews" id="66">
+                                        <items>
+                                            <menuItem title="3x3" tag="1" id="68"/>
+                                            <menuItem title="5x5" state="on" tag="2" id="67"/>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                                <connections>
+                                    <binding destination="-2" name="selectedTag" keyPath="batchSettings.sampleRadius" id="77"/>
+                                    <outlet property="nextKeyView" destination="59" id="125"/>
+                                </connections>
+                            </popUpButton>
+                            <textField verticalHuggingPriority="750" id="61">
+                                <rect key="frame" x="144" y="106" width="53" height="14"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Strength:" id="69">
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" imageHugsTitle="YES" id="60">
+                                <rect key="frame" x="744" y="98" width="19" height="54"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="smallSquare" alternateTitle="Synchronize width and height" bezelStyle="smallSquare" image="LinkButton" imagePosition="only" alignment="center" borderStyle="border" inset="2" id="70">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <binding destination="-2" name="enabled" keyPath="batchSettings.resizeOutput" id="89"/>
+                                    <binding destination="-2" name="value" keyPath="batchSettings.syncOutputDimensions" id="90"/>
+                                    <outlet property="nextKeyView" destination="92" id="129"/>
+                                </connections>
+                            </button>
+                            <slider verticalHuggingPriority="750" id="59">
+                                <rect key="frame" x="147" y="124" width="398" height="17"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <sliderCell key="cell" controlSize="small" continuous="YES" alignment="left" maxValue="1" doubleValue="0.5" tickMarkPosition="below" numberOfTickMarks="20" sliderType="linear" id="71">
+                                    <font key="font" size="12" name="Helvetica"/>
+                                </sliderCell>
+                                <connections>
+                                    <binding destination="-2" name="value" keyPath="batchSettings.strength" id="78"/>
+                                    <outlet property="nextKeyView" destination="58" id="126"/>
+                                </connections>
+                            </slider>
+                            <form verticalHuggingPriority="750" mode="track" allowsEmptySelection="NO" autosizesCells="NO" id="58">
+                                <rect key="frame" x="581" y="99" width="155" height="52"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                <size key="cellSize" width="155" height="22"/>
+                                <size key="intercellSpacing" width="1" height="8"/>
+                                <formCell key="prototype" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="justified" title="Field:" id="72">
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <font key="titleFont" metaFont="smallSystem"/>
+                                </formCell>
+                                <cells>
+                                    <column>
+                                        <formCell scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="justified" title="Output Width" id="74">
+                                            <numberFormatter key="formatter" formatterBehavior="10_0" positiveFormat="###0" negativeFormat="-###0" hasThousandSeparators="NO" thousandSeparator="," id="75">
+                                                <attributedString key="attributedStringForZero">
+                                                    <fragment content="0"/>
+                                                </attributedString>
+                                                <decimal key="minimum" value="1"/>
+                                                <decimal key="maximum" value="NaN"/>
+                                            </numberFormatter>
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <font key="titleFont" metaFont="smallSystem"/>
+                                            <connections>
+                                                <binding destination="-2" name="value" keyPath="batchSettings.outputWidth" id="85"/>
+                                            </connections>
+                                        </formCell>
+                                        <formCell scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="justified" tag="1" title="Output Height" id="73">
+                                            <numberFormatter key="formatter" formatterBehavior="10_0" positiveFormat="#,##0" negativeFormat="-#,##0" thousandSeparator="," id="76">
+                                                <attributedString key="attributedStringForZero">
+                                                    <fragment content="0"/>
+                                                </attributedString>
+                                                <decimal key="minimum" value="1"/>
+                                                <decimal key="maximum" value="NaN"/>
+                                            </numberFormatter>
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <font key="titleFont" metaFont="smallSystem"/>
+                                            <connections>
+                                                <binding destination="-2" name="value" keyPath="batchSettings.outputHeight" id="86"/>
+                                            </connections>
+                                        </formCell>
+                                    </column>
+                                </cells>
+                                <connections>
+                                    <binding destination="-2" name="enabled" keyPath="batchSettings.resizeOutput" id="87"/>
+                                    <outlet property="nextKeyView" destination="82" id="127"/>
+                                </connections>
+                            </form>
+                        </subviews>
+                    </customView>
+                </subviews>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="146"/>
+                <outlet property="initialFirstResponder" destination="22" id="37"/>
+            </connections>
+        </window>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="4" userLabel="ProcessSheet" customClass="NSPanel">
+            <windowStyleMask key="styleMask" titled="YES" utility="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="391" width="402" height="119"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
+            <view key="contentView" id="7">
+                <rect key="frame" x="0.0" y="0.0" width="402" height="119"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField verticalHuggingPriority="750" id="9">
+                        <rect key="frame" x="17" y="82" width="368" height="17"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Analysing dropped files..." id="10">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <binding destination="-2" name="value" keyPath="sheetMessage" id="136"/>
+                        </connections>
+                    </textField>
+                    <progressIndicator wantsLayer="YES" verticalHuggingPriority="750" maxValue="1" bezeled="NO" style="bar" id="8">
+                        <rect key="frame" x="18" y="54" width="366" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <connections>
+                            <binding destination="-2" name="isIndeterminate" keyPath="sheetProcessIndeterminate" id="140"/>
+                            <binding destination="-2" name="value" keyPath="sheetProcessProgress" id="139"/>
+                        </connections>
+                    </progressIndicator>
+                </subviews>
+            </view>
+        </window>
+        <arrayController id="5" userLabel="Bumpmaps">
+            <connections>
+                <binding destination="-2" name="contentArray" keyPath="bumpmaps" id="52"/>
+            </connections>
+        </arrayController>
+        <arrayController id="6" userLabel="NonBumpmaps">
+            <declaredKeys>
+                <string>representedObject.displayTitle</string>
+            </declaredKeys>
+            <connections>
+                <binding destination="-2" name="contentArray" keyPath="nonBumpmaps" id="53"/>
+            </connections>
+        </arrayController>
+    </objects>
+    <resources>
+        <image name="LinkButton" width="17" height="50"/>
+    </resources>
+</document>

@@ -1,0 +1,63 @@
+{
+    IBClasses = (
+        {
+            CLASS = AppDelegate; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {batchController = BatchController; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {executeBatch = id; toggleBatchWindow = id; }; 
+            CLASS = BatchController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                analysisProgressSheet = NSPanel; 
+                clampModePopup = NSPopUpButton; 
+                fileListTable = FileListView; 
+                flatteningSlider = NSSlider; 
+                flatteningValueField = NSTextField; 
+                nameDecorationField = NSTextField; 
+                nameDecorationStylePopup = NSPopUpButton; 
+                outputDimensionsForm = NSForm; 
+                sampleSizePopup = NSPopUpButton; 
+                saveFormatPopup = NSPopUpButton; 
+                saveQualityControlsBox = NSBox; 
+                saveQualitySlider = NSSlider; 
+                window = NSWindow; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = BatchControlsView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {CLASS = BatchDropView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {CLASS = ControlPanelView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {
+            CLASS = FileListView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {dropDelegate = id; }; 
+            SUPERCLASS = NSTableView; 
+        }, 
+        {
+            ACTIONS = {export = id; toggleBatchExportWindow = id; }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {export = id; }; 
+            CLASS = NormalMapprDoc; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                clampModePopup = NSPopUpButton; 
+                flatteningSlider = NSSlider; 
+                flatteningValueField = NSTextField; 
+                imageView = ImageView; 
+                outputDimensionsForm = NSForm; 
+                sampleSizePopup = NSPopUpButton; 
+                savePanelDialog = NSView; 
+                savePanelQualityControls = NSBox; 
+            }; 
+            SUPERCLASS = NSDocument; 
+        }
+    ); 
+    IBVersion = 1; 
+}

@@ -1,0 +1,20 @@
+
+Mac OSX 10.6
+
+- Seem to have fixed the crash bugs by switching to GC
+
+- API Deprecations
+	FIXED
+	
+- The icon view no longer seems to support drag and drop -- it DID before under 10.5
+	- It seems that the selection indices are ordered 0->N but the computation of the index clicked is N->0
+	- FIXED
+	
+- initiating a drag on an unselected icon doesn't drag it.
+	- did this ever work? 
+	- IMPLEMENTED, works.
+
+- The initial message on the batch view "Drop files and folders here" is not vertically centered
+
+- Normalmaps are vertically flipped. wtf?
+	- Fixed via affine transform

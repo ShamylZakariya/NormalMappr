@@ -1,0 +1,8 @@
+//
+// Prefix header for all source files of the 'NormalMappr' target in the 'NormalMappr' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+	#import "DebugLog.h"
+#endif
