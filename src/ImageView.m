@@ -139,8 +139,15 @@
 	[[NSColor colorWithDeviceWhite: 0.75 alpha: 1] set];
 	NSRectFill( [self bounds] );
 	
+    float scale = self.hiDPI ? (1.0f / [[self window] screen].backingScaleFactor) : 1.0f;
 	NSSize imageSize = [image size];
+    imageSize.width *= scale;
+    imageSize.height *= scale;
+    
 	NSSize shadowSize = [shadowImage size];
+    shadowSize.width *= scale;
+    shadowSize.height *= scale;
+    
 	NSSize size = [self bounds].size;
 	
 	NSPoint center = NSMakePoint(lrintf( size.width * 0.5f ), lrintf( size.height * 0.5f ));
@@ -153,8 +160,9 @@
 										center.y - shadowSize.height * 0.5f );
 
 
-	[shadowImage compositeToPoint: shadowOrigin operation: NSCompositeSourceOver];
-	[image drawAtPoint: imageOrigin];
+    [shadowImage drawInRect:NSMakeRect(shadowOrigin.x, shadowOrigin.y, shadowSize.width, shadowSize.height) fromRect:NSMakeRect(0, 0, [shadowImage size].width, [shadowImage size].height) operation:NSCompositingOperationSourceOver fraction:1];
+    
+    [image drawInRect:NSMakeRect(imageOrigin.x, imageOrigin.y, imageSize.width, imageSize.height)];
 }
 
 - (BOOL) isOpaque
@@ -190,17 +198,21 @@
 
 - (NSSize) minimumSize
 {
-	int padding = 0;
 	NSSize size = NSMakeSize( 0, 0 );
 
 	if ( image != nil )
 	{
 		size = [image size];
-	}
+    
+        if ( self.hiDPI )
+        {
+            float scale = 1.0f / [[self window] screen].backingScaleFactor;
+            size.width *= scale;
+            size.height *= scale;
+        }
+    }
+    
 	
-	size.width += 2 * padding;
-	size.height += 2 * padding;
-
 	return size;
 }
 

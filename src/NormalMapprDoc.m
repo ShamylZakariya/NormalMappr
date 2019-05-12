@@ -89,6 +89,9 @@
 {
 	[docWindow setDelegate: self];
     [super windowControllerDidLoadNib:aController];
+    
+    imageView.hiDPI = YES;
+    tilingImageView.hiDPI = YES;
 
 	self.saveFormat = kPNGFormat;
 	self.saveQuality = 80;

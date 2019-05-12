@@ -18,7 +18,7 @@
 
 - (void)drawRect: (NSRect) rect 
 {
-	CGFloat scale = 1.0f;
+    CGFloat scale = self.hiDPI ? (1.0f / [[self window] screen].backingScaleFactor) : 1.0f;
 	NSRect myBounds = [self bounds];
 	NSSize imageSize = self.image.size;
 
@@ -47,11 +47,6 @@
 		{
 			NSPoint outOrigin = NSMakePoint( origin.x + col * imageSize.width, origin.y + row * imageSize.height );
 			NSRect outRect = [self centerScanRect: NSMakeRect( outOrigin.x, outOrigin.y, imageSize.width, imageSize.height )];
-			outRect.origin.x += 0.5f;
-			outRect.origin.y += 0.5f;
-			outRect.size.width -= 0.5;
-			outRect.size.height -= 0.5;
-			
 			[self.image drawInRect: outRect];
 		}
 	}
