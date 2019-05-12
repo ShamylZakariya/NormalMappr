@@ -1,45 +1,45 @@
 vec3 computeNormal( sampler src, float strength, float r )
 {
-	vec2 size = samplerSize( src ),
-	     sc = destCoord();
-		 
-	float n = sample( src, mod( sc + vec2(  0, +r ), size)).r,
-	      s = sample( src, mod( sc + vec2(  0, -r ), size)).r,
-	      e = sample( src, mod( sc + vec2( +r,  0 ), size)).r,
-	      w = sample( src, mod( sc + vec2( -r,  0 ), size)).r;
-	
-	// flat goes from 0 to 1, as strength goes from 0 to 0.5
-	float flat = 1.0 - ((0.5 - clamp( strength, 0.0, 0.5 )) * 2.0);
-	
-	//steep goes from 0 to 1 as strength goes from 0.5 to 1
-	float steep = (clamp( strength, 0.5, 1.0 ) - 0.5) * 2.0;
+    vec2 size = samplerSize(src),
+         sc = destCoord();
+         
+    float n = sample( src, mod( sc + vec2(  0, +r ), size)).r,
+          s = sample( src, mod( sc + vec2(  0, -r ), size)).r,
+          e = sample( src, mod( sc + vec2( +r,  0 ), size)).r,
+          w = sample( src, mod( sc + vec2( -r,  0 ), size)).r;
+    
+    // flat goes from 0 to 1, as strength goes from 0 to 0.5
+    float flatness = 1.0 - ((0.5 - clamp( strength, 0.0, 0.5 )) * 2.0);
+    
+    //steep goes from 0 to 1 as strength goes from 0.5 to 1
+    float steep = (clamp( strength, 0.5, 1.0 ) - 0.5) * 2.0;
 
-	// generate the normal, scale it to 0->1
-	return normalize( vec3( flat*(w-e), flat*(s-n), mix(1.0,0.1,steep) ));
+    // generate the normal, scale it to 0->1
+    return normalize( vec3( flatness*(w-e), flatness*(s-n), mix(1.0,0.1,steep) ));
 }
 
 vec3 computeNormal_clamp( sampler src, float strength, float r )
 {
-	vec2 sc = destCoord(),
-	     size = samplerSize( src ),
-		 origin = vec2( 0,0 );
-		 
-	size.x -= 1.0;
-	size.y -= 1.0;
+    vec2 sc = destCoord(),
+         size = samplerSize( src ),
+         origin = vec2( 0,0 );
+         
+    size.x -= 1.0;
+    size.y -= 1.0;
 
-	float n = sample( src, clamp(sc + vec2(  0, +r ), origin, size )).r,
-	      s = sample( src, clamp(sc + vec2(  0, -r ), origin, size )).r,
-	      e = sample( src, clamp(sc + vec2( +r,  0 ), origin, size )).r,
-	      w = sample( src, clamp(sc + vec2( -r,  0 ), origin, size )).r;
-	
-	// flat goes from 0 to 1, as strength goes from 0 to 0.5
-	float flat = 1.0 - ((0.5 - clamp( strength, 0.0, 0.5 )) * 2.0);
-	
-	//steep goes from 0 to 1 as strength goes from 0.5 to 1
-	float steep = (clamp( strength, 0.5, 1.0 ) - 0.5) * 2.0;
+    float n = sample( src, clamp(sc + vec2(  0, +r ), origin, size )).r,
+          s = sample( src, clamp(sc + vec2(  0, -r ), origin, size )).r,
+          e = sample( src, clamp(sc + vec2( +r,  0 ), origin, size )).r,
+          w = sample( src, clamp(sc + vec2( -r,  0 ), origin, size )).r;
+    
+    // flat goes from 0 to 1, as strength goes from 0 to 0.5
+    float flatness = 1.0 - ((0.5 - clamp( strength, 0.0, 0.5 )) * 2.0);
+    
+    //steep goes from 0 to 1 as strength goes from 0.5 to 1
+    float steep = (clamp( strength, 0.5, 1.0 ) - 0.5) * 2.0;
 
-	// generate the normal, scale it to 0->1
-	return normalize( vec3( flat*(w-e), flat*(s-n), mix(1.0,0.1,steep) ));
+    // generate the normal, scale it to 0->1
+    return normalize( vec3( flatness*(w-e), flatness*(s-n), mix(1.0,0.1,steep) ));
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -47,28 +47,28 @@ vec3 computeNormal_clamp( sampler src, float strength, float r )
 
 kernel vec4 normalMap3x3( sampler src, float strength )
 {
-	vec3 normal = computeNormal( src, strength, 1.0 );
-	return vec4( ( normal * 0.5 ) + 0.5, 1 );
+    vec3 normal = computeNormal( src, strength, 1.0 );
+    return vec4( ( normal * 0.5 ) + 0.5, 1 );
 }
 
 kernel vec4 normalMap5x5( sampler src, float strength )
 {
-	vec3 normal3x3 = computeNormal( src, strength, 1.0 );
-	vec3 normal5x5 = computeNormal( src, strength, 2.0 );
-	vec3 normal = normalize( normal3x3 + normal5x5 );
-	return vec4( ( normal * 0.5 ) + 0.5, 1.0 );
+    vec3 normal3x3 = computeNormal( src, strength, 1.0 );
+    vec3 normal5x5 = computeNormal( src, strength, 2.0 );
+    vec3 normal = normalize( normal3x3 + normal5x5 );
+    return vec4( ( normal * 0.5 ) + 0.5, 1.0 );
 }
 
 kernel vec4 normalMap3x3_clamp( sampler src, float strength )
 {
-	vec3 normal = computeNormal_clamp( src, strength, 1.0 );
-	return vec4( ( normal * 0.5 ) + 0.5, 1 );
+    vec3 normal = computeNormal_clamp( src, strength, 1.0 );
+    return vec4( ( normal * 0.5 ) + 0.5, 1 );
 }
 
 kernel vec4 normalMap5x5_clamp( sampler src, float strength )
 {
-	vec3 normal3x3 = computeNormal_clamp( src, strength, 1.0 );
-	vec3 normal5x5 = computeNormal_clamp( src, strength, 2.0 );
-	vec3 normal = normalize( normal3x3 + normal5x5 );
-	return vec4( ( normal * 0.5 ) + 0.5, 1.0 );
+    vec3 normal3x3 = computeNormal_clamp( src, strength, 1.0 );
+    vec3 normal5x5 = computeNormal_clamp( src, strength, 2.0 );
+    vec3 normal = normalize( normal3x3 + normal5x5 );
+    return vec4( ( normal * 0.5 ) + 0.5, 1.0 );
 }
