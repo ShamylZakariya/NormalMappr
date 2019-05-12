@@ -23,7 +23,7 @@
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
 	id value = nil;
-	if ( value = [defaults valueForKey: kPrefBatchWindowShowing] )
+	if ((value = [defaults valueForKey: kPrefBatchWindowShowing]))
 	{
 		self.batchWindowShowing = [value boolValue];
 	}	

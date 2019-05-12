@@ -8,6 +8,9 @@
 
 
 #import <Cocoa/Cocoa.h>
+
+#import "VDKQueue.h"
+
 #import "ImageView.h"
 #import "TilingImageView.h"
 #import "CINormalMapper.h"
@@ -17,8 +20,9 @@
 #define kPNGFormat @"PNG"
 #define kTIFFFormat @"TIFF"
 
-@interface NormalMapprDoc : NSDocument <NSWindowDelegate>
+@interface NormalMapprDoc : NSDocument <NSWindowDelegate, VDKQueueDelegate>
 {
+    VDKQueue *_fileWatcher;
 	CGSize _outputSize;
 	CINormalMapper *_normalmapper;
 	NSArray *_saveFormats;

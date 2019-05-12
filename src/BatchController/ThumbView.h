@@ -14,6 +14,6 @@
 	CGFloat		inset;
 }
 
-@property (readwrite) CGFloat inset;
+@property (nonatomic, readwrite) CGFloat inset;
 
 @end

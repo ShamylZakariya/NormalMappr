@@ -21,9 +21,9 @@
 	BOOL				clampToEdge;
 }
 
-@property (readwrite) CGFloat strength;
-@property (readwrite) NSUInteger sampleRadius;
-@property (readwrite) BOOL clampToEdge;
+@property (nonatomic, readwrite) CGFloat strength;
+@property (nonatomic, readwrite) NSUInteger sampleRadius;
+@property (nonatomic, readwrite) BOOL clampToEdge;
 
 - (CIImage *)outputImage;
 

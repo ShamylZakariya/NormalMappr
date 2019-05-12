@@ -40,20 +40,13 @@
 	}
 }
 
-- (void) dealloc
-{
-	[label release];
-	[shadow release];
-	[super dealloc];
-}
-
 - (void)drawRect:(NSRect)rect 
 {
 	if ( !fill )
 	{
-		self.fill = [[[NSGradient alloc] 
+		self.fill = [[NSGradient alloc]
 			initWithStartingColor: [NSColor colorWithDeviceWhite: 0.4 alpha:1] 
-			endingColor:[NSColor colorWithDeviceWhite:0.3 alpha:1]] autorelease];
+                     endingColor:[NSColor colorWithDeviceWhite:0.3 alpha:1]];
 	}
 
 	if ( !fillShadow )
@@ -97,8 +90,8 @@
 		shadow, NSShadowAttributeName,
 		nil ];
 
-	NSMutableAttributedString *displayLabel = [[[NSMutableAttributedString alloc] initWithString:self.label attributes:labelAttributes] autorelease];
-	NSAttributedString *countLabel = [[[NSAttributedString alloc] initWithString: [NSString stringWithFormat: @" (%d)", self.count] attributes:countAttributes] autorelease];
+	NSMutableAttributedString *displayLabel = [[NSMutableAttributedString alloc] initWithString:self.label attributes:labelAttributes];
+    NSAttributedString *countLabel = [[NSAttributedString alloc] initWithString: [NSString stringWithFormat: @" (%ld)", (long)self.count] attributes:countAttributes];
 	[displayLabel appendAttributedString: countLabel];
 
 	NSSize labelSize = [displayLabel size];
@@ -123,8 +116,6 @@
 {
 	if ( newLabel != label )
 	{
-		[newLabel retain];
-		[label release];
 		label = newLabel;
 		[self setNeedsDisplay:YES];
 	}

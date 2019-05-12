@@ -19,7 +19,7 @@
 		[reversedArray insertObject:object atIndex:0];
 	}
 	
-	return [reversedArray autorelease];
+    return reversedArray;
 }
 
 @end

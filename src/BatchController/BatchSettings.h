@@ -33,17 +33,17 @@ typedef enum _NMNameDecoration
 - (void) loadPrefs;
 - (void) savePrefs;
 
-@property (readwrite) BOOL syncOutputDimensions;
-@property (readwrite) BOOL resizeOutput;
-@property (readwrite) CGFloat saveQuality;
-@property (readwrite) CGFloat strength;
-@property (readwrite) int outputWidth;
-@property (readwrite) int outputHeight; 
-@property (readwrite) int sampleRadius;
-@property (readwrite) int saveFormat;
+@property (nonatomic, readwrite) BOOL syncOutputDimensions;
+@property (nonatomic, readwrite) BOOL resizeOutput;
+@property (nonatomic, readwrite) CGFloat saveQuality;
+@property (nonatomic, readwrite) CGFloat strength;
+@property (nonatomic, readwrite) int outputWidth;
+@property (nonatomic, readwrite) int outputHeight;
+@property (nonatomic, readwrite) int sampleRadius;
+@property (nonatomic, readwrite) int saveFormat;
 @property (readonly) NSString* saveFormatExtension;
-@property (readwrite,retain) NSString* nameDecoration;
-@property (readwrite) NMNameDecoration nameDecorationStyle;
-@property (readwrite) BOOL showSaveQualityControls;
+@property (nonatomic, readwrite) NSString* nameDecoration;
+@property (nonatomic, readwrite) NMNameDecoration nameDecorationStyle;
+@property (nonatomic, readwrite) BOOL showSaveQualityControls;
 
 @end

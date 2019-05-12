@@ -18,10 +18,10 @@
 	NSInteger	count;
 }
 
-@property (readwrite,retain) NSString* label;
-@property (readwrite,retain) NSGradient *fill;
-@property (readwrite) BOOL open;
-@property (readwrite) NSInteger count;
+@property (nonatomic, readwrite,retain) NSString* label;
+@property (nonatomic, readwrite,retain) NSGradient *fill;
+@property (nonatomic, readwrite) BOOL open;
+@property (nonatomic, readwrite) NSInteger count;
 
 - (CGFloat) preferredHeight;
 

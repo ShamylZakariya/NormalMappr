@@ -20,8 +20,8 @@
 {
 	if ( self = [super init] )
 	{
-		entry = [e retain];
-		settings = [s retain];
+        entry = e;
+        settings = s;
 	}
 	
 	return self;
@@ -29,14 +29,7 @@
 
 + (BatchOperation*) batchOperationWithEntry: (BatchEntry*) entry andSettings: (BatchSettings*) settings;
 {
-	return [[[BatchOperation alloc] initWithEntry: entry andSettings: settings] autorelease];
-}
-
-- (void) dealloc
-{
-	[entry release];
-	[settings release];
-	[super dealloc];
+	return [[BatchOperation alloc] initWithEntry: entry andSettings: settings];
 }
 
 - (NSURL*) outputURL
@@ -108,8 +101,6 @@
 			[data writeToURL: [self outputURL] atomically:YES];
 		}
 	}	
-	
-	[nm release];
 }
 
 

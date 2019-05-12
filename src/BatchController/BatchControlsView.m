@@ -21,12 +21,6 @@
     return self;
 }
 
-- (void) dealloc
-{
-	[_gradient release];
-	[super dealloc];
-}
-
 - (void)drawRect:(NSRect)rect {
 	[[NSColor whiteColor] set];
 	NSRectFill( [self bounds] );

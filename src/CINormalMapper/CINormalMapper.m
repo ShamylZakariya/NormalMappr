@@ -24,7 +24,7 @@
 	if ( self = [super init] )
 	{
 		colorSpace = CGColorSpaceCreateDeviceRGB();
-		filter = (NormalMapFilter*) [[CIFilter filterWithName: @"NormalMapFilter"] retain];
+        filter = (NormalMapFilter*) [CIFilter filterWithName: @"NormalMapFilter"];
 		dirty = YES;
 	}
 	
@@ -49,30 +49,17 @@
 			else
 			{
 				NSLog( @"Unable to open image at URL %@", bumpmapURL );
-				[self release];
 				return nil;
 			}
 		}
 		else
 		{
 			NSLog( @"No data at URL %@", bumpmapURL );
-			[self release];
 			return nil;
 		}
 	}
 	
 	return self;
-}
-
-- (void) dealloc
-{
-	[bumpmap release];
-	[inputImage release];
-	[normalmap release];
-	[filter release];
-	CGColorSpaceRelease(colorSpace);
-
-	[super dealloc];
 }
 
 #pragma mark -
@@ -83,10 +70,7 @@
 {
 	if ( newBumpmap != bumpmap )
 	{
-		[bumpmap release];
-		bumpmap = [newBumpmap retain];
-		
-		[inputImage release];
+        bumpmap = newBumpmap;
 		inputImage = nil;
 
 		self.size = bumpmap ? NSSizeToCGSize([bumpmap size]) : CGSizeMake(0.0,0.0);
@@ -177,8 +161,8 @@
 		contextWithCGContext: (CGContextRef)[nsContext graphicsPort]
 		options:
 			[NSDictionary dictionaryWithObjectsAndKeys: 
-				(id)colorSpace, kCIContextOutputColorSpace,
-				(id)colorSpace, kCIContextWorkingColorSpace,
+             (__bridge id)colorSpace, kCIContextOutputColorSpace,
+             (__bridge id)colorSpace, kCIContextWorkingColorSpace,
 				nil]];
 			
 	[filter setValue: inputImage forKey: kCIInputImageKey];
@@ -204,8 +188,7 @@
 		// create normalmap
 		//
 
-		[normalmap release];
-		normalmap = [[NSBitmapImageRep alloc] 
+		normalmap = [[NSBitmapImageRep alloc]
 			initWithBitmapDataPlanes:NULL 
 			pixelsWide:self.size.width 
 			pixelsHigh:self.size.height 
@@ -261,10 +244,7 @@
 		// Now create a CIImage from that resized bitmap
 		//
 
-		[inputImage release];
-		inputImage = [[CIImage imageWithData: [tempBitmap TIFFRepresentation]] retain];
-		
-		[tempBitmap release];
+        inputImage = [CIImage imageWithData: [tempBitmap TIFFRepresentation]];
 	}
 }
 

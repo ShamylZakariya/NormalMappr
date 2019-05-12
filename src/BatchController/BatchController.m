@@ -59,14 +59,6 @@
 	return self;
 }
 
-- (void) dealloc
-{
-	self.batchSettings = nil;
-	self.bumpmaps = nil;
-	self.nonBumpmaps = nil;
-	[super dealloc];
-}
-
 - (void) awakeFromNib
 {
 	self.showDropMessage = YES;
@@ -101,7 +93,7 @@
 	//
 
 	id value = nil;
-	if ( value = [[NSUserDefaults standardUserDefaults] valueForKey: kPrefNonBumpmapPaneVisible] )
+	if ((value = [[NSUserDefaults standardUserDefaults] valueForKey: kPrefNonBumpmapPaneVisible]))
 	{
 		// we need to go through the label itself, since I'm lazy regarding binding directionality, I suppose
 		nonBumpmapCollectionViewLabel.open = [value boolValue];
@@ -391,10 +383,10 @@
 
 				for ( NSString* subpath in [fm subpathsAtPath: path] )
 				{
-					subpath = [path stringByAppendingPathComponent: subpath];
-					if ( [self canOpenFileWithExtension: [subpath pathExtension]] )
+					NSString *actualPath = [path stringByAppendingPathComponent: subpath];
+					if ( [self canOpenFileWithExtension: [actualPath pathExtension]] )
 					{
-						[files addObject: subpath];
+						[files addObject: actualPath];
 					}
 				}
 			}
@@ -413,8 +405,6 @@
 
 - (void) loadDroppedFiles: (NSArray*) droppedFiles
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-
 	//
 	// gather image files we recognize
 	//
@@ -451,8 +441,6 @@
 	//
 
 	[self performSelectorOnMainThread: @selector( fileAddingAnalysisComplete: ) withObject: entries waitUntilDone: NO];
-	
-	[pool release];
 }
 
 - (void) fileAddingAnalysisComplete: (NSMutableArray*) newEntries
@@ -495,8 +483,6 @@
 
 - (void) normalmapFiles: (NSArray*) entries
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-
 	self.sheetProcessStepTotal = entries.count;
 	self.sheetProcessStep = 0;
 	self.sheetProcessIndeterminate = NO;	
@@ -514,8 +500,6 @@
 		
 		self.sheetProcessStep = self.sheetProcessStep + 1;
 		self.sheetProcessProgress = (float) self.sheetProcessStep / (float)self.sheetProcessStepTotal;
-		
-		[op release];
 	}
 
 	//
@@ -523,8 +507,6 @@
 	//
 	
 	[self performSelectorOnMainThread: @selector( normalmappingComplete: ) withObject: nil waitUntilDone: NO];
-	
-	[pool release];
 }
 
 - (void) normalmappingComplete: (id) info
@@ -551,7 +533,7 @@
 	//	going through this way.
 	//
 
-	[[NSApp delegate] setBatchWindowShowing: NO];
+	((AppDelegate*)[NSApp delegate]).batchWindowShowing = NO;
 }
 
 

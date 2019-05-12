@@ -18,7 +18,7 @@ extern NSString *			kBatchViewDefaultDragType;
 	NSString	*dragTypeString;
 	NSString	*message;
 	
-	id			delegate;
+	__unsafe_unretained id			delegate;
 	SEL			dropAction;
 	SEL			dropFilesAction;
 	SEL			deleteAction;

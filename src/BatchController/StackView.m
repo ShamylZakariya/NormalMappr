@@ -48,7 +48,7 @@
 
 + (LayoutToken*) layoutTokenWithPreferredSize: (CGFloat) size andCollapse: (CGFloat) collapse
 {
-	return [[[LayoutToken alloc] initWithPreferredSize: size andCollapse: collapse] autorelease];
+	return [[LayoutToken alloc] initWithPreferredSize: size andCollapse: collapse];
 }
 
 - (id) initWithPreferredSize: (CGFloat) size andCollapse: (CGFloat) collapseAmount
@@ -109,13 +109,6 @@
     return self;
 }
 
-- (void) dealloc
-{
-	[previousViewCollapse release];
-	[viewCollapse release];
-	[super dealloc];
-}
-
 - (void) awakeFromNib
 {
 	[self setAutoresizesSubviews:NO];
@@ -126,8 +119,6 @@
 {
 	if ( nc != backgroundColor )
 	{
-		[nc retain];
-		[backgroundColor release];
 		backgroundColor = nc;
 		[self setNeedsDisplay:YES];
 	}
@@ -140,9 +131,7 @@
 	// and then assign the current one
 	//
 
-	[previousViewCollapse release];
-	previousViewCollapse = viewCollapse;		
-	viewCollapse = [newViewCollapse retain];
+	previousViewCollapse = viewCollapse;
 
 	if ( animate )
 	{
@@ -190,7 +179,6 @@
 
 - (void) animationDidEnd: (NSAnimation*) animation
 {
-	[collapseAnimation release];
 	collapseAnimation = nil;
 }
 

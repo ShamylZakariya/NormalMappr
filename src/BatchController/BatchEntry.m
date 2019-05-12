@@ -27,7 +27,7 @@
 	BatchEntry *e = [[BatchEntry alloc] initWithURL:url];
 	if ( e )
 	{
-		return [e autorelease];
+        return e;
 	}
 	
 	return nil;
@@ -38,7 +38,7 @@
 	BatchEntry *e = [[BatchEntry alloc] initWithPath:path];
 	if ( e )
 	{
-		return [e autorelease];
+        return e;
 	}
 	
 	return nil;
@@ -86,7 +86,6 @@
 		}
 		else
 		{
-			[self release];
 			return nil;
 		}
 	}
@@ -99,21 +98,6 @@
 {
 	return [self initWithURL: [NSURL fileURLWithPath:imagePath]];
 }
-
-- (void) dealloc
-{
-	[image release];
-	[thumb release];
-	[imageBitmap release];
-	[thumbBitmap release];
-
-	[path release];
-	[displayTitle release];
-	[displayPath release];
-	[identifier release];
-
-	[super dealloc];
-}	
 
 - (NSString*) description
 {

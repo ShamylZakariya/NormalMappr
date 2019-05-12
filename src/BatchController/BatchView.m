@@ -56,13 +56,6 @@ NSString *kBatchViewDefaultDragType	= @"kBatchViewDefaultDragType";
 	[self setDragTypeString: kBatchViewDefaultDragType];
 }
 
-- (void) dealloc
-{
-	[innerShadowGradient release];
-	[message release];
-	[super dealloc];
-}
-
 - (void)drawRect:(NSRect)rect {
 	[super drawRect: rect];
 	
@@ -93,7 +86,7 @@ NSString *kBatchViewDefaultDragType	= @"kBatchViewDefaultDragType";
 	if ( NO && self.window.firstResponder == self )
 	{
 		[[NSColor selectedControlColor] set];
-		NSFrameRectWithWidthUsingOperation( highlightRect, 3, NSCompositeSourceOver );
+        NSFrameRectWithWidthUsingOperation( highlightRect, 3, NSCompositingOperationSourceOver );
 	}
 
 	//
@@ -111,12 +104,12 @@ NSString *kBatchViewDefaultDragType	= @"kBatchViewDefaultDragType";
 	if ( dropInProgress )
 	{
 		[[[NSColor selectedControlColor] colorWithAlphaComponent:0.5] set];
-		NSFrameRectWithWidthUsingOperation( highlightRect, 3, NSCompositeSourceOver );
+        NSFrameRectWithWidthUsingOperation( highlightRect, 3, NSCompositingOperationSourceOver );
 	}	
 	
 	if ( self.showMessage && self.message )
 	{	
-		NSShadow *shadow = [[[NSShadow alloc] init] autorelease];
+		NSShadow *shadow = [[NSShadow alloc] init];
 		shadow.shadowBlurRadius = 1;
 		shadow.shadowOffset = NSMakeSize( 0,-1 );
 		shadow.shadowColor = [NSColor colorWithDeviceWhite:0 alpha:0.5];
@@ -142,8 +135,6 @@ NSString *kBatchViewDefaultDragType	= @"kBatchViewDefaultDragType";
 {
 	if ( aString != dragTypeString )
 	{
-		[aString retain];
-		[dragTypeString release];
 		dragTypeString = aString;
 		[self registerForDraggedTypes:[NSArray arrayWithObjects:dragTypeString, NSFilenamesPboardType, nil]];
 	}
@@ -153,8 +144,6 @@ NSString *kBatchViewDefaultDragType	= @"kBatchViewDefaultDragType";
 {
 	if ( newMessage != message )
 	{
-		[newMessage retain];
-		[message release];
 		message = newMessage;
 		
 		if ( showMessage ) [self setNeedsDisplay: YES];
@@ -256,7 +245,7 @@ NSString *kBatchViewDefaultDragType	= @"kBatchViewDefaultDragType";
 				  source: self
 			   slideBack: ENABLE_DRAG_OUT_TO_DELETE ? NO : YES];
 
-		[self setSelectionIndexes: nil];
+        self.selectionIndexPaths = [NSSet set];
 	}
 }
 
@@ -278,7 +267,7 @@ NSString *kBatchViewDefaultDragType	= @"kBatchViewDefaultDragType";
 			[self.delegate performSelector: self.deleteAction withObject: [self selectedObjects]];
 		}	
 		
-		[self setSelectionIndexes:nil];		
+        self.selectionIndexPaths = [NSSet set];
 	}
 }
 
@@ -297,7 +286,7 @@ NSString *kBatchViewDefaultDragType	= @"kBatchViewDefaultDragType";
 - (BOOL) resignFirstResponder
 {
 	[self setNeedsDisplay:YES];
-	[self setSelectionIndexes:nil];
+    self.selectionIndexPaths = [NSSet set];
 	return [super resignFirstResponder];
 }
 
@@ -415,8 +404,8 @@ NSString *kBatchViewDefaultDragType	= @"kBatchViewDefaultDragType";
 		// The drop has changed our data source, so we should deselect
 		//
 
-		[self setSelectionIndexes: nil];
-		return YES;		
+        self.selectionIndexPaths = [NSSet set];
+		return YES;
 	}
 		
 	return NO;
@@ -516,7 +505,7 @@ NSString *kBatchViewDefaultDragType	= @"kBatchViewDefaultDragType";
 
 	[dragImage unlockFocus];
 	
-	return [dragImage autorelease];
+    return dragImage;
 }
 
 - (NSImage*) dragBadge: (NSUInteger) count

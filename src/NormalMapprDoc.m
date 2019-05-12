@@ -7,11 +7,9 @@
 //
 
 #import "NormalMapprDoc.h"
-#import "UKKQueue.h"
 
 @interface NormalMapprDoc(Private)
 
-- (void) workspaceNotification: (NSNotification*) notification;
 - (NSString*) currentSaveExtension;
 - (void) scheduleReload;
 - (void) update;
@@ -52,37 +50,18 @@
 {
     if (self = [super init]) 
 	{
-		_saveFormats = [[NSArray arrayWithObjects: kJPEG2000Format, kJPEGFormat, kPNGFormat, kTIFFFormat, nil] retain];
+		_saveFormats = @[kJPEG2000Format, kJPEGFormat, kPNGFormat, kTIFFFormat];
 	    _syncDimensions = YES;
-		
-		//
-		// Register for notifications from UKKQueue
-		//
-
-		NSWorkspace *workspace = [NSWorkspace sharedWorkspace];
-		NSNotificationCenter *nc = [workspace notificationCenter];
-		
-		[nc addObserver:self 
-			selector: @selector( workspaceNotification: ) 
-			name: nil 
-			object: nil/*[UKKQueue sharedFileWatcher]*/ ];
+        
+        _fileWatcher = [[VDKQueue alloc] init];
+        _fileWatcher.delegate = self;
     }
     return self;
 }
 
 - (void) dealloc
 {
-	//
-	// Stop listening to workspace notifications
-	//
-		
-	[[UKKQueue sharedFileWatcher] removePath: self.fileURL.path];
-	[[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
-
-	[_normalmapper release];
-	[_saveFormat release];
-	[_saveFormats release];
-	[super dealloc];
+    [_fileWatcher removePath:self.fileURL.path];
 }
 
 #pragma mark -
@@ -155,7 +134,6 @@
 
 - (BOOL)readFromURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
 {
-	[_normalmapper release];
 	_normalmapper = nil;
 	
 	NSData *data = [NSData dataWithContentsOfURL:absoluteURL];
@@ -173,7 +151,7 @@
 			//
 
 			NSString *watchPath = [[absoluteURL path] stringByDeletingLastPathComponent];
-			[[UKKQueue sharedFileWatcher] addPath: watchPath ];
+            [_fileWatcher addPath:watchPath];
 
 			//
 			//	Record timestamp
@@ -300,9 +278,6 @@
 
 - (void) setSaveFormat: (NSString *) formatName
 {
-	[formatName retain];
-	[_saveFormat release];
-
 	_saveFormat = formatName;
 	
 	if ( [_saveFormat isEqualToString: kJPEG2000Format] ||
@@ -362,9 +337,7 @@
 			if ( tilingImageView.superview == nil )
 			{
 				// tiling
-				[iv retain];
 				[imageViewContainer.animator replaceSubview:iv with:tilingImageView];
-				[tilingImageView release];
 			}
 		
 			break;
@@ -376,9 +349,7 @@
 			if ( iv.superview == nil )
 			{
 				// non-tiling
-				[tilingImageView retain];
 				[imageViewContainer.animator replaceSubview:tilingImageView with:iv];
-				[iv release];
 			}
 			
 			break;
@@ -432,14 +403,14 @@
 {
 	_currentSavePanel = [NSSavePanel savePanel];
 	[_currentSavePanel setMessage:@"Export the normalmap to:"];
-	[_currentSavePanel setRequiredFileType: [self currentSaveExtension]];
+    [_currentSavePanel setAllowedFileTypes:@[[self currentSaveExtension]]];
 	[_currentSavePanel setAccessoryView: savePanelDialog];
 	
 	
 	NSURL *fileURL = [self fileURL];
 	NSString *fileName = [fileURL path];
 	
-	[_currentSavePanel beginSheetForDirectory: nil 
+	[_currentSavePanel beginSheetForDirectory: nil
 										 file: [[fileName lastPathComponent] stringByDeletingPathExtension] 
 							   modalForWindow: docWindow
 								modalDelegate: self 
@@ -471,49 +442,46 @@
 }
 
 #pragma mark -
-#pragma mark UKFileWatcherDelegate
+#pragma mark VDKQueueDelegate
 
-- (void) workspaceNotification: (NSNotification*) notification
+-(void) VDKQueue:(VDKQueue *)queue receivedNotification:(NSString*)noteName forPath:(NSString*)fpath
 {
-	if ( [notification object] == [UKKQueue sharedFileWatcher] )
-	{
-		if ( [[notification name] isEqualToString: UKFileWatcherWriteNotification] )
-		{
-			//
-			//	We know that a file in the folder containing this file was written to.
-			//	It may or may not have been our file. So we're going to do a timestamp check.
-			//
-			
-			NSDictionary *attrs = [[NSFileManager defaultManager] attributesOfItemAtPath:[[self fileURL] path] error:nil];
-			if ( attrs )
-			{
-				NSDate *timestamp = [attrs objectForKey: NSFileModificationDate];
-				if ( [_fileTimestamp compare: timestamp] == NSOrderedAscending )
-				{
-					[_fileTimestamp release];
-					_fileTimestamp = timestamp;
-					
-					//
-					//	This is hincty -- photoshop seems to perform multiple immediate writes to the file,
-					//	but our use of timestamps causes only the first to be read, which is
-					//	insufficient. So, we have to shedule a reload in the near future. Which can
-					//	only be done from the main thread. So first we invoke scheduleReload on the 
-					//	main thread, which then shedules -reload to be called in ahalf-second or so.
-					//
-
-					DebugLog( @"Detected write to file: %@ - about to schedule reload", [[[self fileURL] path] lastPathComponent] );
-					[self performSelectorOnMainThread: @selector(scheduleReload) withObject:nil waitUntilDone:NO];
-				}
-				else if ( NO )
-				{
-					NSTimeInterval difference = [timestamp timeIntervalSinceReferenceDate] - [_fileTimestamp timeIntervalSinceReferenceDate];
-					DebugLog( @"timestamp difference %.2f on %@ doesn't show difference: not reloading",
-							  difference, [[[self fileURL] path] lastPathComponent] );
-				}
-			}
-			
-		}
-	}
+    if ([noteName isEqualToString:VDKQueueWriteNotification])
+    {
+        //
+        //    We know that a file in the folder containing this file was written to.
+        //    It may or may not have been our file. So we're going to do a timestamp check.
+        //
+        
+        NSDictionary *attrs = [[NSFileManager defaultManager] attributesOfItemAtPath:[[self fileURL] path] error:nil];
+        if ( attrs )
+        {
+            NSDate *timestamp = [attrs objectForKey: NSFileModificationDate];
+            if ( [_fileTimestamp compare: timestamp] == NSOrderedAscending )
+            {
+                _fileTimestamp = timestamp;
+                
+                //
+                //    This is hincty -- photoshop seems to perform multiple immediate writes to the file,
+                //    but our use of timestamps causes only the first to be read, which is
+                //    insufficient. So, we have to shedule a reload in the near future. Which can
+                //    only be done from the main thread. So first we invoke scheduleReload on the
+                //    main thread, which then shedules -reload to be called in a half-second or so.
+                //
+                
+                DebugLog( @"Detected write to file: %@ - about to schedule reload", [[[self fileURL] path] lastPathComponent] );
+                
+                #warning Use GCD here
+                [self performSelectorOnMainThread: @selector(scheduleReload) withObject:nil waitUntilDone:NO];
+            }
+            else
+            {
+                NSTimeInterval difference = [timestamp timeIntervalSinceReferenceDate] - [_fileTimestamp timeIntervalSinceReferenceDate];
+                DebugLog( @"timestamp difference %.2f on %@ doesn't show difference: not reloading",
+                         difference, [[[self fileURL] path] lastPathComponent] );
+            }
+        }
+    }
 }
 
 - (void) scheduleReload

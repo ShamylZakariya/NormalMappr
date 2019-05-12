@@ -30,13 +30,7 @@
 
 - (void) dealloc
 {
-	[shadow release];
-	[shadowImage release];
-	[image release];
-
 	[[NSNotificationCenter defaultCenter] removeObserver: self];
-
-	[super dealloc];
 }
 
 - (void) awakeFromNib
@@ -71,8 +65,7 @@
 			newShadowNeeded = YES;
 		}	
 
-		[image release];
-		image = [anImage retain];
+        image = anImage;
 				
 		if ( newShadowNeeded )
 		{		
@@ -83,7 +76,6 @@
 			NSSize shadowImageSize = NSMakeSize( [image size].width + 2*[shadow shadowBlurRadius],
 												 [image size].height + 2*[shadow shadowBlurRadius] );
 			
-			[shadowImage release];
 			shadowImage = [[NSImage alloc] initWithSize: shadowImageSize];
 			
 			NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:NULL 

@@ -11,11 +11,6 @@
 
 @implementation BatchItemLabel
 
-- (void) dealloc
-{
-	[shadow release];
-	[super dealloc];
-}
 
 - (void)drawRect:(NSRect)rect 
 {
