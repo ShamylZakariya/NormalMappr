@@ -41,7 +41,6 @@
 	IBOutlet NSScrollView *imageViewScroller;
 	IBOutlet NSSlider *strengthSlider;
 	IBOutlet NSSlider *sampleRadiusSlider;
-	IBOutlet NSForm *outputDimensionsForm;
 	IBOutlet NSView *savePanelDialog;
 	IBOutlet NSBox *savePanelQualityControls;
 */
@@ -51,7 +50,7 @@
     if (self = [super init]) 
 	{
 		_saveFormats = @[kJPEG2000Format, kJPEGFormat, kPNGFormat, kTIFFFormat];
-	    _syncDimensions = YES;
+	    _syncAspectRatio = YES;
         
         _fileWatcher = [[VDKQueue alloc] init];
         _fileWatcher.delegate = self;
@@ -108,21 +107,21 @@
 
 	if ( [_saveFormat isEqualToString: kJPEG2000Format] )
 	{
-		format = NSJPEG2000FileType;
+        format = NSBitmapImageFileTypeJPEG2000;
 		props = [NSDictionary dictionaryWithObject: [NSNumber numberWithFloat:_saveQuality / 100.0f] forKey: NSImageCompressionFactor];
 	}
 	else if ( [_saveFormat isEqualToString: kJPEGFormat] )
 	{
-		format = NSJPEGFileType;
+        format = NSBitmapImageFileTypeJPEG;
 		props = [NSDictionary dictionaryWithObject: [NSNumber numberWithFloat:_saveQuality / 100.0f] forKey: NSImageCompressionFactor];
 	}
 	else if ( [_saveFormat isEqualToString: kPNGFormat] )
 	{
-		format = NSPNGFileType;
+        format = NSBitmapImageFileTypePNG;
 	}
 	else if ( [_saveFormat isEqualToString: kTIFFFormat] )
 	{
-		format = NSTIFFFileType;
+        format = NSBitmapImageFileTypeTIFF;
 		props = [NSDictionary dictionaryWithObject: [NSNumber numberWithInt:NSTIFFCompressionLZW] forKey: NSImageCompressionMethod];
 	}
 	else
@@ -235,7 +234,7 @@
 	CGSize size = _normalmapper.size;
 	size.width = width;
 
-	if ( _syncDimensions )
+	if ( _syncAspectRatio )
 	{
 		float newHeight = ceilf(_normalmapper.bumpmap.size.height * ((float) width / (float)_normalmapper.bumpmap.size.width));
 		size.height = lrintf( ceilf(newHeight) );
@@ -252,12 +251,12 @@
 }
 
 - (void) setOutputHeight: (int) height
-{	
+{
 	height = MAX( height, 8 );
 	CGSize size = _normalmapper.size;
 	size.height = height;
 
-	if ( _syncDimensions )
+	if ( _syncAspectRatio )
 	{
 		float newWidth = ceilf((_normalmapper.bumpmap.size.width ) * ((float) height / _normalmapper.bumpmap.size.height));
 		size.width = lrintf( ceilf(newWidth) );
@@ -293,7 +292,8 @@
 		[savePanelQualityControls setHidden: YES];
 	}
 	
-	[_currentSavePanel setRequiredFileType: [self currentSaveExtension]];
+    NSArray<NSString*> *extensions = @[[self currentSaveExtension]];
+    [_currentSavePanel setAllowedFileTypes: extensions];
 }
 
 - (NSString *) saveFormat
@@ -313,19 +313,22 @@
 	return _saveQuality;
 }
 
-- (void) setSyncDimensions: (BOOL) sync
+- (void) setSyncAspectRatio: (BOOL) sync
 {
-	_syncDimensions = sync;
+	_syncAspectRatio = sync;
+    
+    NSImage *toggleButtonImage = [NSImage imageNamed:sync? @"LinkWidthHeight-Button" : @"UnLinkWidthHeight-Button"];
+    [linkWidthHeightToggleButton setImage:toggleButtonImage];
 	
-	if ( _syncDimensions )
+	if ( _syncAspectRatio )
 	{
 		[self setOutputWidth: [self outputWidth]];
 	}	
 }
 
-- (BOOL) syncDimensions
+- (BOOL) syncAspectRatio
 {
-	return _syncDimensions;
+	return _syncAspectRatio;
 }
 
 - (void) setTileMode: (int) tileMode
@@ -408,17 +411,15 @@
 	[_currentSavePanel setMessage:@"Export the normalmap to:"];
     [_currentSavePanel setAllowedFileTypes:@[[self currentSaveExtension]]];
 	[_currentSavePanel setAccessoryView: savePanelDialog];
-	
-	
-	NSURL *fileURL = [self fileURL];
-	NSString *fileName = [fileURL path];
-	
-	[_currentSavePanel beginSheetForDirectory: nil
-										 file: [[fileName lastPathComponent] stringByDeletingPathExtension] 
-							   modalForWindow: docWindow
-								modalDelegate: self 
-							   didEndSelector: @selector( exportSheetDidEnd: returnCode: contextInfo: ) 
-								  contextInfo: NULL ];
+    [_currentSavePanel setDirectoryURL:[[self fileURL] URLByDeletingLastPathComponent]];
+    [_currentSavePanel setNameFieldStringValue:[[[[self fileURL] path] lastPathComponent] stringByDeletingPathExtension]];
+    
+    [_currentSavePanel beginSheetModalForWindow:docWindow completionHandler:^(NSModalResponse result) {
+        if ( result == NSModalResponseOK )
+        {
+            [[self dataOfType: @"Export Type Or Something" error: nil] writeToURL: [_currentSavePanel URL] atomically: NO];
+        }
+    }];
 }
 
 - (IBAction) showSingleImage: (id) sender
@@ -532,8 +533,9 @@
 - (NSRect) idealZoomWindowSize
 {
 	NSSize size;
-	size.width = _normalmapper.size.width;
-	size.height = _normalmapper.size.height + controlPanelView.bounds.size.height;
+    float scale = 1.0f / [docWindow screen].backingScaleFactor;
+	size.width = _normalmapper.size.width * scale;
+	size.height = (_normalmapper.size.height * scale) + controlPanelView.bounds.size.height;
 	NSRect fr = [docWindow frameRectForContentRect: NSMakeRect( 0,0, size.width, size.height )];
 	
 	//
@@ -553,21 +555,6 @@
 	if ( docWindow )
 	{
 		[docWindow setFrame: [self idealZoomWindowSize] display: YES];
-	}
-	else
-	{
-		DebugLog( @"No doc window? Has NIB loaded?" );
-	}
-}
-
-#pragma mark -
-#pragma mark SavePanel
-
-- (void)exportSheetDidEnd:(NSSavePanel *)sheet returnCode:(int)returnCode  contextInfo:(void  *)contextInfo
-{
-	if ( returnCode == NSOKButton )
-	{
-		[[self dataOfType: @"Export Type Or Something" error: nil] writeToURL: [sheet URL] atomically: NO];
 	}
 }
 

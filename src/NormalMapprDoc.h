@@ -14,6 +14,7 @@
 #import "ImageView.h"
 #import "TilingImageView.h"
 #import "CINormalMapper.h"
+#import "TemplateInDarkModeButton.h"
 
 #define kJPEG2000Format @"JPEG-2000"
 #define kJPEGFormat @"JPEG"
@@ -30,19 +31,19 @@
 	NSSavePanel *_currentSavePanel;
 	NSDate *_fileTimestamp;
 	float _saveQuality;
-	BOOL _syncDimensions;
+	BOOL _syncAspectRatio;
 
-	IBOutlet NSWindow *docWindow;
-	IBOutlet NSView *imageViewContainer;
-	IBOutlet ImageView *imageView;
-	IBOutlet TilingImageView *tilingImageView;
-	IBOutlet NSScrollView *imageViewScroller;
-	IBOutlet NSSlider *strengthSlider;
-	IBOutlet NSSlider *sampleRadiusSlider;
-	IBOutlet NSForm *outputDimensionsForm;
-	IBOutlet NSView *savePanelDialog;
-	IBOutlet NSBox *savePanelQualityControls;
-	IBOutlet NSView *controlPanelView;
+	__weak IBOutlet NSWindow *docWindow;
+	__weak IBOutlet NSView *imageViewContainer;
+	__weak IBOutlet ImageView *imageView;
+	__weak IBOutlet TilingImageView *tilingImageView;
+	__weak IBOutlet NSScrollView *imageViewScroller;
+	__weak IBOutlet NSSlider *strengthSlider;
+	__weak IBOutlet NSSlider *sampleRadiusSlider;
+	__weak IBOutlet NSView *savePanelDialog;
+	__weak IBOutlet NSBox *savePanelQualityControls;
+	__weak IBOutlet NSView *controlPanelView;
+    __weak IBOutlet TemplateInDarkModeButton *linkWidthHeightToggleButton;
 }
 
 @property (readwrite) int strength;
@@ -50,7 +51,7 @@
 @property (readwrite) BOOL clampToEdge;
 @property (readwrite) int outputWidth;
 @property (readwrite) int outputHeight;
-@property (readwrite) BOOL syncDimensions;
+@property (readwrite) BOOL syncAspectRatio;
 @property (readonly,retain) NSArray* saveFormats;
 @property (readwrite,retain) NSString* saveFormat;
 @property (readwrite) float saveQuality;
