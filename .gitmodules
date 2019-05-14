@@ -1,0 +1,3 @@
+[submodule "3rd-party/VDKQueue"]
+	path = 3rd-party/VDKQueue
+	url = https://github.com/sebikeller/VDKQueue

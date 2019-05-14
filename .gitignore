@@ -63,8 +63,5 @@ fastlane/test_output
 iOSInjectionProject/
 
 # 3rd party stuff
-src/UKKQueue
-src/CTBadge
-
-/3rd-party
+/3rd-party/CTBadge
 .DS_Store

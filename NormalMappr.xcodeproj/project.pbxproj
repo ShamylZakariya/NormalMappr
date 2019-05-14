@@ -37,11 +37,11 @@
 		36F94F920F6095A90003C8EF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36F94F910F6095A90003C8EF /* QuartzCore.framework */; };
 		36F951080F644B130003C8EF /* TilingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F951070F644B130003C8EF /* TilingImageView.m */; };
 		36F951710F64A0590003C8EF /* LoadCGImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F951700F64A0590003C8EF /* LoadCGImage.m */; };
-		63608AE3228895630062CD4C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 63608ADE228895630062CD4C /* README.md */; };
-		63608AE4228895630062CD4C /* VDKQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 63608ADF228895630062CD4C /* VDKQueue.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		63608AE5228895630062CD4C /* CTBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 63608AE1228895630062CD4C /* CTBadge.m */; };
 		63608AEA2288D0CF0062CD4C /* TemplateInDarkModeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 63608AE92288D0CF0062CD4C /* TemplateInDarkModeButton.m */; };
 		63608AEC2288D3F80062CD4C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63608AEB2288D3F80062CD4C /* Images.xcassets */; };
+		63608AFB228B068F0062CD4C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 63608AF9228B068F0062CD4C /* README.md */; };
+		63608AFC228B068F0062CD4C /* VDKQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 63608AFA228B068F0062CD4C /* VDKQueue.m */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
 		8D15AC2D0486D014006FF6A4 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B6FDCFA73011CA2CEA /* MainMenu.nib */; };
 		8D15AC2E0486D014006FF6A4 /* NormalMapprDoc.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B4FDCFA73011CA2CEA /* NormalMapprDoc.nib */; };
@@ -110,14 +110,14 @@
 		36F951070F644B130003C8EF /* TilingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TilingImageView.m; sourceTree = "<group>"; };
 		36F9516F0F64A0590003C8EF /* LoadCGImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadCGImage.h; sourceTree = "<group>"; };
 		36F951700F64A0590003C8EF /* LoadCGImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadCGImage.m; sourceTree = "<group>"; };
-		63608ADD228895630062CD4C /* VDKQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDKQueue.h; sourceTree = "<group>"; };
-		63608ADE228895630062CD4C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		63608ADF228895630062CD4C /* VDKQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VDKQueue.m; sourceTree = "<group>"; };
 		63608AE1228895630062CD4C /* CTBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTBadge.m; sourceTree = "<group>"; };
 		63608AE2228895630062CD4C /* CTBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTBadge.h; sourceTree = "<group>"; };
 		63608AE82288D0CF0062CD4C /* TemplateInDarkModeButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TemplateInDarkModeButton.h; sourceTree = "<group>"; };
 		63608AE92288D0CF0062CD4C /* TemplateInDarkModeButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TemplateInDarkModeButton.m; sourceTree = "<group>"; };
 		63608AEB2288D3F80062CD4C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		63608AF8228B068F0062CD4C /* VDKQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDKQueue.h; sourceTree = "<group>"; };
+		63608AF9228B068F0062CD4C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		63608AFA228B068F0062CD4C /* VDKQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VDKQueue.m; sourceTree = "<group>"; };
 		63AAE608227BF61B00926382 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		63AAE609227BF61B00926382 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		63AAE60C227BF62100926382 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/MainMenu.nib; sourceTree = "<group>"; };
@@ -298,20 +298,10 @@
 		63608ADB228895630062CD4C /* 3rd-party */ = {
 			isa = PBXGroup;
 			children = (
-				63608ADC228895630062CD4C /* VDKQueue-master */,
+				63608AF7228B068F0062CD4C /* VDKQueue */,
 				63608AE0228895630062CD4C /* CTBadge */,
 			);
 			path = "3rd-party";
-			sourceTree = "<group>";
-		};
-		63608ADC228895630062CD4C /* VDKQueue-master */ = {
-			isa = PBXGroup;
-			children = (
-				63608ADD228895630062CD4C /* VDKQueue.h */,
-				63608ADE228895630062CD4C /* README.md */,
-				63608ADF228895630062CD4C /* VDKQueue.m */,
-			);
-			path = "VDKQueue-master";
 			sourceTree = "<group>";
 		};
 		63608AE0228895630062CD4C /* CTBadge */ = {
@@ -321,6 +311,16 @@
 				63608AE2228895630062CD4C /* CTBadge.h */,
 			);
 			path = CTBadge;
+			sourceTree = "<group>";
+		};
+		63608AF7228B068F0062CD4C /* VDKQueue */ = {
+			isa = PBXGroup;
+			children = (
+				63608AF8228B068F0062CD4C /* VDKQueue.h */,
+				63608AF9228B068F0062CD4C /* README.md */,
+				63608AFA228B068F0062CD4C /* VDKQueue.m */,
+			);
+			path = VDKQueue;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -378,7 +378,7 @@
 				8D15AC2D0486D014006FF6A4 /* MainMenu.nib in Resources */,
 				8D15AC2E0486D014006FF6A4 /* NormalMapprDoc.nib in Resources */,
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
-				63608AE3228895630062CD4C /* README.md in Resources */,
+				63608AFB228B068F0062CD4C /* README.md in Resources */,
 				63608AEC2288D3F80062CD4C /* Images.xcassets in Resources */,
 				3617E6560C32AED900276C8A /* NormalMappr.icns in Resources */,
 				36F94F8D0F60957E0003C8EF /* NormalMap.cikernel in Resources */,
@@ -407,12 +407,12 @@
 				36F951080F644B130003C8EF /* TilingImageView.m in Sources */,
 				63608AE5228895630062CD4C /* CTBadge.m in Sources */,
 				36F951710F64A0590003C8EF /* LoadCGImage.m in Sources */,
-				63608AE4228895630062CD4C /* VDKQueue.m in Sources */,
 				36A586140F8F68DE00AC6E58 /* DebugLog.m in Sources */,
 				36A586510F8F6CBC00AC6E58 /* BatchControlsView.m in Sources */,
 				36A586520F8F6CBC00AC6E58 /* BatchOperation.m in Sources */,
 				36A586600F8F6E8900AC6E58 /* NSArray+reversedArray.m in Sources */,
 				36A586610F8F6E8900AC6E58 /* NSView+viewAtPointExcluding.m in Sources */,
+				63608AFC228B068F0062CD4C /* VDKQueue.m in Sources */,
 				36A586760F8F6EA500AC6E58 /* BatchEntry.m in Sources */,
 				36A586770F8F6EA500AC6E58 /* BatchItemLabel.m in Sources */,
 				36A586780F8F6EA500AC6E58 /* BatchItemView.m in Sources */,

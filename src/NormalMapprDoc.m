@@ -60,7 +60,7 @@
 
 - (void) dealloc
 {
-    [_fileWatcher removePath:self.fileURL.path];
+    DebugLog(@"dealloc");
 }
 
 #pragma mark -
@@ -152,8 +152,8 @@
 			//	Start a watch on the containing folder
 			//
 
-			NSString *watchPath = [[absoluteURL path] stringByDeletingLastPathComponent];
-            [_fileWatcher addPath:watchPath];
+			NSString *containingFolderPath = [[absoluteURL path] stringByDeletingLastPathComponent];
+            [_fileWatcher addPath:containingFolderPath];
 
 			//
 			//	Record timestamp
