@@ -33,10 +33,12 @@
 	float _saveQuality;
 	BOOL _syncAspectRatio;
 
-	__weak IBOutlet NSWindow *docWindow;
-	__weak IBOutlet NSView *imageViewContainer;
-	__weak IBOutlet ImageView *imageView;
-	__weak IBOutlet TilingImageView *tilingImageView;
+    // strong references, because only one is visible at a time
+    IBOutlet ImageView *imageView;
+    IBOutlet TilingImageView *tilingImageView;
+
+    __weak IBOutlet NSWindow *docWindow;
+    __weak IBOutlet NSView *imageViewContainer;
 	__weak IBOutlet NSScrollView *imageViewScroller;
 	__weak IBOutlet NSSlider *strengthSlider;
 	__weak IBOutlet NSSlider *sampleRadiusSlider;
