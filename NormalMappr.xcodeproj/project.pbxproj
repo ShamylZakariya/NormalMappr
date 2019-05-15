@@ -15,10 +15,6 @@
 		36A586420F8F6BCF00AC6E58 /* BatchWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36A586410F8F6BCF00AC6E58 /* BatchWindow.xib */; };
 		36A586510F8F6CBC00AC6E58 /* BatchControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A5864E0F8F6CBC00AC6E58 /* BatchControlsView.m */; };
 		36A586520F8F6CBC00AC6E58 /* BatchOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A586500F8F6CBC00AC6E58 /* BatchOperation.m */; };
-		36A586570F8F6D2D00AC6E58 /* CTBadge_1.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 36A586530F8F6D2D00AC6E58 /* CTBadge_1.pdf */; };
-		36A586580F8F6D2D00AC6E58 /* CTBadge_3.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 36A586540F8F6D2D00AC6E58 /* CTBadge_3.pdf */; };
-		36A586590F8F6D2D00AC6E58 /* CTBadge_4.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 36A586550F8F6D2D00AC6E58 /* CTBadge_4.pdf */; };
-		36A5865A0F8F6D2D00AC6E58 /* CTBadge_5.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 36A586560F8F6D2D00AC6E58 /* CTBadge_5.pdf */; };
 		36A586600F8F6E8900AC6E58 /* NSArray+reversedArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A5865D0F8F6E8900AC6E58 /* NSArray+reversedArray.m */; };
 		36A586610F8F6E8900AC6E58 /* NSView+viewAtPointExcluding.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A5865F0F8F6E8900AC6E58 /* NSView+viewAtPointExcluding.m */; };
 		36A586760F8F6EA500AC6E58 /* BatchEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A586670F8F6EA500AC6E58 /* BatchEntry.m */; };
@@ -37,11 +33,16 @@
 		36F94F920F6095A90003C8EF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36F94F910F6095A90003C8EF /* QuartzCore.framework */; };
 		36F951080F644B130003C8EF /* TilingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F951070F644B130003C8EF /* TilingImageView.m */; };
 		36F951710F64A0590003C8EF /* LoadCGImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F951700F64A0590003C8EF /* LoadCGImage.m */; };
-		63608AE5228895630062CD4C /* CTBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 63608AE1228895630062CD4C /* CTBadge.m */; };
 		63608AEA2288D0CF0062CD4C /* TemplateInDarkModeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 63608AE92288D0CF0062CD4C /* TemplateInDarkModeButton.m */; };
 		63608AEC2288D3F80062CD4C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63608AEB2288D3F80062CD4C /* Images.xcassets */; };
 		63608AFB228B068F0062CD4C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 63608AF9228B068F0062CD4C /* README.md */; };
 		63608AFC228B068F0062CD4C /* VDKQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 63608AFA228B068F0062CD4C /* VDKQueue.m */; };
+		63608B16228C51F70062CD4C /* CTBadge.h in Sources */ = {isa = PBXBuildFile; fileRef = 63608B0B228C51E50062CD4C /* CTBadge.h */; };
+		63608B17228C51FB0062CD4C /* CTBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 63608B01228C51E40062CD4C /* CTBadge.m */; };
+		63608B18228C520F0062CD4C /* CTBadge_3.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 63608B0E228C51E50062CD4C /* CTBadge_3.pdf */; };
+		63608B19228C52110062CD4C /* CTBadge_1.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 63608B0F228C51E50062CD4C /* CTBadge_1.pdf */; };
+		63608B1A228C52130062CD4C /* CTBadge_4.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 63608B10228C51E50062CD4C /* CTBadge_4.pdf */; };
+		63608B1B228C52150062CD4C /* CTBadge_5.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 63608B11228C51E50062CD4C /* CTBadge_5.pdf */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
 		8D15AC2D0486D014006FF6A4 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B6FDCFA73011CA2CEA /* MainMenu.nib */; };
 		8D15AC2E0486D014006FF6A4 /* NormalMapprDoc.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B4FDCFA73011CA2CEA /* NormalMapprDoc.nib */; };
@@ -49,6 +50,16 @@
 		8D15AC320486D014006FF6A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		63608B14228C51E50062CD4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63608B07228C51E40062CD4C /* CTBadge.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D1107320486CEB800E47090;
+			remoteInfo = CTBadge;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
@@ -71,10 +82,6 @@
 		36A5864E0F8F6CBC00AC6E58 /* BatchControlsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BatchControlsView.m; sourceTree = "<group>"; };
 		36A5864F0F8F6CBC00AC6E58 /* BatchOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BatchOperation.h; sourceTree = "<group>"; };
 		36A586500F8F6CBC00AC6E58 /* BatchOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BatchOperation.m; sourceTree = "<group>"; };
-		36A586530F8F6D2D00AC6E58 /* CTBadge_1.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = CTBadge_1.pdf; path = assets/badges/CTBadge_1.pdf; sourceTree = "<group>"; };
-		36A586540F8F6D2D00AC6E58 /* CTBadge_3.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = CTBadge_3.pdf; path = assets/badges/CTBadge_3.pdf; sourceTree = "<group>"; };
-		36A586550F8F6D2D00AC6E58 /* CTBadge_4.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = CTBadge_4.pdf; path = assets/badges/CTBadge_4.pdf; sourceTree = "<group>"; };
-		36A586560F8F6D2D00AC6E58 /* CTBadge_5.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = CTBadge_5.pdf; path = assets/badges/CTBadge_5.pdf; sourceTree = "<group>"; };
 		36A5865C0F8F6E8900AC6E58 /* NSArray+reversedArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+reversedArray.h"; sourceTree = "<group>"; };
 		36A5865D0F8F6E8900AC6E58 /* NSArray+reversedArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+reversedArray.m"; sourceTree = "<group>"; };
 		36A5865E0F8F6E8900AC6E58 /* NSView+viewAtPointExcluding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+viewAtPointExcluding.h"; sourceTree = "<group>"; };
@@ -110,14 +117,25 @@
 		36F951070F644B130003C8EF /* TilingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TilingImageView.m; sourceTree = "<group>"; };
 		36F9516F0F64A0590003C8EF /* LoadCGImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadCGImage.h; sourceTree = "<group>"; };
 		36F951700F64A0590003C8EF /* LoadCGImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadCGImage.m; sourceTree = "<group>"; };
-		63608AE1228895630062CD4C /* CTBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTBadge.m; sourceTree = "<group>"; };
-		63608AE2228895630062CD4C /* CTBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTBadge.h; sourceTree = "<group>"; };
 		63608AE82288D0CF0062CD4C /* TemplateInDarkModeButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TemplateInDarkModeButton.h; sourceTree = "<group>"; };
 		63608AE92288D0CF0062CD4C /* TemplateInDarkModeButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TemplateInDarkModeButton.m; sourceTree = "<group>"; };
 		63608AEB2288D3F80062CD4C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		63608AF8228B068F0062CD4C /* VDKQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDKQueue.h; sourceTree = "<group>"; };
 		63608AF9228B068F0062CD4C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		63608AFA228B068F0062CD4C /* VDKQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VDKQueue.m; sourceTree = "<group>"; };
+		63608B01228C51E40062CD4C /* CTBadge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CTBadge.m; sourceTree = "<group>"; };
+		63608B03228C51E40062CD4C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		63608B04228C51E40062CD4C /* MainController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainController.m; sourceTree = "<group>"; };
+		63608B06228C51E40062CD4C /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/MainMenu.nib; sourceTree = "<group>"; };
+		63608B07228C51E40062CD4C /* CTBadge.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = CTBadge.xcodeproj; sourceTree = "<group>"; };
+		63608B0A228C51E50062CD4C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		63608B0B228C51E50062CD4C /* CTBadge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CTBadge.h; sourceTree = "<group>"; };
+		63608B0C228C51E50062CD4C /* MainController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainController.h; sourceTree = "<group>"; };
+		63608B0E228C51E50062CD4C /* CTBadge_3.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = CTBadge_3.pdf; sourceTree = "<group>"; };
+		63608B0F228C51E50062CD4C /* CTBadge_1.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = CTBadge_1.pdf; sourceTree = "<group>"; };
+		63608B10228C51E50062CD4C /* CTBadge_4.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = CTBadge_4.pdf; sourceTree = "<group>"; };
+		63608B11228C51E50062CD4C /* CTBadge_5.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = CTBadge_5.pdf; sourceTree = "<group>"; };
+		63608B12228C51E50062CD4C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63AAE608227BF61B00926382 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		63AAE609227BF61B00926382 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		63AAE60C227BF62100926382 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/MainMenu.nib; sourceTree = "<group>"; };
@@ -192,10 +210,6 @@
 		2A37F4B8FDCFA73011CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				36A586530F8F6D2D00AC6E58 /* CTBadge_1.pdf */,
-				36A586540F8F6D2D00AC6E58 /* CTBadge_3.pdf */,
-				36A586550F8F6D2D00AC6E58 /* CTBadge_4.pdf */,
-				36A586560F8F6D2D00AC6E58 /* CTBadge_5.pdf */,
 				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
 				2A37F4B6FDCFA73011CA2CEA /* MainMenu.nib */,
 				2A37F4B4FDCFA73011CA2CEA /* NormalMapprDoc.nib */,
@@ -298,19 +312,10 @@
 		63608ADB228895630062CD4C /* 3rd-party */ = {
 			isa = PBXGroup;
 			children = (
+				63608B00228C51E40062CD4C /* CTBadge */,
 				63608AF7228B068F0062CD4C /* VDKQueue */,
-				63608AE0228895630062CD4C /* CTBadge */,
 			);
 			path = "3rd-party";
-			sourceTree = "<group>";
-		};
-		63608AE0228895630062CD4C /* CTBadge */ = {
-			isa = PBXGroup;
-			children = (
-				63608AE1228895630062CD4C /* CTBadge.m */,
-				63608AE2228895630062CD4C /* CTBadge.h */,
-			);
-			path = CTBadge;
 			sourceTree = "<group>";
 		};
 		63608AF7228B068F0062CD4C /* VDKQueue */ = {
@@ -321,6 +326,42 @@
 				63608AFA228B068F0062CD4C /* VDKQueue.m */,
 			);
 			path = VDKQueue;
+			sourceTree = "<group>";
+		};
+		63608B00228C51E40062CD4C /* CTBadge */ = {
+			isa = PBXGroup;
+			children = (
+				63608B01228C51E40062CD4C /* CTBadge.m */,
+				63608B02228C51E40062CD4C /* InfoPlist.strings */,
+				63608B04228C51E40062CD4C /* MainController.m */,
+				63608B05228C51E40062CD4C /* MainMenu.nib */,
+				63608B07228C51E40062CD4C /* CTBadge.xcodeproj */,
+				63608B0A228C51E50062CD4C /* main.m */,
+				63608B0B228C51E50062CD4C /* CTBadge.h */,
+				63608B0C228C51E50062CD4C /* MainController.h */,
+				63608B0D228C51E50062CD4C /* badges */,
+				63608B12228C51E50062CD4C /* Info.plist */,
+			);
+			path = CTBadge;
+			sourceTree = "<group>";
+		};
+		63608B08228C51E40062CD4C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				63608B15228C51E50062CD4C /* CTBadge.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		63608B0D228C51E50062CD4C /* badges */ = {
+			isa = PBXGroup;
+			children = (
+				63608B0E228C51E50062CD4C /* CTBadge_3.pdf */,
+				63608B0F228C51E50062CD4C /* CTBadge_1.pdf */,
+				63608B10228C51E50062CD4C /* CTBadge_4.pdf */,
+				63608B11228C51E50062CD4C /* CTBadge_5.pdf */,
+			);
+			path = badges;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -362,12 +403,28 @@
 			);
 			mainGroup = 2A37F4AAFDCFA73011CA2CEA /* NormalMappr */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 63608B08228C51E40062CD4C /* Products */;
+					ProjectRef = 63608B07228C51E40062CD4C /* CTBadge.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8D15AC270486D014006FF6A4 /* NormalMappr */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		63608B15228C51E50062CD4C /* CTBadge.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = CTBadge.app;
+			remoteRef = 63608B14228C51E50062CD4C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		8D15AC2B0486D014006FF6A4 /* Resources */ = {
@@ -380,13 +437,13 @@
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
 				63608AFB228B068F0062CD4C /* README.md in Resources */,
 				63608AEC2288D3F80062CD4C /* Images.xcassets in Resources */,
+				63608B19228C52110062CD4C /* CTBadge_1.pdf in Resources */,
+				63608B18228C520F0062CD4C /* CTBadge_3.pdf in Resources */,
+				63608B1A228C52130062CD4C /* CTBadge_4.pdf in Resources */,
+				63608B1B228C52150062CD4C /* CTBadge_5.pdf in Resources */,
 				3617E6560C32AED900276C8A /* NormalMappr.icns in Resources */,
 				36F94F8D0F60957E0003C8EF /* NormalMap.cikernel in Resources */,
 				36A586420F8F6BCF00AC6E58 /* BatchWindow.xib in Resources */,
-				36A586570F8F6D2D00AC6E58 /* CTBadge_1.pdf in Resources */,
-				36A586580F8F6D2D00AC6E58 /* CTBadge_3.pdf in Resources */,
-				36A586590F8F6D2D00AC6E58 /* CTBadge_4.pdf in Resources */,
-				36A5865A0F8F6D2D00AC6E58 /* CTBadge_5.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -397,6 +454,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63608B16228C51F70062CD4C /* CTBadge.h in Sources */,
+				63608B17228C51FB0062CD4C /* CTBadge.m in Sources */,
 				8D15AC320486D014006FF6A4 /* main.m in Sources */,
 				3617DFDC0C312FDF00276C8A /* NormalMapprDoc.m in Sources */,
 				63608AEA2288D0CF0062CD4C /* TemplateInDarkModeButton.m in Sources */,
@@ -405,7 +464,6 @@
 				36F94F8C0F60957E0003C8EF /* CINormalMapper.m in Sources */,
 				36F94F8E0F60957E0003C8EF /* NormalMapFilter.m in Sources */,
 				36F951080F644B130003C8EF /* TilingImageView.m in Sources */,
-				63608AE5228895630062CD4C /* CTBadge.m in Sources */,
 				36F951710F64A0590003C8EF /* LoadCGImage.m in Sources */,
 				36A586140F8F68DE00AC6E58 /* DebugLog.m in Sources */,
 				36A586510F8F6CBC00AC6E58 /* BatchControlsView.m in Sources */,
@@ -459,6 +517,22 @@
 				63AAE608227BF61B00926382 /* en */,
 			);
 			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		63608B02228C51E40062CD4C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				63608B03228C51E40062CD4C /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		63608B05228C51E40062CD4C /* MainMenu.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				63608B06228C51E40062CD4C /* Base */,
+			);
+			name = MainMenu.nib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

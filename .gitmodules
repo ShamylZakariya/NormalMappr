@@ -1,3 +1,6 @@
 [submodule "3rd-party/VDKQueue"]
 	path = 3rd-party/VDKQueue
 	url = https://github.com/sebikeller/VDKQueue
+[submodule "3rd-party/CTBadge"]
+	path = 3rd-party/CTBadge
+	url = https://github.com/ShamylZakariya/CTBadge
