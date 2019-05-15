@@ -171,7 +171,7 @@
 	// And draw
 	//
 
-	[ciContext drawImage: filter.outputImage atPoint:CGPointMake(0,0) fromRect: CGRectMake(0,0,self.size.width,self.size.height)];
+    [ciContext drawImage:filter.outputImage inRect:CGRectMake(0, 0, self.size.width, self.size.height) fromRect:CGRectMake(0,0,self.size.width,self.size.height)];
 }
 
 - (void) prepareBuffers
