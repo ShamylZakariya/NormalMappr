@@ -13,12 +13,10 @@
 		3617E87D0C332D9700276C8A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3617E87C0C332D9700276C8A /* AppDelegate.m */; };
 		36A586140F8F68DE00AC6E58 /* DebugLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A586130F8F68DE00AC6E58 /* DebugLog.m */; };
 		36A586420F8F6BCF00AC6E58 /* BatchWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36A586410F8F6BCF00AC6E58 /* BatchWindow.xib */; };
-		36A586510F8F6CBC00AC6E58 /* BatchControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A5864E0F8F6CBC00AC6E58 /* BatchControlsView.m */; };
 		36A586520F8F6CBC00AC6E58 /* BatchOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A586500F8F6CBC00AC6E58 /* BatchOperation.m */; };
 		36A586600F8F6E8900AC6E58 /* NSArray+reversedArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A5865D0F8F6E8900AC6E58 /* NSArray+reversedArray.m */; };
 		36A586610F8F6E8900AC6E58 /* NSView+viewAtPointExcluding.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A5865F0F8F6E8900AC6E58 /* NSView+viewAtPointExcluding.m */; };
 		36A586760F8F6EA500AC6E58 /* BatchEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A586670F8F6EA500AC6E58 /* BatchEntry.m */; };
-		36A586770F8F6EA500AC6E58 /* BatchItemLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A586690F8F6EA500AC6E58 /* BatchItemLabel.m */; };
 		36A586780F8F6EA500AC6E58 /* BatchItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A5866B0F8F6EA500AC6E58 /* BatchItemView.m */; };
 		36A586790F8F6EA500AC6E58 /* BatchLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A5866D0F8F6EA500AC6E58 /* BatchLabel.m */; };
 		36A5867A0F8F6EA500AC6E58 /* BatchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A5866F0F8F6EA500AC6E58 /* BatchView.m */; };
@@ -34,7 +32,7 @@
 		36F951080F644B130003C8EF /* TilingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F951070F644B130003C8EF /* TilingImageView.m */; };
 		36F951710F64A0590003C8EF /* LoadCGImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F951700F64A0590003C8EF /* LoadCGImage.m */; };
 		63608AEA2288D0CF0062CD4C /* TemplateInDarkModeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 63608AE92288D0CF0062CD4C /* TemplateInDarkModeButton.m */; };
-		63608AEC2288D3F80062CD4C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63608AEB2288D3F80062CD4C /* Images.xcassets */; };
+		63608AEC2288D3F80062CD4C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63608AEB2288D3F80062CD4C /* Media.xcassets */; };
 		63608AFB228B068F0062CD4C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 63608AF9228B068F0062CD4C /* README.md */; };
 		63608AFC228B068F0062CD4C /* VDKQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 63608AFA228B068F0062CD4C /* VDKQueue.m */; };
 		63608B16228C51F70062CD4C /* CTBadge.h in Sources */ = {isa = PBXBuildFile; fileRef = 63608B0B228C51E50062CD4C /* CTBadge.h */; };
@@ -78,8 +76,6 @@
 		36A586120F8F68DE00AC6E58 /* DebugLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugLog.h; sourceTree = "<group>"; };
 		36A586130F8F68DE00AC6E58 /* DebugLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugLog.m; sourceTree = "<group>"; };
 		36A586410F8F6BCF00AC6E58 /* BatchWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BatchWindow.xib; sourceTree = "<group>"; };
-		36A5864D0F8F6CBC00AC6E58 /* BatchControlsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BatchControlsView.h; sourceTree = "<group>"; };
-		36A5864E0F8F6CBC00AC6E58 /* BatchControlsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BatchControlsView.m; sourceTree = "<group>"; };
 		36A5864F0F8F6CBC00AC6E58 /* BatchOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BatchOperation.h; sourceTree = "<group>"; };
 		36A586500F8F6CBC00AC6E58 /* BatchOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BatchOperation.m; sourceTree = "<group>"; };
 		36A5865C0F8F6E8900AC6E58 /* NSArray+reversedArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+reversedArray.h"; sourceTree = "<group>"; };
@@ -88,8 +84,6 @@
 		36A5865F0F8F6E8900AC6E58 /* NSView+viewAtPointExcluding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+viewAtPointExcluding.m"; sourceTree = "<group>"; };
 		36A586660F8F6EA500AC6E58 /* BatchEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BatchEntry.h; sourceTree = "<group>"; };
 		36A586670F8F6EA500AC6E58 /* BatchEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BatchEntry.m; sourceTree = "<group>"; };
-		36A586680F8F6EA500AC6E58 /* BatchItemLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BatchItemLabel.h; sourceTree = "<group>"; };
-		36A586690F8F6EA500AC6E58 /* BatchItemLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BatchItemLabel.m; sourceTree = "<group>"; };
 		36A5866A0F8F6EA500AC6E58 /* BatchItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BatchItemView.h; sourceTree = "<group>"; };
 		36A5866B0F8F6EA500AC6E58 /* BatchItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BatchItemView.m; sourceTree = "<group>"; };
 		36A5866C0F8F6EA500AC6E58 /* BatchLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BatchLabel.h; sourceTree = "<group>"; };
@@ -119,7 +113,7 @@
 		36F951700F64A0590003C8EF /* LoadCGImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadCGImage.m; sourceTree = "<group>"; };
 		63608AE82288D0CF0062CD4C /* TemplateInDarkModeButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TemplateInDarkModeButton.h; sourceTree = "<group>"; };
 		63608AE92288D0CF0062CD4C /* TemplateInDarkModeButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TemplateInDarkModeButton.m; sourceTree = "<group>"; };
-		63608AEB2288D3F80062CD4C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		63608AEB2288D3F80062CD4C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		63608AF8228B068F0062CD4C /* VDKQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDKQueue.h; sourceTree = "<group>"; };
 		63608AF9228B068F0062CD4C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		63608AFA228B068F0062CD4C /* VDKQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VDKQueue.m; sourceTree = "<group>"; };
@@ -216,7 +210,7 @@
 				8D15AC360486D014006FF6A4 /* Info.plist */,
 				089C165FFE840EACC02AAC07 /* InfoPlist.strings */,
 				36A586410F8F6BCF00AC6E58 /* BatchWindow.xib */,
-				63608AEB2288D3F80062CD4C /* Images.xcassets */,
+				63608AEB2288D3F80062CD4C /* Media.xcassets */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -271,12 +265,8 @@
 			children = (
 				36A5867E0F8F6EE600AC6E58 /* BatchController.h */,
 				36A5867F0F8F6EE600AC6E58 /* BatchController.m */,
-				36A5864D0F8F6CBC00AC6E58 /* BatchControlsView.h */,
-				36A5864E0F8F6CBC00AC6E58 /* BatchControlsView.m */,
 				36A586660F8F6EA500AC6E58 /* BatchEntry.h */,
 				36A586670F8F6EA500AC6E58 /* BatchEntry.m */,
-				36A586680F8F6EA500AC6E58 /* BatchItemLabel.h */,
-				36A586690F8F6EA500AC6E58 /* BatchItemLabel.m */,
 				36A5866A0F8F6EA500AC6E58 /* BatchItemView.h */,
 				36A5866B0F8F6EA500AC6E58 /* BatchItemView.m */,
 				36A5866C0F8F6EA500AC6E58 /* BatchLabel.h */,
@@ -436,7 +426,7 @@
 				8D15AC2E0486D014006FF6A4 /* NormalMapprDoc.nib in Resources */,
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
 				63608AFB228B068F0062CD4C /* README.md in Resources */,
-				63608AEC2288D3F80062CD4C /* Images.xcassets in Resources */,
+				63608AEC2288D3F80062CD4C /* Media.xcassets in Resources */,
 				63608B19228C52110062CD4C /* CTBadge_1.pdf in Resources */,
 				63608B18228C520F0062CD4C /* CTBadge_3.pdf in Resources */,
 				63608B1A228C52130062CD4C /* CTBadge_4.pdf in Resources */,
@@ -466,13 +456,11 @@
 				36F951080F644B130003C8EF /* TilingImageView.m in Sources */,
 				36F951710F64A0590003C8EF /* LoadCGImage.m in Sources */,
 				36A586140F8F68DE00AC6E58 /* DebugLog.m in Sources */,
-				36A586510F8F6CBC00AC6E58 /* BatchControlsView.m in Sources */,
 				36A586520F8F6CBC00AC6E58 /* BatchOperation.m in Sources */,
 				36A586600F8F6E8900AC6E58 /* NSArray+reversedArray.m in Sources */,
 				36A586610F8F6E8900AC6E58 /* NSView+viewAtPointExcluding.m in Sources */,
 				63608AFC228B068F0062CD4C /* VDKQueue.m in Sources */,
 				36A586760F8F6EA500AC6E58 /* BatchEntry.m in Sources */,
-				36A586770F8F6EA500AC6E58 /* BatchItemLabel.m in Sources */,
 				36A586780F8F6EA500AC6E58 /* BatchItemView.m in Sources */,
 				36A586790F8F6EA500AC6E58 /* BatchLabel.m in Sources */,
 				36A5867A0F8F6EA500AC6E58 /* BatchView.m in Sources */,
@@ -582,7 +570,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -597,7 +585,7 @@
 				GCC_PREFIX_HEADER = NormalMappr_Prefix.pch;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				SDKROOT = macosx;
 			};
 			name = Release;

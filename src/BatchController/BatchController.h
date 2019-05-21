@@ -43,7 +43,7 @@
 
 @property (readwrite,retain) BatchSettings* batchSettings;
 @property (readwrite) BOOL showWindow;
-@property (readwrite) CGFloat iconSize;
+@property (nonatomic, readwrite) CGFloat iconSize;
 @property (readwrite,retain) NSMutableArray* bumpmaps;
 @property (readwrite,retain) NSMutableArray* nonBumpmaps;
 @property (readonly) NSArrayController *bumpmapsArrayController;
@@ -57,8 +57,8 @@
 @property (readwrite) CGFloat sheetProcessProgress;
 @property (readwrite,retain) NSString* sheetMessage;
 
-@property (readwrite) BOOL showDropMessage;
-@property (readwrite) BOOL nonBumpmapPaneVisible;
+@property (readwrite, nonatomic) BOOL showDropMessage;
+@property (readwrite, nonatomic) BOOL nonBumpmapPaneVisible;
 
 - (NSInteger) bumpmapCount;
 - (NSInteger) nonBumpmapCount;

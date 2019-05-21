@@ -15,8 +15,8 @@
 {
 	if ( self = [super init] )
 	{
-		self.syncOutputDimensions = NO;
-		self.resizeOutput = NO;
+        self.resizeWidth = NO;
+        self.resizeHeight = NO;
 		self.saveQuality = 1;
 		self.strength = 0.5;
 		self.outputWidth = 512;
@@ -38,8 +38,8 @@
 #define kPrefOutputWidth			@"OutputWidth"
 #define kPrefOutputHeight			@"OutputHeight"
 #define kPrefSampleRadius			@"SampleRadius"
-#define kPrefSyncOutputDimensions	@"SyncDimensions"
-#define kPrefResizeOutput			@"ResizeOutput"
+#define kPrefResizeWidth			@"ResizeWidth"
+#define kPrefResizeHeight           @"ResizeHeight"
 #define kPrefNameDecoration			@"NameDecoration"
 #define kPrefNameDecorationStyle	@"NameDecorationStyle"
 #define kPrefSaveQuality			@"SaveQuality"
@@ -55,52 +55,52 @@
 	{
 		id value = nil;
 		
-		if ( value = [settings valueForKey: kPrefStrength] )
+		if ((value = [settings valueForKey: kPrefStrength]))
 		{
-			self.strength = [value floatValue];
+			self.strength = [value intValue];
 		}
 
-		if ( value = [settings valueForKey: kPrefOutputWidth] )
+		if ((value = [settings valueForKey: kPrefOutputWidth]))
 		{
 			self.outputWidth = [value intValue];
 		}
 
-		if ( value = [settings valueForKey: kPrefOutputHeight] )
+		if ((value = [settings valueForKey: kPrefOutputHeight]))
 		{
 			self.outputHeight = [value intValue];
 		}
 
-		if ( value = [settings valueForKey: kPrefSampleRadius] )
+		if ((value = [settings valueForKey: kPrefSampleRadius]))
 		{
 			self.sampleRadius = [value intValue];
 		}
 
-		if ( value = [settings valueForKey: kPrefSyncOutputDimensions] )
+		if ((value = [settings valueForKey: kPrefResizeWidth]))
 		{
-			self.syncOutputDimensions = [value boolValue];
+			self.resizeWidth = [value boolValue];
 		}
-
-		if ( value = [settings valueForKey: kPrefResizeOutput] )
-		{
-			self.resizeOutput = [value boolValue];
-		}
+        
+        if ((value = [settings valueForKey: kPrefResizeHeight]))
+        {
+            self.resizeHeight = [value boolValue];
+        }
 	
-		if ( value = [settings valueForKey: kPrefNameDecoration] )
+		if ((value = [settings valueForKey: kPrefNameDecoration]))
 		{
 			self.nameDecoration = value;
 		}
 
-		if ( value = [settings valueForKey: kPrefNameDecorationStyle] )
+		if ((value = [settings valueForKey: kPrefNameDecorationStyle]))
 		{
 			self.nameDecorationStyle = [value intValue];
 		}
 
-		if ( value = [settings valueForKey: kPrefSaveFormat] )
+		if ((value = [settings valueForKey: kPrefSaveFormat]))
 		{
 			self.saveFormat = [value intValue];
 		}
 
-		if ( value = [settings valueForKey: kPrefSaveQuality] )
+		if ((value = [settings valueForKey: kPrefSaveQuality]))
 		{
 			self.saveQuality = [value floatValue];
 		}
@@ -110,12 +110,12 @@
 - (void) savePrefs
 {
 	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
-	[settings setObject: [NSNumber numberWithFloat: self.strength] forKey: kPrefStrength];
+	[settings setObject: [NSNumber numberWithInt: self.strength] forKey: kPrefStrength];
 	[settings setObject: [NSNumber numberWithInt: self.outputWidth] forKey: kPrefOutputWidth];
 	[settings setObject: [NSNumber numberWithInt: self.outputHeight] forKey: kPrefOutputHeight];
 	[settings setObject: [NSNumber numberWithInt: self.sampleRadius] forKey: kPrefSampleRadius];
-	[settings setObject: [NSNumber numberWithBool: self.syncOutputDimensions] forKey: kPrefSyncOutputDimensions];
-	[settings setObject: [NSNumber numberWithBool: self.resizeOutput] forKey: kPrefResizeOutput];
+	[settings setObject: [NSNumber numberWithBool: self.resizeWidth] forKey: kPrefResizeWidth];
+    [settings setObject: [NSNumber numberWithBool: self.resizeHeight] forKey: kPrefResizeHeight];
 
 	[settings setObject: self.nameDecoration forKey: kPrefNameDecoration];
 	[settings setObject: [NSNumber numberWithInt: self.nameDecorationStyle] forKey: kPrefNameDecorationStyle];
@@ -128,9 +128,9 @@
 
 #pragma mark -
 
-@synthesize syncOutputDimensions;
+@synthesize resizeWidth;
+@synthesize resizeHeight;
 @synthesize showSaveQualityControls;
-@synthesize resizeOutput;
 @synthesize saveQuality;
 @synthesize strength;
 @synthesize outputWidth;
@@ -142,47 +142,14 @@
 
 #pragma mark -
 
-- (void) setOutputWidth: (int) newWidth
-{
-	if ( newWidth != outputWidth )
-	{
-		outputWidth = newWidth;
-		if ( syncOutputDimensions )
-		{
-			self.outputHeight = newWidth;
-		}
-	}
-}
-
-- (void) setOutputHeight: (int) newHeight
-{
-	if ( newHeight != outputHeight )
-	{
-		outputHeight = newHeight;
-		if ( syncOutputDimensions )
-		{
-			self.outputWidth = newHeight;
-		}
-	}
-}
-
-- (void) setSyncOutputDimensions: (BOOL) sync
-{
-	syncOutputDimensions = sync;
-	if ( sync )
-	{
-		self.outputHeight = self.outputWidth;
-	}
-}
-
 -(void) setSaveQuality: (CGFloat) newSaveQuality
 {
 	saveQuality = MIN(MAX(newSaveQuality,0),1);
 }
 
-- (void) setStrength: (CGFloat) newStrength
+- (void) setStrength: (int) newStrength
 {
-	strength = MIN(MAX(newStrength,0),1);
+	strength = MIN(MAX(newStrength,0),100);
 }
 
 - (void) setSaveFormat: (int) newSaveFormat

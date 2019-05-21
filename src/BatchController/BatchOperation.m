@@ -64,14 +64,25 @@
 {
 	CINormalMapper *nm = [[CINormalMapper alloc] init];
 	nm.bumpmap = entry.imageBitmap;
-	nm.strength = settings.strength;
+	nm.strength = settings.strength / 100.0;
 	nm.sampleRadius = settings.sampleRadius;
 	
-	if ( settings.resizeOutput )
-	{
-		nm.size = CGSizeMake( settings.outputWidth, settings.outputHeight );
-	}	
-	
+    nm.size = entry.imageBitmap.size;
+    if (settings.resizeHeight && settings.resizeHeight)
+    {
+        nm.size = CGSizeMake(settings.outputWidth, settings.outputHeight);
+    }
+    else if (settings.resizeWidth)
+    {
+        // compute height maintaining aspect ratio
+        nm.size = CGSizeMake(settings.outputWidth, nm.size.height * (settings.outputWidth / nm.size.width));
+    }
+    else if (settings.resizeHeight)
+    {
+        // compute width maintaining aspect ratio
+        nm.size = CGSizeMake(nm.size.width * (settings.outputHeight / nm.size.height), settings.outputHeight);
+    }
+    
 	NSBitmapImageRep *normalmap = nm.normalmap;
 
 	if ( normalmap )

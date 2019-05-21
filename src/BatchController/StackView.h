@@ -45,8 +45,6 @@
 	BOOL	layingOut;
 }
 
-@property (readwrite,retain) NSColor* backgroundColor; 
-
 - (void) setViewCollapse: (NSDictionary*) viewCollapse animate: (BOOL) animate;
 - (NSDictionary*) viewCollapse;
 

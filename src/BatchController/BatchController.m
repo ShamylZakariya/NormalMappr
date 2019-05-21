@@ -53,7 +53,7 @@
 		nonBumpmaps = [[NSMutableArray alloc] init];
 		allowUIAnimations = NO;
 
-		[NSBundle loadNibNamed: @"BatchWindow" owner:self];
+        [[NSBundle mainBundle] loadNibNamed:@"BatchWindow" owner:self topLevelObjects:nil];        
 	}
 	
 	return self;
@@ -64,24 +64,28 @@
 	self.showDropMessage = YES;
 	self.iconSize = 128;
 	
-	NSColor *backgroundColor = [NSColor grayColor];
-	
 	bumpmapCollectionView.delegate = self;
 	bumpmapCollectionView.dropAction = @selector( makeBumpmap: );
 	bumpmapCollectionView.dropFilesAction = @selector( addFiles: );
 	bumpmapCollectionView.deleteAction = @selector( remove: );
 	bumpmapCollectionView.message = @"Drop files & folders here";
-	bumpmapCollectionView.backgroundColors = [NSArray arrayWithObject: backgroundColor];
+    if (@available(macOS 10.13, *)) {
+        bumpmapCollectionView.backgroundColors = @[[NSColor colorNamed:@"BatchViewBackground"]];
+    } else {
+        bumpmapCollectionView.backgroundColors = @[[NSColor colorWithDeviceWhite:0.9 alpha:1]];
+    }
 	bumpmapCollectionViewLabel.label = @"Bumpmaps";
 
 	nonBumpmapCollectionView.delegate = self;
 	nonBumpmapCollectionView.dropAction = @selector( makeNonBumpmap: );
 	nonBumpmapCollectionView.deleteAction = @selector( remove: );
-	nonBumpmapCollectionView.backgroundColors = bumpmapCollectionView.backgroundColors;
+    if (@available(macOS 10.13, *)) {
+        nonBumpmapCollectionView.backgroundColors = @[[NSColor colorNamed:@"BatchViewBackground"]];
+    } else {
+        nonBumpmapCollectionView.backgroundColors = @[[NSColor colorWithDeviceWhite:0.9 alpha:1]];
+    }
 	nonBumpmapCollectionViewLabel.label = @"These files may not be bumpmaps";
-	
-	collectionStack.backgroundColor = backgroundColor;
-		
+			
 	[self bind: @"nonBumpmapPaneVisible" toObject: nonBumpmapCollectionViewLabel withKeyPath: @"open" options: nil];
 	[bumpmapCollectionView bind: @"showMessage" toObject: self withKeyPath: @"showDropMessage" options:nil];
 

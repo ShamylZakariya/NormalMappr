@@ -72,12 +72,12 @@ NSString *kBatchViewDefaultDragType	= @"kBatchViewDefaultDragType";
 		highlightRect = [self convertRect:cvb fromView:contentView];		
 	}
 
-	if ( !innerShadowGradient )
-	{
-		innerShadowGradient = [[NSGradient alloc] 
-			initWithStartingColor:[NSColor colorWithDeviceWhite:0 alpha:0.25] 
-			endingColor: [NSColor colorWithDeviceWhite:0 alpha:0]];
-	}
+//    if ( !innerShadowGradient )
+//    {
+//        innerShadowGradient = [[NSGradient alloc]
+//            initWithStartingColor:[NSColor colorWithDeviceWhite:0 alpha:0.25]
+//            endingColor: [NSColor colorWithDeviceWhite:0 alpha:0]];
+//    }
 
 	//
 	// Draw focus ring
@@ -89,14 +89,14 @@ NSString *kBatchViewDefaultDragType	= @"kBatchViewDefaultDragType";
         NSFrameRectWithWidthUsingOperation( highlightRect, 3, NSCompositingOperationSourceOver );
 	}
 
-	//
-	// Draw inner shadow
-	//
-
-	CGFloat innerShadowHeight = self.showMessage ? 16 : 4;
-	[innerShadowGradient 
-		drawInRect:NSMakeRect( highlightRect.origin.x, highlightRect.origin.y, highlightRect.size.width, innerShadowHeight ) 
-		angle:90];
+//    //
+//    // Draw inner shadow
+//    //
+//
+//    CGFloat innerShadowHeight = self.showMessage ? 16 : 4;
+//    [innerShadowGradient 
+//        drawInRect:NSMakeRect( highlightRect.origin.x, highlightRect.origin.y, highlightRect.size.width, innerShadowHeight ) 
+//        angle:90];
 
 	//
 	// Draw drop-highlight ring
@@ -487,7 +487,7 @@ NSString *kBatchViewDefaultDragType	= @"kBatchViewDefaultDragType";
 		[sourceImage 
 			drawInRect:NSMakeRect(0,0,thumbSize.width,thumbSize.height) 
 			fromRect:NSMakeRect(0,0,sourceImage.size.width, sourceImage.size.height) 
-			operation:NSCompositeSourceOver 
+         operation:NSCompositingOperationSourceOver
 			fraction:0.5];
 
 		if ( badge )
@@ -498,7 +498,7 @@ NSString *kBatchViewDefaultDragType	= @"kBatchViewDefaultDragType";
 			[badge 
 				drawAtPoint: NSMakePoint( thumbSize.width - pad - badgeSize.width, pad )
 				fromRect: NSMakeRect( 0,0,badgeSize.width,badgeSize.height) 
-				operation:NSCompositeSourceOver 
+             operation:NSCompositingOperationSourceOver
 				fraction:1];
 		}
 

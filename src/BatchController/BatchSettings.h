@@ -10,33 +10,25 @@
 
 typedef enum _NMNameDecoration
 {
-	NMNameDecorationPrepend = 0,
-	NMNameDecorationAppend = 1
+    NMNameDecorationPrepend = 0,
+    NMNameDecorationAppend = 1
 } NMNameDecoration;
 
 
 @interface BatchSettings : NSObject {
-
-	BOOL syncOutputDimensions, resizeOutput, showSaveQualityControls;
-
-	CGFloat saveQuality, strength;
-
-	int outputWidth, outputHeight, 
-	    sampleRadius, saveFormat;
-
-	NSString *nameDecoration;
-
-
-	NMNameDecoration nameDecorationStyle;
+    
+    CGFloat saveQuality;
+    int sampleRadius, saveFormat, strength;
+    NMNameDecoration nameDecorationStyle;
 }
 
 - (void) loadPrefs;
 - (void) savePrefs;
 
-@property (nonatomic, readwrite) BOOL syncOutputDimensions;
-@property (nonatomic, readwrite) BOOL resizeOutput;
 @property (nonatomic, readwrite) CGFloat saveQuality;
-@property (nonatomic, readwrite) CGFloat strength;
+@property (nonatomic, readwrite) int strength; // [0,100]
+@property (nonatomic, readwrite) BOOL resizeWidth;
+@property (nonatomic, readwrite) BOOL resizeHeight;
 @property (nonatomic, readwrite) int outputWidth;
 @property (nonatomic, readwrite) int outputHeight;
 @property (nonatomic, readwrite) int sampleRadius;

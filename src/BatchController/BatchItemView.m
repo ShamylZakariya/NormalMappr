@@ -19,46 +19,52 @@
 
 - (id) initWithCoder: (NSCoder*) decoder
 {
-	if ( self = [super initWithCoder: decoder] )
-	{
-	}
-	
-	return self;
+    if ( self = [super initWithCoder: decoder] )
+    {
+    }
+    
+    return self;
 }
 
 - (id)initWithFrame:(NSRect)frame {
-    if (self = [super initWithFrame:frame]) 
-	{
-
+    if (self = [super initWithFrame:frame])
+    {
+        
     }
     return self;
 }
 
 - (void)drawRect:(NSRect)rect 
 {
-	if ( !self.isTransparent )
-	{
-		NSBezierPath *b = [NSBezierPath bezierPathWithRoundedRect:NSInsetRect( self.bounds, 5,5 ) xRadius:6 yRadius:6];
-		[[NSColor colorWithDeviceWhite:1 alpha:0.3] set];
-		[b fill]; 
-		
-	}
+    if ( !self.isTransparent )
+    {
+        if (@available(macOS 10.14, *))
+        {
+            [[NSColor selectedContentBackgroundColor] set];
+        }
+        else
+        {
+            [[NSColor alternateSelectedControlColor] set];
+        }
+        
+        [[NSBezierPath bezierPathWithRoundedRect:NSInsetRect( self.bounds, 5,5 ) xRadius:6 yRadius:6] fill];
+    }
 }
 
 - (BOOL)acceptsFirstResponder
 {
-	return NO;
+    return NO;
 }
 
 - (NSView *)hitTest:(NSPoint)aPoint
 {
-	for ( NSView *sv in self.subviews )
-	{
-		NSView *tv = [self hitTest: aPoint forView: sv];
-		if ( tv ) return tv;
-	}
-
-	return nil;
+    for ( NSView *sv in self.subviews )
+    {
+        NSView *tv = [self hitTest: aPoint forView: sv];
+        if ( tv ) return tv;
+    }
+    
+    return nil;
 }
 
 #pragma mark -
@@ -66,12 +72,12 @@
 
 - (NSView*) hitTest: (NSPoint) point forView: (NSView*) view
 {
-	if(NSPointInRect(point,[view convertRect:[view bounds] toView:[view superview]])) 
-	{
-		return view;
-	} 
-
-	return nil;    
+    if(NSPointInRect(point,[view convertRect:[view bounds] toView:[view superview]]))
+    {
+        return view;
+    }
+    
+    return nil;
 }
 
 

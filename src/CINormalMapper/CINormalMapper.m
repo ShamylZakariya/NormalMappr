@@ -96,7 +96,7 @@
 
 - (void) setStrength: (float) newStrength
 {
-	filter.strength = newStrength;
+	filter.strength = MIN(MAX(newStrength, 0), 1);
 	dirty = YES;
 }
 

@@ -71,8 +71,6 @@
 
 @implementation StackView
 
-@synthesize backgroundColor;
-
 - (id)initWithCoder: (NSCoder*) decoder
 {
 	if ( self = [super initWithCoder:decoder] )
@@ -84,7 +82,6 @@
 			name: NSViewFrameDidChangeNotification 
 			object: nil ];	
 			
-		self.backgroundColor = [NSColor clearColor];
 		[self setAutoresizesSubviews:NO];
 	}
 
@@ -102,7 +99,6 @@
 			name: NSViewFrameDidChangeNotification 
 			object: nil ];	
 
-		self.backgroundColor = [NSColor clearColor];
 		[self setAutoresizesSubviews:NO];
     }
 
@@ -113,15 +109,6 @@
 {
 	[self setAutoresizesSubviews:NO];
 	[self layout];
-}
-
-- (void) setBackgroundColor: (NSColor*) nc
-{
-	if ( nc != backgroundColor )
-	{
-		backgroundColor = nc;
-		[self setNeedsDisplay:YES];
-	}
 }
 
 - (void) setViewCollapse: (NSDictionary*) newViewCollapse animate: (BOOL) animate;
@@ -163,12 +150,6 @@
 - (void)willRemoveSubview:(NSView *)subview
 {
 	[self performSelector:@selector(frameSizeChanged:) withObject:nil afterDelay:0.0];
-}
-
-- (void) drawRect: (NSRect) rect
-{
-	[backgroundColor set];
-	NSRectFill( rect );
 }
 
 - (void)resizeSubviewsWithOldSize:(NSSize)oldBoundsSize

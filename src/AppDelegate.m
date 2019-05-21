@@ -26,7 +26,7 @@
 	if ((value = [defaults valueForKey: kPrefBatchWindowShowing]))
 	{
 		self.batchWindowShowing = [value boolValue];
-	}	
+	}
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification

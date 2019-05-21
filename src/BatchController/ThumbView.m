@@ -36,7 +36,7 @@
 		shadow = [[NSShadow alloc] init];
 		shadow.shadowBlurRadius = 5;
 		shadow.shadowOffset = NSMakeSize( 0,-2 );
-		shadow.shadowColor = [NSColor colorWithDeviceWhite:0.25 alpha:1];
+		shadow.shadowColor = [NSColor colorWithDeviceWhite:0 alpha:0.5];
 	}
 
 
