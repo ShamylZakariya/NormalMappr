@@ -136,8 +136,12 @@
 
 - (void)drawRect:(NSRect)rect
 {
-	[[NSColor colorWithDeviceWhite: 0.75 alpha: 1] set];
-	NSRectFill( [self bounds] );
+    if (@available(macOS 10.13, *)) {
+        [[NSColor colorNamed:@"BatchViewBackground"] set];
+    } else {
+        [[NSColor colorWithDeviceWhite:0.9 alpha:1] set];
+    }
+    NSRectFill( [self bounds] );
 	
     float scale = self.hiDPI ? (1.0f / [[self window] screen].backingScaleFactor) : 1.0f;
 	NSSize imageSize = [image size];
