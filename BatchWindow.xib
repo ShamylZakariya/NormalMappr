@@ -26,7 +26,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="784" height="570"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <customView id="57">
+                    <customView id="57" customClass="NSVisualEffectView">
                         <rect key="frame" x="0.0" y="0.0" width="784" height="144"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
