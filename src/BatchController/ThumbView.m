@@ -75,7 +75,7 @@
 	
 	[context restoreGraphicsState];
 
-	[self.image drawInRect:imageRect fromRect:NSMakeRect(0,0,self.image.size.width,self.image.size.height) operation:NSCompositeSourceOver fraction:1];
+	[self.image drawInRect:imageRect fromRect:NSMakeRect(0,0,self.image.size.width,self.image.size.height) operation:NSCompositingOperationSourceOver fraction:1];
 }
 
 - (BOOL) isOpaque

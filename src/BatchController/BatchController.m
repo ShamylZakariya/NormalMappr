@@ -136,9 +136,12 @@
     //
     // Image analysis is expensive, so we'll spawn a thread
     //
-
-#warning Use GCD
-    [NSThread detachNewThreadSelector: @selector( loadDroppedFiles: ) toTarget: self withObject: fileURLs];
+    
+    WEAK_SELF;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        STRONG_SELF;
+        [strongSelf loadDroppedFiles:fileURLs];
+    });
 }
 
 - (void) removeFiles:(NSArray<NSURL *> *)fileURLs
@@ -172,7 +175,11 @@
     // Image analysis is expensive, so we'll spawn a thread
     //
     
-    [NSThread detachNewThreadSelector: @selector( normalmapFiles: ) toTarget: self withObject: bumpmaps];
+    WEAK_SELF;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        STRONG_SELF;
+        [strongSelf normalmapFiles:bumpmaps];
+    });
 }
 
 #pragma mark - File analysis
@@ -236,6 +243,8 @@
 
 - (void) loadDroppedFiles: (NSArray<NSURL*>*) fileURLs
 {
+    WEAK_SELF;
+    
     //
     // gather image files we recognize
     //
@@ -247,9 +256,13 @@
     // now we know how many we need to examine
     //
     
-    self.sheetProcessStepTotal = fileURLs.count;
-    self.sheetProcessStep = 0;
-    self.sheetProcessIndeterminate = NO;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        STRONG_SELF;
+        
+        strongSelf.sheetProcessStepTotal = fileURLs.count;
+        strongSelf.sheetProcessStep = 0;
+        strongSelf.sheetProcessIndeterminate = NO;
+    });
     
     //
     // Now load batch entries
@@ -263,15 +276,21 @@
             [entries addObject:be];
         }
         
-        self.sheetProcessStep = self.sheetProcessStep + 1;
-        self.sheetProcessProgress = (float) self.sheetProcessStep / (float)self.sheetProcessStepTotal;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            STRONG_SELF;
+            strongSelf.sheetProcessStep = strongSelf.sheetProcessStep + 1;
+            strongSelf.sheetProcessProgress = (float) strongSelf.sheetProcessStep / (float)strongSelf.sheetProcessStepTotal;
+        });
     }
     
     //
     // we're done, notify self on main thread
     //
     
-    [self performSelectorOnMainThread: @selector( fileAddingAnalysisComplete: ) withObject: entries waitUntilDone: NO];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        STRONG_SELF;
+        [strongSelf fileAddingAnalysisComplete:entries];
+    });
 }
 
 - (void) fileAddingAnalysisComplete: (NSMutableArray<BatchEntry*>*) newEntries
@@ -300,9 +319,14 @@
 
 - (void) normalmapFiles: (NSArray<BatchEntry*>*) entries
 {
-    self.sheetProcessStepTotal = entries.count;
-    self.sheetProcessStep = 0;
-    self.sheetProcessIndeterminate = NO;
+    WEAK_SELF;
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        STRONG_SELF;
+        strongSelf.sheetProcessStepTotal = entries.count;
+        strongSelf.sheetProcessStep = 0;
+        strongSelf.sheetProcessIndeterminate = NO;
+    });
     
     //
     // Now load batch entries
@@ -310,26 +334,24 @@
     
     for ( BatchEntry *entry in entries )
     {
-        DebugLog( @"normalmapping %@", entry );
-        
         BatchOperation *op = [[BatchOperation alloc] initWithEntry: entry andSettings: batchSettings];
         [op run];
         
-        self.sheetProcessStep = self.sheetProcessStep + 1;
-        self.sheetProcessProgress = (float) self.sheetProcessStep / (float)self.sheetProcessStepTotal;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            STRONG_SELF;
+            strongSelf.sheetProcessStep = strongSelf.sheetProcessStep + 1;
+            strongSelf.sheetProcessProgress = (float) strongSelf.sheetProcessStep / (float) strongSelf.sheetProcessStepTotal;
+        });
     }
     
     //
     // we're done, notify self on main thread
     //
     
-    [self performSelectorOnMainThread: @selector( normalmappingComplete: ) withObject: nil waitUntilDone: NO];
-}
-
-- (void) normalmappingComplete: (id) info
-{
-    self.sheetProcessRunning = NO;
-    [NSApp endSheet: progressSheet];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.sheetProcessRunning = NO;
+        [NSApp endSheet: progressSheet];
+    });
 }
 
 #pragma mark -
@@ -337,8 +359,6 @@
 
 - (void)windowWillClose:(NSNotification *)notification
 {
-    DebugLog( @"Batch window will close" );
-    
     //
     //	This is stupid hacky, but the menu-state is maintained in the AppDelegate
     //	and this means that when the user hits command-w or clicks the close button,

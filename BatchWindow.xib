@@ -19,19 +19,19 @@
         <window title="Batch Processing" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="_batch_window_" animationBehavior="default" id="3">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="130" width="881" height="633"/>
+            <rect key="contentRect" x="335" y="130" width="784" height="570"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
-            <value key="minSize" type="size" width="780" height="620"/>
+            <value key="minSize" type="size" width="570" height="570"/>
             <view key="contentView" id="11">
-                <rect key="frame" x="0.0" y="0.0" width="881" height="633"/>
+                <rect key="frame" x="0.0" y="0.0" width="784" height="570"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <customView id="57">
-                        <rect key="frame" x="0.0" y="0.0" width="881" height="144"/>
+                        <rect key="frame" x="0.0" y="0.0" width="784" height="144"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button verticalHuggingPriority="750" imageHugsTitle="YES" id="108">
-                                <rect key="frame" x="759" y="13" width="108" height="32"/>
+                                <rect key="frame" x="662" y="14" width="108" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="push" title="Run" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="109">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -45,7 +45,7 @@ DQ
                                 </connections>
                             </button>
                             <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" id="102">
-                                <rect key="frame" x="342" y="18" width="100" height="26"/>
+                                <rect key="frame" x="342" y="18" width="105" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="JPEG2000" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="5" imageScaling="proportionallyDown" inset="2" selectedItem="107" id="103">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -103,7 +103,7 @@ DQ
                                 </connections>
                             </popUpButton>
                             <box autoresizesSubviews="NO" verticalHuggingPriority="750" boxType="separator" id="91">
-                                <rect key="frame" x="0.0" y="60" width="881" height="5"/>
+                                <rect key="frame" x="0.0" y="60" width="784" height="5"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             </box>
                             <textField verticalHuggingPriority="750" id="1km-TQ-B7B">
@@ -142,7 +142,7 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <textField verticalHuggingPriority="750" id="t7F-vo-kpQ">
-                                <rect key="frame" x="786" y="101" width="75" height="22"/>
+                                <rect key="frame" x="689" y="101" width="75" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" bezelStyle="round" id="osA-Hs-Xsz">
                                     <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="0Wq-pk-izw">
@@ -158,7 +158,7 @@ DQ
                                 </connections>
                             </textField>
                             <textField verticalHuggingPriority="750" id="io2-8p-uSD">
-                                <rect key="frame" x="786" y="76" width="75" height="22"/>
+                                <rect key="frame" x="689" y="76" width="75" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" bezelStyle="round" id="eBS-6L-T4R">
                                     <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="HZJ-BH-cjn">
@@ -174,15 +174,15 @@ DQ
                                 </connections>
                             </textField>
                             <slider verticalHuggingPriority="750" id="NaQ-BK-7EF">
-                                <rect key="frame" x="135" y="100" width="570" height="17"/>
+                                <rect key="frame" x="137" y="99" width="469" height="18"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <sliderCell key="cell" continuous="YES" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="below" numberOfTickMarks="20" sliderType="linear" id="Mk9-XO-nej"/>
+                                <sliderCell key="cell" controlSize="small" continuous="YES" alignment="left" maxValue="100" doubleValue="63.585453539823014" tickMarkPosition="below" numberOfTickMarks="20" sliderType="linear" id="Mk9-XO-nej"/>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="batchSettings.strength" id="ynJ-zG-OFQ"/>
                                 </connections>
                             </slider>
                             <button imageHugsTitle="YES" id="82">
-                                <rect key="frame" x="717" y="103" width="63" height="18"/>
+                                <rect key="frame" x="620" y="103" width="63" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="Width" bezelStyle="regularSquare" imagePosition="leading" alignment="left" controlSize="mini" state="on" inset="2" id="83">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -193,7 +193,7 @@ DQ
                                 </connections>
                             </button>
                             <button imageHugsTitle="YES" id="edK-fV-lK2">
-                                <rect key="frame" x="717" y="81" width="63" height="18"/>
+                                <rect key="frame" x="620" y="81" width="63" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="Height" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="mini" state="on" inset="2" id="uxl-0G-WFH">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -204,15 +204,13 @@ DQ
                                 </connections>
                             </button>
                             <view id="q4D-db-saK">
-                                <rect key="frame" x="444" y="18" width="309" height="26"/>
+                                <rect key="frame" x="444" y="18" width="214" height="26"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <slider verticalHuggingPriority="750" id="gb0-9X-cQn">
-                                        <rect key="frame" x="93" y="1" width="216" height="17"/>
+                                        <rect key="frame" x="93" y="5" width="121" height="15"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                        <sliderCell key="cell" controlSize="small" state="on" alignment="left" maxValue="1" doubleValue="0.80000000000000004" tickMarkPosition="below" numberOfTickMarks="20" sliderType="linear" id="thp-UF-qDr">
-                                            <font key="font" metaFont="smallSystem"/>
-                                        </sliderCell>
+                                        <sliderCell key="cell" controlSize="mini" state="on" alignment="left" maxValue="1" doubleValue="0.80000000000000004" tickMarkPosition="below" numberOfTickMarks="20" sliderType="linear" id="thp-UF-qDr"/>
                                         <connections>
                                             <binding destination="-2" name="value" keyPath="batchSettings.saveQuality" id="nZh-gN-iB8"/>
                                             <outlet property="nextKeyView" destination="108" id="qvx-Rg-Rzh"/>
@@ -250,38 +248,60 @@ DQ
                             </textField>
                         </subviews>
                     </customView>
-                    <scrollView wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="7Mb-zT-vPU">
-                        <rect key="frame" x="0.0" y="143" width="881" height="491"/>
+                    <customView id="GBm-E1-1xG">
+                        <rect key="frame" x="0.0" y="143" width="784" height="428"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <clipView key="contentView" id="tu1-1y-j7t">
-                            <rect key="frame" x="0.0" y="0.0" width="881" height="491"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            <subviews>
-                                <collectionView id="dmv-IW-L03">
-                                    <rect key="frame" x="0.0" y="0.0" width="881" height="158"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                                    <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="9cb-4W-j73">
-                                        <size key="itemSize" width="50" height="50"/>
-                                    </collectionViewFlowLayout>
-                                    <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </collectionView>
-                            </subviews>
-                        </clipView>
-                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="nRS-Db-0lc">
-                            <rect key="frame" x="1" y="144" width="233" height="15"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                        </scroller>
-                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="GUo-iO-R3H">
-                            <rect key="frame" x="234" y="1" width="15" height="143"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                        </scroller>
-                    </scrollView>
+                        <subviews>
+                            <scrollView wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="7Mb-zT-vPU">
+                                <rect key="frame" x="0.0" y="0.0" width="784" height="428"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <clipView key="contentView" id="tu1-1y-j7t">
+                                    <rect key="frame" x="0.0" y="0.0" width="784" height="428"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <collectionView id="dmv-IW-L03">
+                                            <rect key="frame" x="0.0" y="0.0" width="784" height="428"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                                            <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="9cb-4W-j73">
+                                                <size key="itemSize" width="50" height="50"/>
+                                            </collectionViewFlowLayout>
+                                            <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </collectionView>
+                                    </subviews>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="nRS-Db-0lc">
+                                    <rect key="frame" x="-100" y="-100" width="233" height="15"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="GUo-iO-R3H">
+                                    <rect key="frame" x="560" y="0.0" width="16" height="428"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="zio-IM-XUJ">
+                                <rect key="frame" x="-2" y="188" width="788" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="truncatingTail" alignment="center" title="Drop bumpmaps" id="Ce4-4S-GR5">
+                                    <font key="font" size="19" name=".AppleSystemUIFont"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <binding destination="-2" name="hidden" keyPath="showDropMessage" id="Mwm-LS-f7K">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
+                                </connections>
+                            </textField>
+                        </subviews>
+                    </customView>
                 </subviews>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="146"/>
             </connections>
-            <point key="canvasLocation" x="188.5" y="153.5"/>
+            <point key="canvasLocation" x="100" y="122"/>
         </window>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="4" userLabel="ProcessSheet" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" utility="YES"/>

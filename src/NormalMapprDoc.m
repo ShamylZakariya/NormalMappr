@@ -11,7 +11,6 @@
 @interface NormalMapprDoc(Private)
 
 - (NSString*) currentSaveExtension;
-- (void) scheduleReload;
 - (void) update;
 - (NSRect) idealZoomWindowSize;
 - (void) fitWindowToContents;
@@ -468,15 +467,15 @@
                 //
                 //    This is hincty -- photoshop seems to perform multiple immediate writes to the file,
                 //    but our use of timestamps causes only the first to be read, which is
-                //    insufficient. So, we have to shedule a reload in the near future. Which can
-                //    only be done from the main thread. So first we invoke scheduleReload on the
-                //    main thread, which then shedules -reload to be called in a half-second or so.
+                //    insufficient. So, we have to shedule a reload in the near future.
                 //
                 
-                DebugLog( @"Detected write to file: %@ - about to schedule reload", [[[self fileURL] path] lastPathComponent] );
-                
-                #warning Use GCD here
-                [self performSelectorOnMainThread: @selector(scheduleReload) withObject:nil waitUntilDone:NO];
+                WEAK_SELF;
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    STRONG_SELF;
+                    DebugLog( @"Reloading %@", [[strongSelf fileURL] path]);
+                    [strongSelf reload];
+                });
             }
             else
             {
@@ -487,13 +486,6 @@
         }
     }
 }
-
-- (void) scheduleReload
-{
-	DebugLog( @"Scheduling reload of %@", [[[self fileURL] path] lastPathComponent] );
-	[self performSelector: @selector(reload) withObject: nil afterDelay: 0.5];
-}
-
 
 #pragma mark -
 #pragma mark Private

@@ -16,7 +16,6 @@
 - (nullable CIFilter *)filterWithName:(nonnull NSString *)name {
     if ([name isEqualToString:@"NormalMapFilter"])
     {
-        NSLog(@"[NormalMapFilterFactory::filterWithName] - vending new NormalMapFilter");
         return [[NormalMapFilter alloc] init];
     }
     return nil;
