@@ -17,11 +17,8 @@
 		36A586600F8F6E8900AC6E58 /* NSArray+reversedArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A5865D0F8F6E8900AC6E58 /* NSArray+reversedArray.m */; };
 		36A586610F8F6E8900AC6E58 /* NSView+viewAtPointExcluding.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A5865F0F8F6E8900AC6E58 /* NSView+viewAtPointExcluding.m */; };
 		36A586760F8F6EA500AC6E58 /* BatchEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A586670F8F6EA500AC6E58 /* BatchEntry.m */; };
-		36A586780F8F6EA500AC6E58 /* BatchItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A5866B0F8F6EA500AC6E58 /* BatchItemView.m */; };
-		36A586790F8F6EA500AC6E58 /* BatchLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A5866D0F8F6EA500AC6E58 /* BatchLabel.m */; };
+		36A586780F8F6EA500AC6E58 /* BatchCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A5866B0F8F6EA500AC6E58 /* BatchCollectionViewItem.m */; };
 		36A5867A0F8F6EA500AC6E58 /* BatchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A5866F0F8F6EA500AC6E58 /* BatchView.m */; };
-		36A5867B0F8F6EA500AC6E58 /* StackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A586710F8F6EA500AC6E58 /* StackView.m */; };
-		36A5867C0F8F6EA500AC6E58 /* StackViewScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A586730F8F6EA500AC6E58 /* StackViewScrollView.m */; };
 		36A5867D0F8F6EA500AC6E58 /* ThumbView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A586750F8F6EA500AC6E58 /* ThumbView.m */; };
 		36A586800F8F6EE600AC6E58 /* BatchController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A5867F0F8F6EE600AC6E58 /* BatchController.m */; };
 		36A586FC0F934FB500AC6E58 /* BatchSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A586FB0F934FB500AC6E58 /* BatchSettings.m */; };
@@ -41,6 +38,7 @@
 		63608B19228C52110062CD4C /* CTBadge_1.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 63608B0F228C51E50062CD4C /* CTBadge_1.pdf */; };
 		63608B1A228C52130062CD4C /* CTBadge_4.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 63608B10228C51E50062CD4C /* CTBadge_4.pdf */; };
 		63608B1B228C52150062CD4C /* CTBadge_5.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 63608B11228C51E50062CD4C /* CTBadge_5.pdf */; };
+		63A761912296F908004E6EC3 /* BatchCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63A761902296F908004E6EC3 /* BatchCollectionViewItem.xib */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
 		8D15AC2D0486D014006FF6A4 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B6FDCFA73011CA2CEA /* MainMenu.nib */; };
 		8D15AC2E0486D014006FF6A4 /* NormalMapprDoc.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B4FDCFA73011CA2CEA /* NormalMapprDoc.nib */; };
@@ -84,16 +82,10 @@
 		36A5865F0F8F6E8900AC6E58 /* NSView+viewAtPointExcluding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+viewAtPointExcluding.m"; sourceTree = "<group>"; };
 		36A586660F8F6EA500AC6E58 /* BatchEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BatchEntry.h; sourceTree = "<group>"; };
 		36A586670F8F6EA500AC6E58 /* BatchEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BatchEntry.m; sourceTree = "<group>"; };
-		36A5866A0F8F6EA500AC6E58 /* BatchItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BatchItemView.h; sourceTree = "<group>"; };
-		36A5866B0F8F6EA500AC6E58 /* BatchItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BatchItemView.m; sourceTree = "<group>"; };
-		36A5866C0F8F6EA500AC6E58 /* BatchLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BatchLabel.h; sourceTree = "<group>"; };
-		36A5866D0F8F6EA500AC6E58 /* BatchLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BatchLabel.m; sourceTree = "<group>"; };
+		36A5866A0F8F6EA500AC6E58 /* BatchCollectionViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BatchCollectionViewItem.h; sourceTree = "<group>"; };
+		36A5866B0F8F6EA500AC6E58 /* BatchCollectionViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BatchCollectionViewItem.m; sourceTree = "<group>"; };
 		36A5866E0F8F6EA500AC6E58 /* BatchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BatchView.h; sourceTree = "<group>"; };
 		36A5866F0F8F6EA500AC6E58 /* BatchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BatchView.m; sourceTree = "<group>"; };
-		36A586700F8F6EA500AC6E58 /* StackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StackView.h; sourceTree = "<group>"; };
-		36A586710F8F6EA500AC6E58 /* StackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StackView.m; sourceTree = "<group>"; };
-		36A586720F8F6EA500AC6E58 /* StackViewScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StackViewScrollView.h; sourceTree = "<group>"; };
-		36A586730F8F6EA500AC6E58 /* StackViewScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StackViewScrollView.m; sourceTree = "<group>"; };
 		36A586740F8F6EA500AC6E58 /* ThumbView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThumbView.h; sourceTree = "<group>"; };
 		36A586750F8F6EA500AC6E58 /* ThumbView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThumbView.m; sourceTree = "<group>"; };
 		36A5867E0F8F6EE600AC6E58 /* BatchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BatchController.h; sourceTree = "<group>"; };
@@ -130,6 +122,7 @@
 		63608B10228C51E50062CD4C /* CTBadge_4.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = CTBadge_4.pdf; sourceTree = "<group>"; };
 		63608B11228C51E50062CD4C /* CTBadge_5.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = CTBadge_5.pdf; sourceTree = "<group>"; };
 		63608B12228C51E50062CD4C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		63A761902296F908004E6EC3 /* BatchCollectionViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BatchCollectionViewItem.xib; sourceTree = "<group>"; };
 		63AAE608227BF61B00926382 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		63AAE609227BF61B00926382 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		63AAE60C227BF62100926382 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/MainMenu.nib; sourceTree = "<group>"; };
@@ -211,6 +204,7 @@
 				089C165FFE840EACC02AAC07 /* InfoPlist.strings */,
 				36A586410F8F6BCF00AC6E58 /* BatchWindow.xib */,
 				63608AEB2288D3F80062CD4C /* Media.xcassets */,
+				63A761902296F908004E6EC3 /* BatchCollectionViewItem.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -267,20 +261,14 @@
 				36A5867F0F8F6EE600AC6E58 /* BatchController.m */,
 				36A586660F8F6EA500AC6E58 /* BatchEntry.h */,
 				36A586670F8F6EA500AC6E58 /* BatchEntry.m */,
-				36A5866A0F8F6EA500AC6E58 /* BatchItemView.h */,
-				36A5866B0F8F6EA500AC6E58 /* BatchItemView.m */,
-				36A5866C0F8F6EA500AC6E58 /* BatchLabel.h */,
-				36A5866D0F8F6EA500AC6E58 /* BatchLabel.m */,
+				36A5866A0F8F6EA500AC6E58 /* BatchCollectionViewItem.h */,
+				36A5866B0F8F6EA500AC6E58 /* BatchCollectionViewItem.m */,
 				36A5864F0F8F6CBC00AC6E58 /* BatchOperation.h */,
 				36A586500F8F6CBC00AC6E58 /* BatchOperation.m */,
 				36A586FA0F934FB500AC6E58 /* BatchSettings.h */,
 				36A586FB0F934FB500AC6E58 /* BatchSettings.m */,
 				36A5866E0F8F6EA500AC6E58 /* BatchView.h */,
 				36A5866F0F8F6EA500AC6E58 /* BatchView.m */,
-				36A586700F8F6EA500AC6E58 /* StackView.h */,
-				36A586710F8F6EA500AC6E58 /* StackView.m */,
-				36A586720F8F6EA500AC6E58 /* StackViewScrollView.h */,
-				36A586730F8F6EA500AC6E58 /* StackViewScrollView.m */,
 				36A586740F8F6EA500AC6E58 /* ThumbView.h */,
 				36A586750F8F6EA500AC6E58 /* ThumbView.m */,
 			);
@@ -425,6 +413,7 @@
 				8D15AC2D0486D014006FF6A4 /* MainMenu.nib in Resources */,
 				8D15AC2E0486D014006FF6A4 /* NormalMapprDoc.nib in Resources */,
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
+				63A761912296F908004E6EC3 /* BatchCollectionViewItem.xib in Resources */,
 				63608AFB228B068F0062CD4C /* README.md in Resources */,
 				63608AEC2288D3F80062CD4C /* Media.xcassets in Resources */,
 				63608B19228C52110062CD4C /* CTBadge_1.pdf in Resources */,
@@ -461,11 +450,8 @@
 				36A586610F8F6E8900AC6E58 /* NSView+viewAtPointExcluding.m in Sources */,
 				63608AFC228B068F0062CD4C /* VDKQueue.m in Sources */,
 				36A586760F8F6EA500AC6E58 /* BatchEntry.m in Sources */,
-				36A586780F8F6EA500AC6E58 /* BatchItemView.m in Sources */,
-				36A586790F8F6EA500AC6E58 /* BatchLabel.m in Sources */,
+				36A586780F8F6EA500AC6E58 /* BatchCollectionViewItem.m in Sources */,
 				36A5867A0F8F6EA500AC6E58 /* BatchView.m in Sources */,
-				36A5867B0F8F6EA500AC6E58 /* StackView.m in Sources */,
-				36A5867C0F8F6EA500AC6E58 /* StackViewScrollView.m in Sources */,
 				36A5867D0F8F6EA500AC6E58 /* ThumbView.m in Sources */,
 				36A586800F8F6EE600AC6E58 /* BatchController.m in Sources */,
 				36A586FC0F934FB500AC6E58 /* BatchSettings.m in Sources */,

@@ -11,7 +11,6 @@
 
 #import "BatchView.h"
 #include "BatchEntry.h"
-#include "BatchItemView.h"
 #include "CTBadge.h"
 
 #import "NSView+viewAtPointExcluding.h"
@@ -52,6 +51,7 @@ NSString *kBatchViewDefaultDragType	= @"kBatchViewDefaultDragType";
 
 - (void) awakeFromNib
 {
+    [super awakeFromNib];
 	[self setFocusRingType:NSFocusRingTypeDefault];
 	[self setDragTypeString: kBatchViewDefaultDragType];
 }
@@ -72,13 +72,6 @@ NSString *kBatchViewDefaultDragType	= @"kBatchViewDefaultDragType";
 		highlightRect = [self convertRect:cvb fromView:contentView];		
 	}
 
-//    if ( !innerShadowGradient )
-//    {
-//        innerShadowGradient = [[NSGradient alloc]
-//            initWithStartingColor:[NSColor colorWithDeviceWhite:0 alpha:0.25]
-//            endingColor: [NSColor colorWithDeviceWhite:0 alpha:0]];
-//    }
-
 	//
 	// Draw focus ring
 	//
@@ -89,19 +82,11 @@ NSString *kBatchViewDefaultDragType	= @"kBatchViewDefaultDragType";
         NSFrameRectWithWidthUsingOperation( highlightRect, 3, NSCompositingOperationSourceOver );
 	}
 
-//    //
-//    // Draw inner shadow
-//    //
-//
-//    CGFloat innerShadowHeight = self.showMessage ? 16 : 4;
-//    [innerShadowGradient 
-//        drawInRect:NSMakeRect( highlightRect.origin.x, highlightRect.origin.y, highlightRect.size.width, innerShadowHeight ) 
-//        angle:90];
-
 	//
 	// Draw drop-highlight ring
 	//
-	if ( dropInProgress )
+
+    if ( dropInProgress )
 	{
 		[[[NSColor selectedControlColor] colorWithAlphaComponent:0.5] set];
         NSFrameRectWithWidthUsingOperation( highlightRect, 3, NSCompositingOperationSourceOver );

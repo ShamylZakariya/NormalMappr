@@ -39,9 +39,9 @@
 	switch( settings.nameDecorationStyle )
 	{
 		case NMNameDecorationPrepend:
-		{
-			NSString *pathToFile = [entry.path stringByDeletingLastPathComponent];
-			NSString *name = [entry.path lastPathComponent];
+		{            
+			NSString *pathToFile = [entry.filePath stringByDeletingLastPathComponent];
+			NSString *name = [entry.filePath lastPathComponent];
 			
 			outputFile = [settings.nameDecoration stringByAppendingString: name];
 			outputFile = [pathToFile stringByAppendingPathComponent: outputFile];			
@@ -50,7 +50,7 @@
 		
 		case NMNameDecorationAppend:
 		{
-			outputFile = [entry.path stringByDeletingPathExtension];
+			outputFile = [entry.filePath stringByDeletingPathExtension];
 			outputFile = [outputFile stringByAppendingString: settings.nameDecoration];
 			outputFile = [outputFile stringByAppendingPathExtension: settings.saveFormatExtension];
 			break;

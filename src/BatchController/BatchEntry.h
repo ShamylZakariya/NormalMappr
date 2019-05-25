@@ -10,30 +10,26 @@
 
 
 @interface BatchEntry : NSObject {
+    NSURL *fileURL;
 	NSImage *image, *thumb;
 	NSBitmapImageRep *imageBitmap, *thumbBitmap;
-	NSString *path, *displayTitle, *displayPath, *identifier;
+	NSString *displayTitle, *displayPath, *identifier;
 	BOOL looksLikeBumpmap;
 	BOOL isSeparator;
 }
 
-+ (BatchEntry*) imageEntryWithURL: (NSURL*) url;
-+ (BatchEntry*) imageEntryWithPath: (NSString*) path;
++ (BatchEntry*) fromFileURL: (NSURL*) fileURL;
 
-- (id) initWithURL: (NSURL*) url;
-- (id) initWithPath: (NSString*) path;
+- (id) initWithFileURL: (NSURL*) fileURL;
 
-@property (readonly,copy) NSString* identifier;
+@property (readonly) NSString* identifier;
 
-@property (readonly,retain) NSImage* image;
-@property (readonly,retain) NSImage* thumb;
-@property (readonly,retain) NSBitmapImageRep* imageBitmap;
-@property (readonly,retain) NSBitmapImageRep* thumbBitmap;
-@property (readonly,retain) NSString* path;
-
-@property (readonly) NSString* displayTitle;
-@property (readonly) NSString* displayPath;
-
+@property (readonly) NSImage* image;
+@property (readonly) NSImage* thumb;
+@property (readonly) NSBitmapImageRep* imageBitmap;
+@property (readonly) NSBitmapImageRep* thumbBitmap;
+@property (readonly) NSURL* fileURL;
+@property (readonly) NSString *filePath;
 @property (readwrite) BOOL looksLikeBumpmap;
 
 @end

@@ -1,6 +1,5 @@
 
-Mac OSX 10.6
-
+10.6
 - Seem to have fixed the crash bugs by switching to GC
 
 - API Deprecations
@@ -18,3 +17,8 @@ Mac OSX 10.6
 
 - Normalmaps are vertically flipped. wtf?
 	- Fixed via affine transform
+
+10.14
+- light mode, icon when selected; needs to invert label color. not certain how to bind this to representedItem.selected
+- might want to drop bindings for collection view data source, it's too... shitty
+- 

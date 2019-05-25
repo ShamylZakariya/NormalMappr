@@ -23,7 +23,6 @@ extern NSString *			kBatchViewDefaultDragType;
 	SEL			dropFilesAction;
 	SEL			deleteAction;
 	NSPoint		mouseDownPosition;
-	NSGradient	*innerShadowGradient;
 }
 
 @property (retain) NSString				*dragTypeString;

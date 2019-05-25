@@ -22,9 +22,9 @@
 
 @implementation BatchEntry
 
-+ (BatchEntry*) imageEntryWithURL: (NSURL*) url
++ (BatchEntry*) fromFileURL: (NSURL*) fileURL
 {
-	BatchEntry *e = [[BatchEntry alloc] initWithURL:url];
+	BatchEntry *e = [[BatchEntry alloc] initWithFileURL:fileURL];
 	if ( e )
 	{
         return e;
@@ -33,27 +33,14 @@
 	return nil;
 }
 
-+ (BatchEntry*) imageEntryWithPath: (NSString*) path
-{
-	BatchEntry *e = [[BatchEntry alloc] initWithPath:path];
-	if ( e )
-	{
-        return e;
-	}
-	
-	return nil;
-}
-
-- (id) initWithURL: (NSURL*) url
+- (id) initWithFileURL: (NSURL*) fileURL
 {
 	if ( self = [super init] )
 	{
-		path = [[url path] copy];
-		displayTitle = [[path lastPathComponent] copy];
-		displayPath = [path copy];
-		identifier = [path copy];
+        self->fileURL = fileURL;
+        identifier = self.filePath;
 
-		CGImageRef img = LoadCGImage( path );
+		CGImageRef img = LoadCGImage( self.filePath );
 		if ( img )
 		{
 			[self createImage:img];
@@ -93,15 +80,9 @@
 	return self;
 }
 
-
-- (id) initWithPath: (NSString*) imagePath
-{
-	return [self initWithURL: [NSURL fileURLWithPath:imagePath]];
-}
-
 - (NSString*) description
 {
-	return [NSString stringWithFormat: @"<BatchEntry bumpmap: %@ path: %@>", (self.looksLikeBumpmap ? @"YES" : @"NO" ), self.path ];
+	return [NSString stringWithFormat: @"<BatchEntry bumpmap: %@ path: %@>", (self.looksLikeBumpmap ? @"YES" : @"NO" ), self.filePath ];
 }
 
 #pragma mark -
@@ -111,11 +92,14 @@
 @synthesize thumb;
 @synthesize imageBitmap;
 @synthesize thumbBitmap;
-@synthesize path;
-@synthesize displayTitle;
-@synthesize displayPath;
+@synthesize fileURL = fileURL;
 @synthesize looksLikeBumpmap;
 @synthesize identifier;
+
+- (NSString*) filePath
+{
+    return @(fileURL.fileSystemRepresentation);
+}
 
 #pragma mark -
 #pragma mark Private
