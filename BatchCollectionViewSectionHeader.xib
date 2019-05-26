@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView wantsLayer="YES" id="Z8y-cf-p4C" customClass="BatchCollectionViewSectionHeader">
+            <rect key="frame" x="0.0" y="0.0" width="497" height="45"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zcL-It-C5M">
+                    <rect key="frame" x="63" y="14" width="86" height="17"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Section Title" id="ZDW-Sx-ZaB">
+                        <font key="font" metaFont="systemBold"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="O4k-fA-KUN" customClass="ItemCountBackgroundView">
+                    <rect key="frame" x="20" y="11" width="25" height="23"/>
+                    <subviews>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YBf-Pr-xYT">
+                            <rect key="frame" x="2" y="4" width="21" height="17"/>
+                            <constraints>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" secondItem="YBf-Pr-xYT" secondAttribute="height" id="kFi-YJ-M5U"/>
+                            </constraints>
+                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="0" id="aWG-7B-YMW">
+                                <font key="font" metaFont="systemBlack" size="13"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="YBf-Pr-xYT" firstAttribute="top" secondItem="O4k-fA-KUN" secondAttribute="top" constant="2" id="9lw-U8-N53"/>
+                        <constraint firstAttribute="bottom" secondItem="YBf-Pr-xYT" secondAttribute="bottom" constant="4" id="a1b-iG-6b4"/>
+                        <constraint firstItem="YBf-Pr-xYT" firstAttribute="leading" secondItem="O4k-fA-KUN" secondAttribute="leading" constant="4" id="fZS-R9-c4g"/>
+                        <constraint firstAttribute="trailing" secondItem="YBf-Pr-xYT" secondAttribute="trailing" constant="4" id="m9J-IB-9cx"/>
+                    </constraints>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="zcL-It-C5M" firstAttribute="leading" secondItem="O4k-fA-KUN" secondAttribute="trailing" constant="20" id="1bK-Pz-8Hu"/>
+                <constraint firstItem="O4k-fA-KUN" firstAttribute="leading" secondItem="Z8y-cf-p4C" secondAttribute="leading" constant="20" id="I7g-p9-dBB"/>
+                <constraint firstItem="zcL-It-C5M" firstAttribute="centerY" secondItem="Z8y-cf-p4C" secondAttribute="centerY" id="J5Y-Ye-FwA"/>
+                <constraint firstItem="O4k-fA-KUN" firstAttribute="centerY" secondItem="Z8y-cf-p4C" secondAttribute="centerY" id="MjY-1w-BLB"/>
+            </constraints>
+            <connections>
+                <outlet property="itemCount" destination="YBf-Pr-xYT" id="Idt-uB-13l"/>
+                <outlet property="itemCountContainer" destination="O4k-fA-KUN" id="TrD-MU-GiA"/>
+                <outlet property="sectionTitle" destination="zcL-It-C5M" id="9z8-0X-Jtl"/>
+            </connections>
+            <point key="canvasLocation" x="84.5" y="-157.5"/>
+        </customView>
+    </objects>
+</document>

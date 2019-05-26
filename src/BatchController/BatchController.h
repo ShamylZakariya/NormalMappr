@@ -10,7 +10,7 @@
 #import "BatchSettings.h"
 #import "BatchEntry.h"
 
-@interface BatchController : NSObject <NSCollectionViewDataSource, NSCollectionViewDelegate> {
+@interface BatchController : NSObject <NSCollectionViewDataSource, NSCollectionViewDelegate, NSCollectionViewDelegateFlowLayout> {
     BatchSettings					*batchSettings;
     
     CGFloat							iconSize;

@@ -10,9 +10,11 @@
 
 #import "AppDelegate.h"
 #import "BatchCollectionViewItem.h"
+#import "BatchCollectionViewSectionHeader.h"
 #import "BatchOperation.h"
 
 #define kBatchCollectionViewItemIdentifier @"batchCollectionViewItem"
+#define kBatchCollectionViewSectionHeaderIdentifier @"batchCollectionSectionHeader"
 
 @interface BatchController(Private)
 
@@ -48,8 +50,13 @@
     
     bumpmapsCollectionView.dataSource = self;
     bumpmapsCollectionView.delegate = self;
-    NSNib* itemNib = [[NSNib alloc] initWithNibNamed:@"BatchCollectionViewItem" bundle:[NSBundle mainBundle]];
+
+    NSNib *itemNib = [[NSNib alloc] initWithNibNamed:@"BatchCollectionViewItem" bundle:[NSBundle mainBundle]];
     [bumpmapsCollectionView registerNib:itemNib forItemWithIdentifier:kBatchCollectionViewItemIdentifier];
+
+    NSNib *headerNib = [[NSNib alloc] initWithNibNamed:@"BatchCollectionViewSectionHeader" bundle:[NSBundle mainBundle]];
+    [bumpmapsCollectionView registerNib:headerNib forSupplementaryViewOfKind:NSCollectionElementKindSectionHeader withIdentifier:kBatchCollectionViewSectionHeaderIdentifier];
+
     [bumpmapsCollectionView registerForDraggedTypes:@[NSURLPboardType]];
     [bumpmapsCollectionView setDraggingSourceOperationMask:NSDragOperationEvery forLocal:YES];
     
@@ -373,7 +380,7 @@
 
 - (NSInteger)numberOfSectionsInCollectionView:(NSCollectionView *)collectionView
 {
-    return [nonBumpmaps count] > 0 ? 2 : 1;
+    return ([bumpmaps count] > 0 ? 1 : 0) + ([nonBumpmaps count] > 0 ? 1 : 0);
 }
 
 - (NSInteger)collectionView:(NSCollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -413,6 +420,28 @@
     return item;
 }
 
+- (NSView *)collectionView:(NSCollectionView *)collectionView viewForSupplementaryElementOfKind:(NSCollectionViewSupplementaryElementKind)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    if ([kind isEqualToString:NSCollectionElementKindSectionHeader])
+    {
+        BatchCollectionViewSectionHeader *header = [collectionView makeSupplementaryViewOfKind:NSCollectionElementKindSectionHeader withIdentifier:kBatchCollectionViewSectionHeaderIdentifier forIndexPath:indexPath];
+        switch(indexPath.section)
+        {
+            case 0:
+                [header.sectionTitle setStringValue:@"Bumpmaps"];
+                [header.itemCount setStringValue:[NSString stringWithFormat:@"%lu", [bumpmaps count]]];
+                break;
+            case 1:
+                [header.sectionTitle setStringValue:@"Non-bumpmaps"];
+                [header.itemCount setStringValue:[NSString stringWithFormat:@"%lu", [nonBumpmaps count]]];
+                break;
+        }
+        return header;
+    }
+    
+    return [collectionView makeSupplementaryViewOfKind:kind withIdentifier:@"" forIndexPath:indexPath];
+}
+
 #pragma mark - NSCollectionViewDelegate
 
 - (NSDragOperation)collectionView:(NSCollectionView *)collectionView validateDrop:(id <NSDraggingInfo>)draggingInfo proposedIndexPath:(NSIndexPath * __nonnull * __nonnull)proposedDropIndexPath dropOperation:(NSCollectionViewDropOperation *)proposedDropOperation
@@ -443,5 +472,13 @@
     [self addFiles:droppedFileURLs];
     return YES;
 }
+
+#pragma mark - NSCollectionViewDelegateFlowLayout
+
+- (NSSize)collectionView:(NSCollectionView *)collectionView layout:(NSCollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
+{
+    return NSMakeSize(0, 80);
+}
+
 
 @end

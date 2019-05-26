@@ -27,6 +27,8 @@
 		36F94F920F6095A90003C8EF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36F94F910F6095A90003C8EF /* QuartzCore.framework */; };
 		36F951080F644B130003C8EF /* TilingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F951070F644B130003C8EF /* TilingImageView.m */; };
 		36F951710F64A0590003C8EF /* LoadCGImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F951700F64A0590003C8EF /* LoadCGImage.m */; };
+		632A312B2299E17C00A9D01A /* BatchCollectionViewSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 632A312A2299E17C00A9D01A /* BatchCollectionViewSectionHeader.xib */; };
+		632A312E2299E25700A9D01A /* BatchCollectionViewSectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 632A312D2299E25700A9D01A /* BatchCollectionViewSectionHeader.m */; };
 		63608AEA2288D0CF0062CD4C /* TemplateInDarkModeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 63608AE92288D0CF0062CD4C /* TemplateInDarkModeButton.m */; };
 		63608AEC2288D3F80062CD4C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63608AEB2288D3F80062CD4C /* Media.xcassets */; };
 		63608AFB228B068F0062CD4C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 63608AF9228B068F0062CD4C /* README.md */; };
@@ -100,6 +102,9 @@
 		36F951070F644B130003C8EF /* TilingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TilingImageView.m; sourceTree = "<group>"; };
 		36F9516F0F64A0590003C8EF /* LoadCGImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadCGImage.h; sourceTree = "<group>"; };
 		36F951700F64A0590003C8EF /* LoadCGImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadCGImage.m; sourceTree = "<group>"; };
+		632A312A2299E17C00A9D01A /* BatchCollectionViewSectionHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BatchCollectionViewSectionHeader.xib; sourceTree = "<group>"; };
+		632A312C2299E25700A9D01A /* BatchCollectionViewSectionHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BatchCollectionViewSectionHeader.h; sourceTree = "<group>"; };
+		632A312D2299E25700A9D01A /* BatchCollectionViewSectionHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BatchCollectionViewSectionHeader.m; sourceTree = "<group>"; };
 		63608AE82288D0CF0062CD4C /* TemplateInDarkModeButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TemplateInDarkModeButton.h; sourceTree = "<group>"; };
 		63608AE92288D0CF0062CD4C /* TemplateInDarkModeButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TemplateInDarkModeButton.m; sourceTree = "<group>"; };
 		63608AEB2288D3F80062CD4C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
@@ -202,6 +207,7 @@
 				36A586410F8F6BCF00AC6E58 /* BatchWindow.xib */,
 				63608AEB2288D3F80062CD4C /* Media.xcassets */,
 				63A761902296F908004E6EC3 /* BatchCollectionViewItem.xib */,
+				632A312A2299E17C00A9D01A /* BatchCollectionViewSectionHeader.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -266,6 +272,8 @@
 				36A586FB0F934FB500AC6E58 /* BatchSettings.m */,
 				36A586740F8F6EA500AC6E58 /* ThumbView.h */,
 				36A586750F8F6EA500AC6E58 /* ThumbView.m */,
+				632A312C2299E25700A9D01A /* BatchCollectionViewSectionHeader.h */,
+				632A312D2299E25700A9D01A /* BatchCollectionViewSectionHeader.m */,
 			);
 			path = BatchController;
 			sourceTree = "<group>";
@@ -412,6 +420,7 @@
 				63608AFB228B068F0062CD4C /* README.md in Resources */,
 				63608AEC2288D3F80062CD4C /* Media.xcassets in Resources */,
 				63608B19228C52110062CD4C /* CTBadge_1.pdf in Resources */,
+				632A312B2299E17C00A9D01A /* BatchCollectionViewSectionHeader.xib in Resources */,
 				63608B18228C520F0062CD4C /* CTBadge_3.pdf in Resources */,
 				63608B1A228C52130062CD4C /* CTBadge_4.pdf in Resources */,
 				63608B1B228C52150062CD4C /* CTBadge_5.pdf in Resources */,
@@ -436,6 +445,7 @@
 				3617E5470C32828200276C8A /* ImageView.m in Sources */,
 				3617E87D0C332D9700276C8A /* AppDelegate.m in Sources */,
 				36F94F8C0F60957E0003C8EF /* CINormalMapper.m in Sources */,
+				632A312E2299E25700A9D01A /* BatchCollectionViewSectionHeader.m in Sources */,
 				36F94F8E0F60957E0003C8EF /* NormalMapFilter.m in Sources */,
 				36F951080F644B130003C8EF /* TilingImageView.m in Sources */,
 				36F951710F64A0590003C8EF /* LoadCGImage.m in Sources */,
