@@ -14,8 +14,7 @@
 	NSImage *image, *thumb;
 	NSBitmapImageRep *imageBitmap, *thumbBitmap;
 	NSString *displayTitle, *displayPath, *identifier;
-	BOOL looksLikeBumpmap;
-	BOOL isSeparator;
+    CGFloat bumpmapScore;
 }
 
 + (BatchEntry*) fromFileURL: (NSURL*) fileURL;
@@ -30,6 +29,6 @@
 @property (readonly) NSBitmapImageRep* thumbBitmap;
 @property (readonly) NSURL* fileURL;
 @property (readonly) NSString *filePath;
-@property (readwrite) BOOL looksLikeBumpmap;
+@property (readonly) BOOL looksLikeBumpmap;
 
 @end

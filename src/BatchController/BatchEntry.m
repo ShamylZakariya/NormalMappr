@@ -9,13 +9,14 @@
 #import "BatchEntry.h"
 #import "LoadCGImage.h"
 
-#define THUMB_SIZE 128;
+#define kTHUMB_SIZE 128
+#define kCOLOR_THRESHOLD 16.0
 
 @interface BatchEntry(Private)
 
 -(void) createImage: (CGImageRef) sourceImage;
 -(void) createThumb: (CGImageRef) sourceImage;
-- (BOOL) looksLikeABumpmap: (NSBitmapImageRep*) sourceImage withTolerance: (int) tolerance;
+- (CGFloat) computeBumpmapScore: (NSBitmapImageRep*) image;
 
 @end
 
@@ -58,16 +59,16 @@
 			// though in principle downsampling may cause single-pixel color samples to be lost enough to
 			// false-positive the result. Imagine: a greyscale image with a single red pixel in the middle.
 			//
-
-			if ( CGColorSpaceGetNumberOfComponents( colorSpace ) == 1 && 
-				 CGColorSpaceGetColorTableCount( colorSpace ) == 0 )
-			{
-				looksLikeBumpmap = YES;
-			}
-			else
-			{
-				looksLikeBumpmap = [self looksLikeABumpmap: thumbBitmap withTolerance: 8];
-			}
+            
+            if ( CGColorSpaceGetNumberOfComponents( colorSpace ) == 1 &&
+                 CGColorSpaceGetColorTableCount( colorSpace ) == 0 )
+            {
+                bumpmapScore = 0; // small value means YES, this is a bumpmap
+            }
+            else
+            {
+                bumpmapScore = [self computeBumpmapScore:thumbBitmap];
+            }
 			
 			CGImageRelease(img);		
 		}
@@ -93,12 +94,16 @@
 @synthesize imageBitmap;
 @synthesize thumbBitmap;
 @synthesize fileURL = fileURL;
-@synthesize looksLikeBumpmap;
 @synthesize identifier;
 
 - (NSString*) filePath
 {
     return @(fileURL.fileSystemRepresentation);
+}
+
+- (BOOL) looksLikeBumpmap
+{
+    return bumpmapScore < kCOLOR_THRESHOLD;
 }
 
 #pragma mark -
@@ -137,12 +142,12 @@
 	CGFloat aspect = imageSize.width / imageSize.height;
 	if ( aspect > 1 )
 	{
-		thumbSize.width = THUMB_SIZE;
+		thumbSize.width = kTHUMB_SIZE;
 		thumbSize.height = thumbSize.width / aspect;
 	}
 	else
 	{
-		thumbSize.height = THUMB_SIZE;
+		thumbSize.height = kTHUMB_SIZE;
 		thumbSize.width = thumbSize.height * aspect;
 	}
 	
@@ -168,39 +173,33 @@
 	CGContextDrawImage(cggc, CGRectMake(0, 0, thumbSize.width, thumbSize.height), sourceImage);
 }
 
-- (BOOL) looksLikeABumpmap: (NSBitmapImageRep*) sourceImage withTolerance: (int) tolerance
+- (CGFloat) computeBumpmapScore:(NSBitmapImageRep*)image
 {
-	int width = sourceImage.size.width,
-		height = sourceImage.size.height,
-		bpp = 4;
-	
-	unsigned char *bytes = [sourceImage bitmapData];
-							
-	//
-	// Check each pixel. The image is a heightmap iff all red/green/blue are close-to-equal
-	//
+    int width = image.size.width,
+        height = image.size.height,
+        bpp = 4,
+        length = width * height,
+        i;
+    
+    unsigned char *bytes = [image bitmapData];
+    
+    //
+    // Compute the mean deviation from grayscale
+    //
 
-	int length = width * height, i;
-	for ( i = 0; i < length; i++ )
-	{
-		int offset = i * bpp;
-		unsigned char r = bytes[offset],
-					  g = bytes[offset+1],
-					  b = bytes[offset+2];
-
-		if ( ABS( r - g ) > tolerance ||
-			 ABS( g - b ) > tolerance )
-		{
-			return NO;
-		}
-	}
-
-	//
-	// If we're here, the image appears to be grayscale within tolerance
-	//
-	
-	return YES;
+    long sum = 0;
+    for ( i = 0; i < length; i++ )
+    {
+        int offset = i * bpp;
+        unsigned char r = bytes[offset],
+            g = bytes[offset+1],
+            b = bytes[offset+2];
+        
+        sum += ABS(r - g) + ABS(g - b) + ABS(b - r);
+    }
+    
+    CGFloat mean = (CGFloat)sum / (CGFloat) length;
+    return mean;
 }
-
 
 @end
