@@ -1,24 +1,4 @@
-
-10.6
-- Seem to have fixed the crash bugs by switching to GC
-
-- API Deprecations
-	FIXED
-	
-- The icon view no longer seems to support drag and drop -- it DID before under 10.5
-	- It seems that the selection indices are ordered 0->N but the computation of the index clicked is N->0
-	- FIXED
-	
-- initiating a drag on an unselected icon doesn't drag it.
-	- did this ever work? 
-	- IMPLEMENTED, works.
-
-- The initial message on the batch view "Drop files and folders here" is not vertically centered
-
-- Normalmaps are vertically flipped. wtf?
-	- Fixed via affine transform
-
 10.14
-- light mode, icon when selected; needs to invert label color. not certain how to bind this to representedItem.selected
-- might want to drop bindings for collection view data source, it's too... shitty
-- 
+- need to implement drag/drop between batch sections
+- need to fix drop target situation - either do it through colleciton view or make a proxy drag target from finder-to-window drag
+- major memory leak - when destroying batch window BatchEntry images aren't freed (!)
