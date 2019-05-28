@@ -13,7 +13,6 @@
 	BatchController	*batchController;
 }
 
-@property (readonly) BatchController* batchController;
 @property (readwrite) BOOL batchWindowShowing;
 
 @end

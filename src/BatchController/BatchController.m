@@ -65,7 +65,22 @@
     } else {
         bumpmapsCollectionView.backgroundColors = @[[NSColor colorWithDeviceWhite:0.9 alpha:1]];
     }
+    
+    [batchWindow makeKeyAndOrderFront:self];
 }
+
+- (void) dismiss
+{
+    // progressSheet has to be strong ptr because it's selectively shown at runtime
+    // however, keeping it strong causes memory leak, so we have to explicitly nil it
+    progressSheet = nil;
+
+    if ([batchWindow isVisible])
+    {
+        [batchWindow orderOut:self];
+    }
+}
+
 
 #pragma mark -
 
@@ -78,27 +93,6 @@
 @synthesize sheetMessage;
 @synthesize showDropMessage;
 @synthesize iconSize;
-
-- (void) setShowWindow: (BOOL) shouldShowWindow 
-{
-    if ( shouldShowWindow != showWindow )
-    {
-        showWindow = shouldShowWindow;
-        if ( showWindow )
-        {
-            [batchWindow makeKeyAndOrderFront:self];
-        }
-        else if ( [batchWindow isVisible] )
-        {
-            [batchWindow orderOut:self];
-        }
-    }
-}
-
-- (BOOL) showWindow
-{
-    return showWindow;
-}
 
 - (void) setIconSize: (CGFloat) size
 {
@@ -367,20 +361,24 @@
 - (void)windowWillClose:(NSNotification *)notification
 {
     //
-    //	This is stupid hacky, but the menu-state is maintained in the AppDelegate
-    //	and this means that when the user hits command-w or clicks the close button,
-    //	and the window is manually closed, we need to keep menu state in sync by
-    //	going through this way.
+    //    This is stupid hacky, but the menu-state is maintained in the AppDelegate
+    //    and this means that when the user hits command-w or clicks the close button,
+    //    and the window is manually closed, we need to keep menu state in sync by
+    //    going through this way.
     //
-    
-    ((AppDelegate*)[NSApp delegate]).batchWindowShowing = NO;
+
+    AppDelegate *delegate = [NSApp delegate];
+    if (delegate.batchWindowShowing)
+    {
+        delegate.batchWindowShowing = NO;
+    }
 }
 
 #pragma mark - NSCollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(NSCollectionView *)collectionView
 {
-    return ([bumpmaps count] > 0 ? 1 : 0) + ([nonBumpmaps count] > 0 ? 1 : 0);
+    return ([bumpmaps count] ? 1 : 0) + ([nonBumpmaps count] ? 1 : 0);
 }
 
 - (NSInteger)collectionView:(NSCollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -388,7 +386,7 @@
     switch(section)
     {
         case 0:
-            return [bumpmaps count];
+            return [bumpmaps count] > 0 ? [bumpmaps count] : [nonBumpmaps count];
         case 1:
             return [nonBumpmaps count];
     }
@@ -400,7 +398,7 @@
     NSMutableArray<BatchEntry*> *source = nil;
     switch(indexPath.section)
     {
-        case 0: source = bumpmaps; break;
+        case 0: source = [bumpmaps count] ? bumpmaps : nonBumpmaps; break;
         case 1: source = nonBumpmaps; break;
         default: return nil;
     }
@@ -428,9 +426,13 @@
         switch(indexPath.section)
         {
             case 0:
-                [header.sectionTitle setStringValue:@"Bumpmaps"];
-                [header.itemCount setStringValue:[NSString stringWithFormat:@"%lu", [bumpmaps count]]];
-                break;
+                if ([bumpmaps count])
+                {
+                    [header.sectionTitle setStringValue:@"Bumpmaps"];
+                    [header.itemCount setStringValue:[NSString stringWithFormat:@"%lu", [bumpmaps count]]];
+                    break;
+                }
+                // explicit fallthrough to non-bumpmaps
             case 1:
                 [header.sectionTitle setStringValue:@"Non-bumpmaps"];
                 [header.itemCount setStringValue:[NSString stringWithFormat:@"%lu", [nonBumpmaps count]]];
@@ -449,7 +451,7 @@
     switch((*proposedDropIndexPath).section)
     {
         case 0:
-            return NSDragOperationLink;
+            return NSDragOperationGeneric;
         default:
             break;
     }
@@ -471,6 +473,30 @@
 
     [self addFiles:droppedFileURLs];
     return YES;
+}
+
+- (NSSet<NSIndexPath *> *)collectionView:(NSCollectionView *)collectionView shouldSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths
+{
+    // all selection is OK
+    return indexPaths;
+}
+
+- (NSSet<NSIndexPath *> *)collectionView:(NSCollectionView *)collectionView shouldDeselectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths
+{
+    // all deselection is OK
+    return indexPaths;
+}
+
+- (void)collectionView:(NSCollectionView *)collectionView didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths
+{
+    DebugLog(@"didSelect %@", [indexPaths.allObjects componentsJoinedByString:@", "]);
+}
+
+/* Sent at the end of interactive selection, to inform the delegate that the CollectionView has de-selected the items at the specified "indexPaths".
+ */
+- (void)collectionView:(NSCollectionView *)collectionView didDeselectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths
+{
+    DebugLog(@"didDeselect %@", [indexPaths.allObjects componentsJoinedByString:@", "]);
 }
 
 #pragma mark - NSCollectionViewDelegateFlowLayout

@@ -18,7 +18,6 @@
     NSMutableArray<BatchEntry*>		*nonBumpmaps;
     
     NSUInteger						sheetProcessStepTotal, sheetProcessStep;
-    BOOL							showWindow;
     BOOL							sheetProcessRunning;
     BOOL							sheetProcessIndeterminate;
     BOOL							showDropMessage;
@@ -26,13 +25,14 @@
     NSString						*sheetMessage;
     
     __weak IBOutlet NSWindow        *batchWindow;
-    IBOutlet NSPanel			    *progressSheet;
+    IBOutlet NSPanel    			*progressSheet;
     __weak IBOutlet NSCollectionView *bumpmapsCollectionView;
     __weak IBOutlet NSCollectionViewFlowLayout *bumpmapsCollectionViewFL;
 }
 
+- (void) dismiss;
+
 @property (readwrite,retain) BatchSettings* batchSettings;
-@property (readwrite) BOOL showWindow;
 
 @property (readwrite) NSUInteger sheetProcessStepTotal;
 @property (readwrite) NSUInteger sheetProcessStep;
