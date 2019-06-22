@@ -50,6 +50,8 @@
     
     bumpmapsCollectionView.dataSource = self;
     bumpmapsCollectionView.delegate = self;
+    bumpmapsCollectionView.selectable = YES;
+    bumpmapsCollectionView.allowsMultipleSelection = YES;
 
     NSNib *itemNib = [[NSNib alloc] initWithNibNamed:@"BatchCollectionViewItem" bundle:[NSBundle mainBundle]];
     [bumpmapsCollectionView registerNib:itemNib forItemWithIdentifier:kBatchCollectionViewItemIdentifier];
@@ -58,7 +60,6 @@
     [bumpmapsCollectionView registerNib:headerNib forSupplementaryViewOfKind:NSCollectionElementKindSectionHeader withIdentifier:kBatchCollectionViewSectionHeaderIdentifier];
 
     [bumpmapsCollectionView registerForDraggedTypes:@[NSURLPboardType]];
-    [bumpmapsCollectionView setDraggingSourceOperationMask:NSDragOperationEvery forLocal:YES];
     
     if (@available(macOS 10.13, *)) {
         bumpmapsCollectionView.backgroundColors = @[[NSColor colorNamed:@"BatchViewBackground"]];
@@ -407,8 +408,7 @@
     BatchCollectionViewItem *item = [collectionView makeItemWithIdentifier:kBatchCollectionViewItemIdentifier forIndexPath:indexPath];
     if (item != nil)
     {
-        item.thumbnailTitle = [[entry.filePath lastPathComponent] stringByDeletingPathExtension];
-        item.thumbnailImage = entry.thumb;
+        item.batchEntry = entry;
     }
     else
     {
@@ -473,6 +473,11 @@
 
     [self addFiles:droppedFileURLs];
     return YES;
+}
+
+- (NSSet<NSIndexPath *> *)collectionView:(NSCollectionView *)collectionView shouldChangeItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths toHighlightState:(NSCollectionViewItemHighlightState)highlightState
+{
+    return indexPaths;
 }
 
 - (NSSet<NSIndexPath *> *)collectionView:(NSCollectionView *)collectionView shouldSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths

@@ -259,7 +259,7 @@ DQ
                                     <rect key="frame" x="0.0" y="0.0" width="784" height="428"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <collectionView id="dmv-IW-L03">
+                                        <collectionView selectable="YES" allowsMultipleSelection="YES" id="dmv-IW-L03">
                                             <rect key="frame" x="0.0" y="0.0" width="784" height="428"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                             <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="9cb-4W-j73">

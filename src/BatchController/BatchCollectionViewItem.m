@@ -12,9 +12,20 @@
 
 @implementation BatchCollectionViewItem
 
+@synthesize batchEntry = batchEntry;
+
+- (void) setBatchEntry:(BatchEntry *)batchEntry
+{
+    self->batchEntry = batchEntry;
+    [label setStringValue:[[batchEntry.filePath lastPathComponent] stringByDeletingPathExtension]];
+    [thumb setImage:batchEntry.thumb];
+}
+
 - (void) setSelected:(BOOL)selected
 {
     [super setSelected:selected];
+    batchItemView.selected = selected;
+    [batchItemView setNeedsDisplay:YES];
     
     BOOL lightMode = YES;
     if (@available(macOS 10.14, *))
@@ -35,36 +46,9 @@
     }
 }
 
-- (void) setThumbnailTitle:(NSString *)title
-{
-    [label setStringValue:title];
-}
-
-- (NSString*) thumbnailTitle
-{
-    return [label stringValue];
-}
-
-- (void) setThumbnailImage:(NSImage *)thumbnailImage
-{
-    [thumb setImage:thumbnailImage];
-}
-
-- (NSImage*) thumbnailImage
-{
-    return [thumb image];
-}
-
 @end
 
 #pragma mark - BatchItemView
-
-@interface BatchItemView(Private)
-
-- (NSView*) hitTest: (NSPoint) point forView: (NSView*) view;
-
-@end
-
 
 @implementation BatchItemView
 
@@ -86,34 +70,5 @@
         [[NSBezierPath bezierPathWithRoundedRect:NSInsetRect( self.bounds, 5,5 ) xRadius:6 yRadius:6] fill];
     }
 }
-
-- (BOOL)acceptsFirstResponder
-{
-    return NO;
-}
-
-- (NSView *)hitTest:(NSPoint)aPoint
-{
-    for ( NSView *sv in self.subviews )
-    {
-        NSView *tv = [self hitTest: aPoint forView: sv];
-        if ( tv ) return tv;
-    }
-    
-    return nil;
-}
-
-#pragma mark - Private
-
-- (NSView*) hitTest: (NSPoint) point forView: (NSView*) view
-{
-    if(NSPointInRect(point,[view convertRect:[view bounds] toView:[view superview]]))
-    {
-        return view;
-    }
-    
-    return nil;
-}
-
 
 @end

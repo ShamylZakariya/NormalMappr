@@ -1,8 +1,3 @@
 10.14
 - need to implement drag/drop between batch sections
 - need to fix drop target situation - either do it through colleciton view or make a proxy drag target from finder-to-window drag
-
-- major memory leak - when destroying batch window BatchEntry images aren't freed (!)
-    - BatchEntry::dealloc not being called
-    - BatchController::ddealloc not being called
-

@@ -63,7 +63,6 @@
     {
         if (!batchController)
         {
-            DebugLog(@"allocating batchWindow");
             batchController = [[BatchController alloc] init];
         }
     }

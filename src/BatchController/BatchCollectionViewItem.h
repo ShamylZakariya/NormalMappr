@@ -10,6 +10,20 @@
 #import "BatchEntry.h"
 #import "ThumbView.h"
 
+@class BatchItemView;
+
+@interface BatchCollectionViewItem : NSCollectionViewItem {
+    __weak IBOutlet ThumbView *thumb;
+    __weak IBOutlet NSTextField *label;
+    __weak IBOutlet BatchItemView *batchItemView;
+    BatchEntry *batchEntry;
+    NSClickGestureRecognizer *clickRecognizer;
+}
+
+@property (readwrite, nonatomic) BatchEntry *batchEntry;
+
+@end
+
 @interface BatchItemView : NSBox {
 }
 
@@ -17,13 +31,3 @@
 
 @end
 
-@interface BatchCollectionViewItem : NSCollectionViewItem {
-    __weak IBOutlet ThumbView *thumb;
-    __weak IBOutlet NSTextField *label;
-    __weak IBOutlet BatchItemView *batchItemView;
-}
-
-@property (readwrite, nonatomic) NSString* thumbnailTitle;
-@property (readwrite, nonatomic) NSImage* thumbnailImage;
-
-@end
