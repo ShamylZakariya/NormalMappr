@@ -3,7 +3,7 @@
 //  NormalMappr
 //
 //  Created by Shamyl Zakariya on 6/29/07.
-//  Copyright 2007 Shamyl Zakariya. All rights reserved.
+//  Copyright 2007-2019 Shamyl Zakariya. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

@@ -3,7 +3,7 @@
 //  FilteredImageList
 //
 //  Created by Shamyl Zakariya on 3/12/09.
-//  Copyright 2009 Shamyl Zakariya. All rights reserved.
+//  Copyright 2009-2019 Shamyl Zakariya. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
