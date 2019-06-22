@@ -66,6 +66,10 @@
             argument = "--batch /Users/shamyl/Downloads/bumpmaps"
             isEnabled = "YES">
          </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--batch /Users/shamyl/Downloads/non-bumpmaps"
+            isEnabled = "YES">
+         </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>

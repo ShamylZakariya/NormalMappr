@@ -36,9 +36,18 @@
     
     if ([args count] > 2)
     {
-        if ([args[1] isEqualToString:@"--batch"])
+        NSMutableArray<NSURL*> *batchFiles = [NSMutableArray array];
+        for (int i = 1; i < args.count; i++)
         {
-            NSArray<NSURL*> *batchFiles = @[[NSURL fileURLWithPath:args[2]]];
+            if ([args[i] isEqualToString:@"--batch"])
+            {
+                [batchFiles addObject:[NSURL fileURLWithPath:args[i+1]]];
+                i++;
+            }
+        }
+        
+        if (batchFiles.count > 0)
+        {
             self.batchWindowShowing = YES;
             [batchController addFiles:batchFiles];
         }
