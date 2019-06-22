@@ -12,6 +12,7 @@
                 <outlet property="bumpmapsCollectionView" destination="dmv-IW-L03" id="yVO-7O-0Sb"/>
                 <outlet property="bumpmapsCollectionViewFL" destination="9cb-4W-j73" id="SOM-fC-wzo"/>
                 <outlet property="progressSheet" destination="4" id="137"/>
+                <outlet property="runButton" destination="108" id="NPj-kJ-Hab"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
@@ -74,7 +75,7 @@ DQ
                             <textField verticalHuggingPriority="750" id="98">
                                 <rect key="frame" x="148" y="20" width="111" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="99">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" bezelStyle="round" id="99">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

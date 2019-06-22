@@ -28,6 +28,7 @@
     IBOutlet NSPanel    			*progressSheet;
     __weak IBOutlet NSCollectionView *bumpmapsCollectionView;
     __weak IBOutlet NSCollectionViewFlowLayout *bumpmapsCollectionViewFL;
+    __weak IBOutlet NSButton *runButton;
 }
 
 - (void) dismiss;

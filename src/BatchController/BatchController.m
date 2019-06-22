@@ -68,6 +68,7 @@
     }
     
     [batchWindow makeKeyAndOrderFront:self];
+    batchWindow.defaultButtonCell = runButton.cell;
 }
 
 - (void) dismiss
@@ -379,7 +380,7 @@
 
 - (NSInteger)numberOfSectionsInCollectionView:(NSCollectionView *)collectionView
 {
-    return ([bumpmaps count] ? 1 : 0) + ([nonBumpmaps count] ? 1 : 0);
+    return 2;
 }
 
 - (NSInteger)collectionView:(NSCollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -387,7 +388,7 @@
     switch(section)
     {
         case 0:
-            return [bumpmaps count] > 0 ? [bumpmaps count] : [nonBumpmaps count];
+            return [bumpmaps count];
         case 1:
             return [nonBumpmaps count];
     }
@@ -399,7 +400,7 @@
     NSMutableArray<BatchEntry*> *source = nil;
     switch(indexPath.section)
     {
-        case 0: source = [bumpmaps count] ? bumpmaps : nonBumpmaps; break;
+        case 0: source = bumpmaps; break;
         case 1: source = nonBumpmaps; break;
         default: return nil;
     }
@@ -426,13 +427,9 @@
         switch(indexPath.section)
         {
             case 0:
-                if ([bumpmaps count])
-                {
-                    [header.sectionTitle setStringValue:@"Bumpmaps"];
-                    [header.itemCount setStringValue:[NSString stringWithFormat:@"%lu", [bumpmaps count]]];
-                    break;
-                }
-                // explicit fallthrough to non-bumpmaps
+                [header.sectionTitle setStringValue:@"Bumpmaps"];
+                [header.itemCount setStringValue:[NSString stringWithFormat:@"%lu", [bumpmaps count]]];
+                break;
             case 1:
                 [header.sectionTitle setStringValue:@"Non-bumpmaps"];
                 [header.itemCount setStringValue:[NSString stringWithFormat:@"%lu", [nonBumpmaps count]]];
@@ -494,14 +491,10 @@
 
 - (void)collectionView:(NSCollectionView *)collectionView didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths
 {
-    DebugLog(@"didSelect %@", [indexPaths.allObjects componentsJoinedByString:@", "]);
 }
 
-/* Sent at the end of interactive selection, to inform the delegate that the CollectionView has de-selected the items at the specified "indexPaths".
- */
 - (void)collectionView:(NSCollectionView *)collectionView didDeselectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths
 {
-    DebugLog(@"didDeselect %@", [indexPaths.allObjects componentsJoinedByString:@", "]);
 }
 
 #pragma mark - NSCollectionViewDelegateFlowLayout
