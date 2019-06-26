@@ -10,7 +10,7 @@
 @class BatchController;
 
 @interface AppDelegate : NSObject {
-	BatchController	*batchController;
+    BatchController* batchController;
 }
 
 @property (readwrite) BOOL batchWindowShowing;

@@ -9,8 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TemplateInDarkModeButton : NSButton
-{
+@interface TemplateInDarkModeButton : NSButton {
     BOOL _defaultIsTemplateImage;
 }
 

@@ -13,18 +13,18 @@
 #define NORMAL_MAP_5X5 2
 
 @interface NormalMapFilter : CIFilter {
-	NSMutableDictionary	*kernelsByName;
-	CIKernel			*currentKernel;
-	CIImage				*inputImage;
-	CGFloat				strength;
-	NSUInteger			sampleRadius;
-	BOOL				clampToEdge;
+    NSMutableDictionary* kernelsByName;
+    CIKernel* currentKernel;
+    CIImage* inputImage;
+    CGFloat strength;
+    NSUInteger sampleRadius;
+    BOOL clampToEdge;
 }
 
 @property (nonatomic, readwrite) CGFloat strength;
 @property (nonatomic, readwrite) NSUInteger sampleRadius;
 @property (nonatomic, readwrite) BOOL clampToEdge;
 
-- (CIImage *)outputImage;
+- (CIImage*)outputImage;
 
 @end

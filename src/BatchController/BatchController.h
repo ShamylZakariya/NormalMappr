@@ -6,34 +6,34 @@
 //  Copyright 2009-2019 Shamyl Zakariya. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
-#import "BatchSettings.h"
 #import "BatchEntry.h"
+#import "BatchSettings.h"
+#import <Cocoa/Cocoa.h>
 
 @interface BatchController : NSObject <NSCollectionViewDataSource, NSCollectionViewDelegate, NSCollectionViewDelegateFlowLayout> {
-    BatchSettings					*batchSettings;
-    
-    CGFloat							iconSize;
-    NSMutableArray<BatchEntry*>		*bumpmaps;
-    NSMutableArray<BatchEntry*>		*nonBumpmaps;
-    
-    NSUInteger						sheetProcessStepTotal, sheetProcessStep;
-    BOOL							sheetProcessRunning;
-    BOOL							sheetProcessIndeterminate;
-    BOOL							showDropMessage;
-    CGFloat							sheetProcessProgress;
-    NSString						*sheetMessage;
-    
-    __weak IBOutlet NSWindow        *batchWindow;
-    IBOutlet NSPanel    			*progressSheet;
-    __weak IBOutlet NSCollectionView *bumpmapsCollectionView;
-    __weak IBOutlet NSCollectionViewFlowLayout *bumpmapsCollectionViewFL;
-    __weak IBOutlet NSButton *runButton;
+    BatchSettings* batchSettings;
+
+    CGFloat iconSize;
+    NSMutableArray<BatchEntry*>* bumpmaps;
+    NSMutableArray<BatchEntry*>* nonBumpmaps;
+
+    NSUInteger sheetProcessStepTotal, sheetProcessStep;
+    BOOL sheetProcessRunning;
+    BOOL sheetProcessIndeterminate;
+    BOOL showDropMessage;
+    CGFloat sheetProcessProgress;
+    NSString* sheetMessage;
+
+    __weak IBOutlet NSWindow* batchWindow;
+    IBOutlet NSPanel* progressSheet;
+    __weak IBOutlet NSCollectionView* bumpmapsCollectionView;
+    __weak IBOutlet NSCollectionViewFlowLayout* bumpmapsCollectionViewFL;
+    __weak IBOutlet NSButton* runButton;
 }
 
-- (void) dismiss;
+- (void)dismiss;
 
-@property (readwrite,retain) BatchSettings* batchSettings;
+@property (readwrite, retain) BatchSettings* batchSettings;
 
 @property (readwrite) NSUInteger sheetProcessStepTotal;
 @property (readwrite) NSUInteger sheetProcessStep;
@@ -41,18 +41,18 @@
 @property (readwrite) BOOL sheetProcessRunning;
 @property (readwrite) BOOL sheetProcessIndeterminate;
 @property (readwrite) CGFloat sheetProcessProgress;
-@property (readwrite,retain) NSString* sheetMessage;
+@property (readwrite, retain) NSString* sheetMessage;
 
 @property (readwrite, nonatomic) BOOL showDropMessage;
 @property (readwrite, nonatomic) CGFloat iconSize;
 
-- (NSInteger) bumpmapCount;
-- (NSInteger) nonBumpmapCount;
+- (NSInteger)bumpmapCount;
+- (NSInteger)nonBumpmapCount;
 
-- (void) addFiles:(NSArray<NSURL*>*) fileURLs;
-- (void) removeFiles: (NSArray<NSURL*>*) fileURLs;
-- (void) savePreferences;
+- (void)addFiles:(NSArray<NSURL*>*)fileURLs;
+- (void)removeFiles:(NSArray<NSURL*>*)fileURLs;
+- (void)savePreferences;
 
-- (IBAction) executeBatch: (id) sender;
+- (IBAction)executeBatch:(id)sender;
 
 @end

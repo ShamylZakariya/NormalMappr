@@ -8,22 +8,20 @@
 
 #import <Cocoa/Cocoa.h>
 
-typedef enum _NMNameDecoration
-{
+typedef enum _NMNameDecoration {
     NMNameDecorationPrepend = 0,
     NMNameDecorationAppend = 1
 } NMNameDecoration;
 
-
 @interface BatchSettings : NSObject {
-    
+
     CGFloat saveQuality;
     int sampleRadius, saveFormat, strength;
     NMNameDecoration nameDecorationStyle;
 }
 
-- (void) loadPrefs;
-- (void) savePrefs;
+- (void)loadPrefs;
+- (void)savePrefs;
 
 @property (nonatomic, readwrite) CGFloat saveQuality;
 @property (nonatomic, readwrite) int strength; // [0,100]

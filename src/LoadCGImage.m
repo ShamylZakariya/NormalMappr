@@ -8,31 +8,30 @@
 
 #import "LoadCGImage.h"
 
-CGImageRef 
-LoadCGImage( NSString *filename )
+CGImageRef
+LoadCGImage(NSString* filename)
 {
-	CFStringRef path = NULL;
-	CFURLRef url = NULL;
+    CFStringRef path = NULL;
+    CFURLRef url = NULL;
 
-	path = CFStringCreateWithCString( NULL, [filename fileSystemRepresentation], 
-									  kCFStringEncodingUTF8 ); 
+    path = CFStringCreateWithCString(NULL, [filename fileSystemRepresentation],
+        kCFStringEncodingUTF8);
 
-	url = CFURLCreateWithFileSystemPath( NULL, path,
-										 kCFURLPOSIXPathStyle, false );
-	CFRelease(path);    
+    url = CFURLCreateWithFileSystemPath(NULL, path,
+        kCFURLPOSIXPathStyle, false);
+    CFRelease(path);
 
-	CGImageRef image = NULL;
-	CGImageSourceRef sourceRef = NULL;
-	
-	sourceRef = CGImageSourceCreateWithURL( url, NULL );
+    CGImageRef image = NULL;
+    CGImageSourceRef sourceRef = NULL;
 
-	CFRelease( url );
+    sourceRef = CGImageSourceCreateWithURL(url, NULL);
 
-	if ( sourceRef )
-	{
-		image = CGImageSourceCreateImageAtIndex( sourceRef, 0, NULL );
-		CFRelease( sourceRef );
-	}
-	
-	return image;
+    CFRelease(url);
+
+    if (sourceRef) {
+        image = CGImageSourceCreateImageAtIndex(sourceRef, 0, NULL);
+        CFRelease(sourceRef);
+    }
+
+    return image;
 }

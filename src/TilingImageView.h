@@ -8,9 +8,7 @@
 
 #import "ImageView.h"
 
-
 @interface TilingImageView : ImageView {
-
 }
 
 @end

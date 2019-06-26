@@ -8,7 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-
 @interface NSView (viewAtPointExcluding)
 
 - (id)viewAtPoint:(NSPoint)pt excludingView:(id)eView;

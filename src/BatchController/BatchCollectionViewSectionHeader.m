@@ -9,14 +9,11 @@
 
 @implementation ItemCountBackgroundView
 
-- (void) drawRect:(NSRect)dirtyRect
+- (void)drawRect:(NSRect)dirtyRect
 {
-    if (@available(macOS 10.13, *))
-    {
+    if (@available(macOS 10.13, *)) {
         [[NSColor colorNamed:@"ItemCountBackgroundColor"] set];
-    }
-    else
-    {
+    } else {
         [[NSColor redColor] set];
     }
 
@@ -25,7 +22,6 @@
 }
 
 @end
-
 
 @implementation BatchCollectionViewSectionHeader
 

@@ -14,34 +14,29 @@
 
 @synthesize batchEntry = batchEntry;
 
-- (void) setBatchEntry:(BatchEntry *)batchEntry
+- (void)setBatchEntry:(BatchEntry*)batchEntry
 {
     self->batchEntry = batchEntry;
     [label setStringValue:[[batchEntry.filePath lastPathComponent] stringByDeletingPathExtension]];
     [thumb setImage:batchEntry.thumb];
 }
 
-- (void) setSelected:(BOOL)selected
+- (void)setSelected:(BOOL)selected
 {
     [super setSelected:selected];
     batchItemView.selected = selected;
     [batchItemView setNeedsDisplay:YES];
-    
+
     BOOL lightMode = YES;
-    if (@available(macOS 10.14, *))
-    {
-        if ([[self.view effectiveAppearance].name isEqualToString:NSAppearanceNameDarkAqua])
-        {
+    if (@available(macOS 10.14, *)) {
+        if ([[self.view effectiveAppearance].name isEqualToString:NSAppearanceNameDarkAqua]) {
             lightMode = NO;
         }
     }
-    
-    if (lightMode)
-    {
+
+    if (lightMode) {
         label.textColor = selected ? [NSColor whiteColor] : [NSColor controlTextColor];
-    }
-    else
-    {
+    } else {
         label.textColor = [NSColor whiteColor];
     }
 }
@@ -56,18 +51,14 @@
 
 - (void)drawRect:(NSRect)rect
 {
-    if ( selected )
-    {
-        if (@available(macOS 10.14, *))
-        {
+    if (selected) {
+        if (@available(macOS 10.14, *)) {
             [[NSColor selectedContentBackgroundColor] set];
-        }
-        else
-        {
+        } else {
             [[NSColor alternateSelectedControlColor] set];
         }
-        
-        [[NSBezierPath bezierPathWithRoundedRect:NSInsetRect( self.bounds, 5,5 ) xRadius:6 yRadius:6] fill];
+
+        [[NSBezierPath bezierPathWithRoundedRect:NSInsetRect(self.bounds, 5, 5) xRadius:6 yRadius:6] fill];
     }
 }
 

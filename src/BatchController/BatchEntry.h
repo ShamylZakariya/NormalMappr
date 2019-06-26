@@ -8,18 +8,17 @@
 
 #import <Cocoa/Cocoa.h>
 
-
 @interface BatchEntry : NSObject {
-    NSURL *fileURL;
-	NSImage *image, *thumb;
-	NSBitmapImageRep *imageBitmap, *thumbBitmap;
-	NSString *displayTitle, *displayPath, *identifier;
+    NSURL* fileURL;
+    NSImage *image, *thumb;
+    NSBitmapImageRep *imageBitmap, *thumbBitmap;
+    NSString *displayTitle, *displayPath, *identifier;
     CGFloat bumpmapScore;
 }
 
-+ (BatchEntry*) fromFileURL: (NSURL*) fileURL;
++ (BatchEntry*)fromFileURL:(NSURL*)fileURL;
 
-- (id) initWithFileURL: (NSURL*) fileURL;
+- (id)initWithFileURL:(NSURL*)fileURL;
 
 @property (readonly) NSString* identifier;
 
@@ -28,7 +27,7 @@
 @property (readonly) NSBitmapImageRep* imageBitmap;
 @property (readonly) NSBitmapImageRep* thumbBitmap;
 @property (readonly) NSURL* fileURL;
-@property (readonly) NSString *filePath;
+@property (readonly) NSString* filePath;
 @property (readonly) BOOL looksLikeBumpmap;
 
 @end

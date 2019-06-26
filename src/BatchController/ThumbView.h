@@ -8,10 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 
-
 @interface ThumbView : NSImageView {
-	NSShadow	*shadow;
-	CGFloat		inset;
+    NSShadow* shadow;
+    CGFloat inset;
 }
 
 @property (nonatomic, readwrite) CGFloat inset;

@@ -8,17 +8,17 @@
 
 #import "NSView+viewAtPointExcluding.h"
 
-
 @implementation NSView (viewAtPointExcluding)
 
-- (id)viewAtPoint:(NSPoint)pt excludingView:(id)eView {
-	for( NSView * view in [self subviews] ) {
-		if( view != eView && [self mouse:pt inRect:[view frame]] ) {
-			return (view);
-		}
-	}
-	
-	return nil;
+- (id)viewAtPoint:(NSPoint)pt excludingView:(id)eView
+{
+    for (NSView* view in [self subviews]) {
+        if (view != eView && [self mouse:pt inRect:[view frame]]) {
+            return (view);
+        }
+    }
+
+    return nil;
 }
 
 @end

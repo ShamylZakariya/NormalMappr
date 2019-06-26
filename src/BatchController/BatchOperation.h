@@ -6,21 +6,20 @@
 //  Copyright 2007-2019 Shamyl Zakariya. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
-#import "BatchSettings.h"
 #import "BatchEntry.h"
+#import "BatchSettings.h"
+#import <Cocoa/Cocoa.h>
 
 @interface BatchOperation : NSObject {
-	BatchEntry *entry;
-	BatchSettings *settings;
+    BatchEntry* entry;
+    BatchSettings* settings;
 }
 
-- (id) initWithEntry: (BatchEntry*) entry andSettings: (BatchSettings*) settings;
-+ (BatchOperation*) batchOperationWithEntry: (BatchEntry*) entry andSettings: (BatchSettings*) settings;
+- (id)initWithEntry:(BatchEntry*)entry andSettings:(BatchSettings*)settings;
++ (BatchOperation*)batchOperationWithEntry:(BatchEntry*)entry andSettings:(BatchSettings*)settings;
 
-- (NSURL*) outputURL;
+- (NSURL*)outputURL;
 
-- (void) run;
-
+- (void)run;
 
 @end

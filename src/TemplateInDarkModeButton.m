@@ -9,10 +9,10 @@
 
 @implementation TemplateInDarkModeButton
 
-- (void) layout {
+- (void)layout
+{
     if (@available(macOS 10.14, *)) {
-        if ([[self effectiveAppearance].name isEqualToString:NSAppearanceNameDarkAqua])
-        {
+        if ([[self effectiveAppearance].name isEqualToString:NSAppearanceNameDarkAqua]) {
             [[self image] setTemplate:YES];
         }
     }

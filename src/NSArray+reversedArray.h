@@ -8,9 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-
 @interface NSArray (reversedArray)
 
-- (NSArray *)reversedArray;
+- (NSArray*)reversedArray;
 
 @end
