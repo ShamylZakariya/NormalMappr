@@ -14,8 +14,6 @@
 		36A586140F8F68DE00AC6E58 /* DebugLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A586130F8F68DE00AC6E58 /* DebugLog.m */; };
 		36A586420F8F6BCF00AC6E58 /* BatchWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36A586410F8F6BCF00AC6E58 /* BatchWindow.xib */; };
 		36A586520F8F6CBC00AC6E58 /* BatchOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A586500F8F6CBC00AC6E58 /* BatchOperation.m */; };
-		36A586600F8F6E8900AC6E58 /* NSArray+reversedArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A5865D0F8F6E8900AC6E58 /* NSArray+reversedArray.m */; };
-		36A586610F8F6E8900AC6E58 /* NSView+viewAtPointExcluding.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A5865F0F8F6E8900AC6E58 /* NSView+viewAtPointExcluding.m */; };
 		36A586760F8F6EA500AC6E58 /* BatchEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A586670F8F6EA500AC6E58 /* BatchEntry.m */; };
 		36A586780F8F6EA500AC6E58 /* BatchCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A5866B0F8F6EA500AC6E58 /* BatchCollectionViewItem.m */; };
 		36A5867D0F8F6EA500AC6E58 /* ThumbView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A586750F8F6EA500AC6E58 /* ThumbView.m */; };
@@ -77,10 +75,6 @@
 		36A586410F8F6BCF00AC6E58 /* BatchWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BatchWindow.xib; sourceTree = "<group>"; };
 		36A5864F0F8F6CBC00AC6E58 /* BatchOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BatchOperation.h; sourceTree = "<group>"; };
 		36A586500F8F6CBC00AC6E58 /* BatchOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BatchOperation.m; sourceTree = "<group>"; };
-		36A5865C0F8F6E8900AC6E58 /* NSArray+reversedArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+reversedArray.h"; sourceTree = "<group>"; };
-		36A5865D0F8F6E8900AC6E58 /* NSArray+reversedArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+reversedArray.m"; sourceTree = "<group>"; };
-		36A5865E0F8F6E8900AC6E58 /* NSView+viewAtPointExcluding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+viewAtPointExcluding.h"; sourceTree = "<group>"; };
-		36A5865F0F8F6E8900AC6E58 /* NSView+viewAtPointExcluding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+viewAtPointExcluding.m"; sourceTree = "<group>"; };
 		36A586660F8F6EA500AC6E58 /* BatchEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BatchEntry.h; sourceTree = "<group>"; };
 		36A586670F8F6EA500AC6E58 /* BatchEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BatchEntry.m; sourceTree = "<group>"; };
 		36A5866A0F8F6EA500AC6E58 /* BatchCollectionViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BatchCollectionViewItem.h; sourceTree = "<group>"; };
@@ -243,10 +237,6 @@
 		367725530C35984100B12FDE /* Extensions, etc */ = {
 			isa = PBXGroup;
 			children = (
-				36A5865C0F8F6E8900AC6E58 /* NSArray+reversedArray.h */,
-				36A5865D0F8F6E8900AC6E58 /* NSArray+reversedArray.m */,
-				36A5865E0F8F6E8900AC6E58 /* NSView+viewAtPointExcluding.h */,
-				36A5865F0F8F6E8900AC6E58 /* NSView+viewAtPointExcluding.m */,
 				36A586120F8F68DE00AC6E58 /* DebugLog.h */,
 				36A586130F8F68DE00AC6E58 /* DebugLog.m */,
 				36F9516F0F64A0590003C8EF /* LoadCGImage.h */,
@@ -451,8 +441,6 @@
 				36F951710F64A0590003C8EF /* LoadCGImage.m in Sources */,
 				36A586140F8F68DE00AC6E58 /* DebugLog.m in Sources */,
 				36A586520F8F6CBC00AC6E58 /* BatchOperation.m in Sources */,
-				36A586600F8F6E8900AC6E58 /* NSArray+reversedArray.m in Sources */,
-				36A586610F8F6E8900AC6E58 /* NSView+viewAtPointExcluding.m in Sources */,
 				63608AFC228B068F0062CD4C /* VDKQueue.m in Sources */,
 				36A586760F8F6EA500AC6E58 /* BatchEntry.m in Sources */,
 				36A586780F8F6EA500AC6E58 /* BatchCollectionViewItem.m in Sources */,
