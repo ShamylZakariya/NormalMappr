@@ -15,9 +15,12 @@
 
 #define kBatchCollectionViewItemIdentifier @"batchCollectionViewItem"
 #define kBatchCollectionViewSectionHeaderIdentifier @"batchCollectionSectionHeader"
+#define kUserSaveLocationTag 100
 
 @interface BatchController (Private)
 
+- (void)requestUserSaveDestination;
+- (void)addUserSaveDestination:(NSURL*)destination;
 - (BOOL)canOpenFileWithExtension:(NSString*)extension;
 - (NSMutableArray<NSURL*>*)gatherFiles:(NSArray<NSURL*>*)fileURLs;
 - (void)loadDroppedFiles:(NSArray<NSURL*>*)fileURLs;
@@ -67,10 +70,27 @@
 
     [batchWindow makeKeyAndOrderFront:self];
     batchWindow.defaultButtonCell = runButton.cell;
+
+    // sync up user save dir popup
+    // NOTE: We don't use cocoa bindings with the popup, because it
+    // led to some oddities where at startup the menu attempted to select
+    // an item which mapped to a non-existing tag
+    if (batchSettings.userSaveDestination != nil) {
+        previousSaveLocationPopupTag = kUserSaveLocationTag;
+        [self addUserSaveDestination:batchSettings.userSaveDestination];
+    } else {
+        previousSaveLocationPopupTag = 0;
+    }
+
+    if (batchSettings.saveDestinationType == NMSaveDestinationInPlace) {
+        [saveLocationPopup selectItemWithTag:NMSaveDestinationInPlace];
+    }
 }
 
 - (void)dismiss
 {
+    [batchSettings savePrefs];
+
     // progressSheet has to be strong ptr because it's selectively shown at runtime
     // however, keeping it strong causes memory leak, so we have to explicitly nil it
     progressSheet = nil;
@@ -83,6 +103,7 @@
 #pragma mark -
 
 @synthesize batchSettings;
+@synthesize batchWindow = batchWindow;
 @synthesize sheetProcessStepTotal;
 @synthesize sheetProcessStep;
 @synthesize sheetProcessRunning;
@@ -149,15 +170,12 @@
     DebugLog(@"remove %@", [fileURLs componentsJoinedByString:@"\n"]);
 }
 
-- (void)savePreferences
-{
-    [batchSettings savePrefs];
-}
-
 - (IBAction)executeBatch:(id)sender
 {
-    if (self.sheetProcessRunning)
+    if (self.sheetProcessRunning) {
         return;
+    }
+
     self.sheetProcessRunning = YES;
 
     //
@@ -182,6 +200,67 @@
         STRONG_SELF;
         [strongSelf normalmapFiles:bumpmaps];
     });
+}
+
+- (IBAction)onSaveLocationPopupAction:(id)sender
+{
+    NSMenuItem* selected = saveLocationPopup.selectedItem;
+    if (selected != nil) {
+        DebugLog(@"onSaveLocationPopupAction tag %@", @(selected.tag));
+        switch (selected.tag) {
+        case NMSaveDestinationUserSelected:
+            batchSettings.saveDestinationType = NMSaveDestinationUserSelected;
+            [self requestUserSaveDestination];
+            break;
+        case NMSaveDestinationInPlace:
+            batchSettings.saveDestinationType = NMSaveDestinationInPlace;
+            previousSaveLocationPopupTag = selected.tag;
+            break;
+        case kUserSaveLocationTag:
+            batchSettings.saveDestinationType = NMSaveDestinationUserSelected;
+            previousSaveLocationPopupTag = selected.tag;
+            DebugLog(@"selected kUserSaveLocationTag - %@", batchSettings.userSaveDestination);
+            break;
+        }
+    }
+}
+
+- (void)requestUserSaveDestination
+{
+    NSOpenPanel* panel = [NSOpenPanel openPanel];
+    panel.canChooseFiles = NO;
+    panel.canChooseDirectories = YES;
+    panel.allowsMultipleSelection = NO;
+
+    [panel beginSheetModalForWindow:self.batchWindow
+                  completionHandler:^(NSModalResponse result) {
+                      switch (result) {
+                      case NSFileHandlingPanelOKButton:
+                          DebugLog(@"user selected OK, urls: %@", panel.URLs.firstObject);
+                          self.batchSettings.userSaveDestination = panel.URLs.firstObject;
+                          [self addUserSaveDestination:self.batchSettings.userSaveDestination];
+                          break;
+                      default:
+                          // user cancelled, select the previously selected item
+                          [saveLocationPopup selectItemWithTag:previousSaveLocationPopupTag];
+                          break;
+                      }
+                  }];
+}
+
+- (void)addUserSaveDestination:(NSURL*)destination
+{
+    DebugLog(@"addUserSaveDestination: %@", destination);
+
+    int existingIndex = [saveLocationPopup indexOfItemWithTag:kUserSaveLocationTag];
+    if (existingIndex >= 0) {
+        [saveLocationPopup removeItemAtIndex:existingIndex];
+    }
+
+    const int index = 1; // element 0 is the default, "Current directory"
+    [saveLocationPopup insertItemWithTitle:[destination.absoluteString lastPathComponent] atIndex:index];
+    [[saveLocationPopup itemAtIndex:index] setTag:kUserSaveLocationTag];
+    [saveLocationPopup selectItemAtIndex:index];
 }
 
 #pragma mark - File analysis

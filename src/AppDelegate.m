@@ -50,10 +50,6 @@
 
 - (void)applicationWillTerminate:(NSNotification*)aNotification
 {
-    //	Only save batch controller prefs if it has actually been loaded
-    if (batchController)
-        [batchController savePreferences];
-
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:[NSNumber numberWithBool:self.batchWindowShowing] forKey:kPrefBatchWindowShowing];
 }

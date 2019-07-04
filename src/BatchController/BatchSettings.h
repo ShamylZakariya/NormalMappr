@@ -8,16 +8,22 @@
 
 #import <Cocoa/Cocoa.h>
 
-typedef enum _NMNameDecoration {
+@class BatchController;
+
+typedef NS_ENUM(NSInteger, NMNameDecoration) {
     NMNameDecorationPrepend = 0,
     NMNameDecorationAppend = 1
-} NMNameDecoration;
+};
+
+typedef NS_ENUM(NSInteger, NMSaveDestinationType) {
+    NMSaveDestinationInPlace = 0,
+    NMSaveDestinationUserSelected = 1
+};
 
 @interface BatchSettings : NSObject {
 
     CGFloat saveQuality;
     int sampleRadius, saveFormat, strength;
-    NMNameDecoration nameDecorationStyle;
 }
 
 - (void)loadPrefs;
@@ -35,5 +41,7 @@ typedef enum _NMNameDecoration {
 @property (nonatomic, readwrite) NSString* nameDecoration;
 @property (nonatomic, readwrite) NMNameDecoration nameDecorationStyle;
 @property (nonatomic, readwrite) BOOL showSaveQualityControls;
+@property (nonatomic, readwrite) NMSaveDestinationType saveDestinationType;
+@property (nonatomic, readwrite) NSURL* userSaveDestination;
 
 @end

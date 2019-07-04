@@ -1,3 +1,4 @@
 10.14
 - need to implement drag/drop between batch sections
 - need to fix drop target situation - either do it through colleciton view or make a proxy drag target from finder-to-window drag
+

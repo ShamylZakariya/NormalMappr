@@ -23,17 +23,20 @@
     BOOL showDropMessage;
     CGFloat sheetProcessProgress;
     NSString* sheetMessage;
+    NSInteger previousSaveLocationPopupTag;
 
     __weak IBOutlet NSWindow* batchWindow;
     IBOutlet NSPanel* progressSheet;
     __weak IBOutlet NSCollectionView* bumpmapsCollectionView;
     __weak IBOutlet NSCollectionViewFlowLayout* bumpmapsCollectionViewFL;
     __weak IBOutlet NSButton* runButton;
+    __weak IBOutlet NSPopUpButton* saveLocationPopup;
 }
 
 - (void)dismiss;
 
 @property (readwrite, retain) BatchSettings* batchSettings;
+@property (weak, readonly) NSWindow* batchWindow;
 
 @property (readwrite) NSUInteger sheetProcessStepTotal;
 @property (readwrite) NSUInteger sheetProcessStep;
@@ -51,8 +54,8 @@
 
 - (void)addFiles:(NSArray<NSURL*>*)fileURLs;
 - (void)removeFiles:(NSArray<NSURL*>*)fileURLs;
-- (void)savePreferences;
 
 - (IBAction)executeBatch:(id)sender;
+- (IBAction)onSaveLocationPopupAction:(id)sender;
 
 @end

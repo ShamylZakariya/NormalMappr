@@ -7,6 +7,7 @@
 //
 
 #import "BatchSettings.h"
+#import "BatchController.h"
 
 @implementation BatchSettings
 
@@ -23,6 +24,8 @@
         self.saveFormat = NSPNGFileType;
         self.nameDecoration = @"_normal";
         self.nameDecorationStyle = NMNameDecorationAppend;
+        self.saveDestinationType = NMSaveDestinationInPlace;
+        self.userSaveDestination = nil;
 
         [self loadPrefs];
     }
@@ -42,6 +45,8 @@
 #define kPrefNameDecorationStyle @"NameDecorationStyle"
 #define kPrefSaveQuality @"SaveQuality"
 #define kPrefSaveFormat @"SaveFormat"
+#define kSaveDestinationType @"SaveDestinationType"
+#define kUserSaveDestination @"UserSaveDestination"
 
 #define kBatchSettings @"BatchSettings"
 
@@ -91,6 +96,14 @@
         if ((value = [settings valueForKey:kPrefSaveQuality])) {
             self.saveQuality = [value floatValue];
         }
+
+        if ((value = [settings valueForKey:kSaveDestinationType])) {
+            self.saveDestinationType = [value intValue];
+        }
+
+        if ((value = [settings valueForKey:kUserSaveDestination])) {
+            self.userSaveDestination = [NSURL URLWithString:value];
+        }
     }
 }
 
@@ -109,6 +122,11 @@
     [settings setObject:[NSNumber numberWithInt:self.saveFormat] forKey:kPrefSaveFormat];
     [settings setObject:[NSNumber numberWithFloat:self.saveQuality] forKey:kPrefSaveQuality];
 
+    [settings setObject:[NSNumber numberWithInt:self.saveDestinationType] forKey:kSaveDestinationType];
+    if (self.userSaveDestination != nil) {
+        [settings setObject:[self.userSaveDestination absoluteString] forKey:kUserSaveDestination];
+    }
+
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:settings forKey:kBatchSettings];
 }
@@ -126,6 +144,8 @@
 @synthesize saveFormat;
 @synthesize nameDecoration;
 @synthesize nameDecorationStyle;
+@synthesize saveDestinationType;
+@synthesize userSaveDestination;
 
 #pragma mark -
 
@@ -143,42 +163,33 @@
 {
     saveFormat = newSaveFormat;
     switch (saveFormat) {
-    case NSJPEGFileType: {
+    case NSJPEGFileType:
         self.showSaveQualityControls = YES;
         break;
-    }
 
-    case NSJPEG2000FileType: {
+    case NSJPEG2000FileType:
         self.showSaveQualityControls = YES;
         break;
-    }
 
-    case NSPNGFileType: {
+    case NSPNGFileType:
         self.showSaveQualityControls = NO;
-    }
     }
 }
 
 - (NSString*)saveFormatExtension
 {
-    NSString* extension = nil;
     switch (saveFormat) {
-    case NSJPEGFileType: {
-        extension = @"jpg";
-        break;
+    case NSJPEGFileType:
+        return @"jpg";
+
+    case NSJPEG2000FileType:
+        return @"jp2";
+
+    case NSPNGFileType:
+        return @"png";
     }
 
-    case NSJPEG2000FileType: {
-        extension = @"jp2";
-        break;
-    }
-
-    case NSPNGFileType: {
-        extension = @"png";
-    }
-    }
-
-    return extension;
+    return nil;
 }
 
 @end
