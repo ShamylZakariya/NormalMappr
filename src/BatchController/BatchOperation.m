@@ -36,31 +36,31 @@
     //
     // build the file name (sans path)
     //
-    
-    NSString *outputFileName = [[entry.filePath lastPathComponent] stringByDeletingPathExtension];
+
+    NSString* outputFileName = [[entry.filePath lastPathComponent] stringByDeletingPathExtension];
     switch (settings.nameDecorationStyle) {
-        case NMNameDecorationPrepend: {
-            outputFileName = [settings.nameDecoration stringByAppendingString:outputFileName];
-            break;
-        }
-        case NMNameDecorationAppend: {
-            outputFileName = [outputFileName stringByAppendingString:settings.nameDecoration];
-            break;
-        }
+    case NMNameDecorationPrepend: {
+        outputFileName = [settings.nameDecoration stringByAppendingString:outputFileName];
+        break;
+    }
+    case NMNameDecorationAppend: {
+        outputFileName = [outputFileName stringByAppendingString:settings.nameDecoration];
+        break;
+    }
     }
     outputFileName = [outputFileName stringByAppendingPathExtension:settings.saveFormatExtension];
 
     //
     // build the file path
     //
-    
-    NSString *outputFileLocation = [entry.filePath stringByDeletingLastPathComponent];
+
+    NSString* outputFileLocation = [entry.filePath stringByDeletingLastPathComponent];
     if (settings.userSaveDestination != nil && settings.saveDestinationType == NMSaveDestinationUserSelected) {
         outputFileLocation = [settings.userSaveDestination path];
     }
-    
-    NSString *fullPath = [outputFileLocation stringByAppendingPathComponent:outputFileName];
-    NSURL *fullURL = [NSURL fileURLWithPath:fullPath];
+
+    NSString* fullPath = [outputFileLocation stringByAppendingPathComponent:outputFileName];
+    NSURL* fullURL = [NSURL fileURLWithPath:fullPath];
     return fullURL;
 }
 
