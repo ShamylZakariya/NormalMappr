@@ -463,11 +463,9 @@
     case 0:
         source = bumpmaps;
         break;
-    case 1:
+    default:
         source = nonBumpmaps;
         break;
-    default:
-        return nil;
     }
 
     BatchEntry* entry = source[indexPath.item];
@@ -487,11 +485,11 @@
         BatchCollectionViewSectionHeader* header = [collectionView makeSupplementaryViewOfKind:NSCollectionElementKindSectionHeader withIdentifier:kBatchCollectionViewSectionHeaderIdentifier forIndexPath:indexPath];
         switch (indexPath.section) {
         case 0:
-            [header.sectionTitle setStringValue:@"Bumpmaps"];
+            [header.sectionTitle setStringValue:NSLocalizedString(@"Bumpmaps", @"Title of section holding apparently valid bumpmaps")];
             [header.itemCount setStringValue:[NSString stringWithFormat:@"%lu", [bumpmaps count]]];
             break;
         case 1:
-            [header.sectionTitle setStringValue:@"Non-bumpmaps"];
+            [header.sectionTitle setStringValue:NSLocalizedString(@"Non-bumpmaps", "Title of section holding images which don't appear to be bumpmaps")];
             [header.itemCount setStringValue:[NSString stringWithFormat:@"%lu", [nonBumpmaps count]]];
             break;
         }

@@ -8,4 +8,4 @@
 
 #import <Cocoa/Cocoa.h>
 
-extern CGImageRef LoadCGImage(NSString* filename);
+extern CGImageRef CGImageCreateWithFileURL(NSURL* fileURL);

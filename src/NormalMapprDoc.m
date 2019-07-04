@@ -369,7 +369,7 @@
 - (IBAction)export:(id)sender
 {
     _currentSavePanel = [NSSavePanel savePanel];
-    [_currentSavePanel setMessage:@"Export the normalmap to:"];
+    [_currentSavePanel setMessage:NSLocalizedString(@"Export to", @"Title of export dialog")];
     [_currentSavePanel setAllowedFileTypes:@[ [self currentSaveExtension] ]];
     [_currentSavePanel setAccessoryView:savePanelDialog];
     [_currentSavePanel setDirectoryURL:[[self fileURL] URLByDeletingLastPathComponent]];

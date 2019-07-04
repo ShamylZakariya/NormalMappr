@@ -6,15 +6,15 @@
 //  Copyright 2009-2019 Shamyl Zakariya. All rights reserved.
 //
 
-#import "LoadCGImage.h"
+#import "CGImageCreateWithFileURL.h"
 
 CGImageRef
-LoadCGImage(NSString* filename)
+CGImageCreateWithFileURL(NSURL* fileURL)
 {
     CFStringRef path = NULL;
     CFURLRef url = NULL;
 
-    path = CFStringCreateWithCString(NULL, [filename fileSystemRepresentation],
+    path = CFStringCreateWithCString(NULL, [[fileURL path] fileSystemRepresentation],
         kCFStringEncodingUTF8);
 
     url = CFURLCreateWithFileSystemPath(NULL, path,
@@ -25,7 +25,6 @@ LoadCGImage(NSString* filename)
     CGImageSourceRef sourceRef = NULL;
 
     sourceRef = CGImageSourceCreateWithURL(url, NULL);
-
     CFRelease(url);
 
     if (sourceRef) {

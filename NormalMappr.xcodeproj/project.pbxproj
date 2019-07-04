@@ -24,7 +24,7 @@
 		36F94F8E0F60957E0003C8EF /* NormalMapFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F94F8B0F60957E0003C8EF /* NormalMapFilter.m */; };
 		36F94F920F6095A90003C8EF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36F94F910F6095A90003C8EF /* QuartzCore.framework */; };
 		36F951080F644B130003C8EF /* TilingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F951070F644B130003C8EF /* TilingImageView.m */; };
-		36F951710F64A0590003C8EF /* LoadCGImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F951700F64A0590003C8EF /* LoadCGImage.m */; };
+		36F951710F64A0590003C8EF /* CGImageCreateWithFileURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F951700F64A0590003C8EF /* CGImageCreateWithFileURL.m */; };
 		632A312B2299E17C00A9D01A /* BatchCollectionViewSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 632A312A2299E17C00A9D01A /* BatchCollectionViewSectionHeader.xib */; };
 		632A312E2299E25700A9D01A /* BatchCollectionViewSectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 632A312D2299E25700A9D01A /* BatchCollectionViewSectionHeader.m */; };
 		63608AEA2288D0CF0062CD4C /* TemplateInDarkModeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 63608AE92288D0CF0062CD4C /* TemplateInDarkModeButton.m */; };
@@ -94,8 +94,8 @@
 		36F94F910F6095A90003C8EF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
 		36F951060F644B130003C8EF /* TilingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TilingImageView.h; sourceTree = "<group>"; };
 		36F951070F644B130003C8EF /* TilingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TilingImageView.m; sourceTree = "<group>"; };
-		36F9516F0F64A0590003C8EF /* LoadCGImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadCGImage.h; sourceTree = "<group>"; };
-		36F951700F64A0590003C8EF /* LoadCGImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadCGImage.m; sourceTree = "<group>"; };
+		36F9516F0F64A0590003C8EF /* CGImageCreateWithFileURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGImageCreateWithFileURL.h; sourceTree = "<group>"; };
+		36F951700F64A0590003C8EF /* CGImageCreateWithFileURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGImageCreateWithFileURL.m; sourceTree = "<group>"; };
 		632A312A2299E17C00A9D01A /* BatchCollectionViewSectionHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BatchCollectionViewSectionHeader.xib; sourceTree = "<group>"; };
 		632A312C2299E25700A9D01A /* BatchCollectionViewSectionHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BatchCollectionViewSectionHeader.h; sourceTree = "<group>"; };
 		632A312D2299E25700A9D01A /* BatchCollectionViewSectionHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BatchCollectionViewSectionHeader.m; sourceTree = "<group>"; };
@@ -239,8 +239,8 @@
 			children = (
 				36A586120F8F68DE00AC6E58 /* DebugLog.h */,
 				36A586130F8F68DE00AC6E58 /* DebugLog.m */,
-				36F9516F0F64A0590003C8EF /* LoadCGImage.h */,
-				36F951700F64A0590003C8EF /* LoadCGImage.m */,
+				36F9516F0F64A0590003C8EF /* CGImageCreateWithFileURL.h */,
+				36F951700F64A0590003C8EF /* CGImageCreateWithFileURL.m */,
 				63608AE82288D0CF0062CD4C /* TemplateInDarkModeButton.h */,
 				63608AE92288D0CF0062CD4C /* TemplateInDarkModeButton.m */,
 			);
@@ -438,7 +438,7 @@
 				632A312E2299E25700A9D01A /* BatchCollectionViewSectionHeader.m in Sources */,
 				36F94F8E0F60957E0003C8EF /* NormalMapFilter.m in Sources */,
 				36F951080F644B130003C8EF /* TilingImageView.m in Sources */,
-				36F951710F64A0590003C8EF /* LoadCGImage.m in Sources */,
+				36F951710F64A0590003C8EF /* CGImageCreateWithFileURL.m in Sources */,
 				36A586140F8F68DE00AC6E58 /* DebugLog.m in Sources */,
 				36A586520F8F6CBC00AC6E58 /* BatchOperation.m in Sources */,
 				63608AFC228B068F0062CD4C /* VDKQueue.m in Sources */,

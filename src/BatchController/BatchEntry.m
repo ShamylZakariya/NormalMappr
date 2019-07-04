@@ -7,7 +7,7 @@
 //
 
 #import "BatchEntry.h"
-#import "LoadCGImage.h"
+#import "CGImageCreateWithFileURL.h"
 
 #define kTHUMB_SIZE 128
 #define kCOLOR_THRESHOLD 16.0
@@ -38,7 +38,7 @@
         self->fileURL = fileURL;
         identifier = self.filePath;
 
-        CGImageRef img = LoadCGImage(self.filePath);
+        CGImageRef img = CGImageCreateWithFileURL(fileURL);
         if (img) {
             [self createImage:img];
             [self createThumb:img];
@@ -63,6 +63,7 @@
             }
 
             CGImageRelease(img);
+
         } else {
             return nil;
         }
