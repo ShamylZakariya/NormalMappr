@@ -24,6 +24,7 @@
 - (BOOL)canOpenFileWithExtension:(NSString*)extension;
 - (NSMutableArray<NSURL*>*)gatherFiles:(NSArray<NSURL*>*)fileURLs;
 - (void)loadDroppedFiles:(NSArray<NSURL*>*)fileURLs;
+- (void)removeItems:(NSSet<NSIndexPath*>*)items animated:(BOOL)animated;
 - (void)fileAddingAnalysisComplete:(NSMutableArray<BatchEntry*>*)addableFiles;
 - (void)normalmapFiles:(NSArray<BatchEntry*>*)files;
 
@@ -62,19 +63,16 @@
 
     [bumpmapsCollectionView registerForDraggedTypes:@[ NSURLPboardType ]];
 
-    if (@available(macOS 10.13, *)) {
-        bumpmapsCollectionView.backgroundColors = @[ [NSColor colorNamed:@"BatchViewBackground"] ];
-    } else {
-        bumpmapsCollectionView.backgroundColors = @[ [NSColor colorWithDeviceWhite:0.9 alpha:1] ];
-    }
-
     [batchWindow makeKeyAndOrderFront:self];
     batchWindow.defaultButtonCell = runButton.cell;
 
+    //
     // sync up user save dir popup
     // NOTE: We don't use cocoa bindings with the popup, because it
     // led to some oddities where at startup the menu attempted to select
-    // an item which mapped to a non-existing tag
+    // an item which mapped to a tag which hasn't been built yet
+    //
+
     if (batchSettings.userSaveDestination != nil) {
         previousSaveLocationPopupTag = kUserSaveLocationTag;
         [self addUserSaveDestination:batchSettings.userSaveDestination];
@@ -250,8 +248,6 @@
 
 - (void)addUserSaveDestination:(NSURL*)destination
 {
-    DebugLog(@"addUserSaveDestination: %@", destination);
-
     int existingIndex = [saveLocationPopup indexOfItemWithTag:kUserSaveLocationTag];
     if (existingIndex >= 0) {
         [saveLocationPopup removeItemAtIndex:existingIndex];
@@ -362,6 +358,41 @@
         STRONG_SELF;
         [strongSelf fileAddingAnalysisComplete:entries];
     });
+}
+
+- (void)removeItems:(NSSet<NSIndexPath*>*)items animated:(BOOL)animated
+{
+    [bumpmapsCollectionView deselectItemsAtIndexPaths:items];
+
+    // remove these items from internal store
+    NSMutableIndexSet* bumpmapIndices = [[NSMutableIndexSet alloc] init];
+    NSMutableIndexSet* nonBumpmapIndices = [[NSMutableIndexSet alloc] init];
+    for (NSIndexPath* indexPath in items) {
+        switch (indexPath.section) {
+        case 0:
+            [bumpmapIndices addIndex:indexPath.item];
+            break;
+        case 1:
+            [nonBumpmapIndices addIndex:indexPath.item];
+            break;
+        }
+    }
+
+    if (bumpmapIndices.count > 0) {
+        [bumpmaps removeObjectsAtIndexes:bumpmapIndices];
+    }
+
+    if (nonBumpmapIndices.count > 0) {
+        [nonBumpmaps removeObjectsAtIndexes:nonBumpmapIndices];
+    }
+
+    // remove from collection view
+    if (animated) {
+        NSAnimationContext.currentContext.duration = 0.2;
+        [[bumpmapsCollectionView animator] deleteItemsAtIndexPaths:items];
+    } else {
+        [bumpmapsCollectionView deleteItemsAtIndexPaths:items];
+    }
 }
 
 - (void)fileAddingAnalysisComplete:(NSMutableArray<BatchEntry*>*)newEntries
@@ -503,13 +534,8 @@
 
 - (NSDragOperation)collectionView:(NSCollectionView*)collectionView validateDrop:(id<NSDraggingInfo>)draggingInfo proposedIndexPath:(NSIndexPath* __nonnull* __nonnull)proposedDropIndexPath dropOperation:(NSCollectionViewDropOperation*)proposedDropOperation
 {
-    switch ((*proposedDropIndexPath).section) {
-    case 0:
-        return NSDragOperationGeneric;
-    default:
-        break;
-    }
-    return NSDragOperationNone;
+    *proposedDropIndexPath = [NSIndexPath indexPathForItem:0 inSection:0];
+    return NSDragOperationGeneric;
 }
 
 - (BOOL)collectionView:(NSCollectionView*)collectionView acceptDrop:(id<NSDraggingInfo>)draggingInfo indexPath:(NSIndexPath*)indexPath dropOperation:(NSCollectionViewDropOperation)dropOperation
@@ -560,6 +586,18 @@
 - (NSSize)collectionView:(NSCollectionView*)collectionView layout:(NSCollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
     return NSMakeSize(0, 80);
+}
+
+#pragma mark - Handle deletion
+
+- (void)deleteForward:(id)sender
+{
+    [self removeItems:bumpmapsCollectionView.selectionIndexPaths animated:YES];
+}
+
+- (void)deleteBackward:(id)sender
+{
+    [self removeItems:bumpmapsCollectionView.selectionIndexPaths animated:YES];
 }
 
 @end
