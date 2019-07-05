@@ -55,7 +55,7 @@
     bumpmapsCollectionView.selectable = YES;
     bumpmapsCollectionView.allowsMultipleSelection = YES;
     bumpmapsCollectionView.batchController = self;
-    
+
     NSNib* itemNib = [[NSNib alloc] initWithNibNamed:@"BatchCollectionViewItem" bundle:[NSBundle mainBundle]];
     [bumpmapsCollectionView registerNib:itemNib forItemWithIdentifier:kBatchCollectionViewItemIdentifier];
 
@@ -371,13 +371,20 @@
     for (NSIndexPath* indexPath in items) {
         switch (indexPath.section) {
         case 0:
-            [bumpmapIndices addIndex:indexPath.item];
+            if ([bumpmaps count] > 0) {
+                [bumpmapIndices addIndex:indexPath.item];
+            } else {
+                [nonBumpmapIndices addIndex:indexPath.item];
+            }
             break;
         case 1:
             [nonBumpmapIndices addIndex:indexPath.item];
             break;
         }
     }
+
+    BOOL bumpmapsWasPopulated = [bumpmaps count] > 0;
+    BOOL nonBumpmapsWasPopulated = [nonBumpmaps count] > 0;
 
     if (bumpmapIndices.count > 0) {
         [bumpmaps removeObjectsAtIndexes:bumpmapIndices];
@@ -387,13 +394,41 @@
         [nonBumpmaps removeObjectsAtIndexes:nonBumpmapIndices];
     }
 
+    BOOL bumpmapsIsEmpty = [bumpmaps count] == 0;
+    BOOL nonBumpmapsIsEmpty = [nonBumpmaps count] == 0;
+
     // remove from collection view
     if (animated) {
+
+#warning Animation has stopped working
+
         NSAnimationContext.currentContext.duration = 0.2;
-        [[bumpmapsCollectionView animator] deleteItemsAtIndexPaths:items];
+        [bumpmapsCollectionView
+            performBatchUpdates:^{
+                [[bumpmapsCollectionView animator] deleteItemsAtIndexPaths:items];
+                if (nonBumpmapsIsEmpty && nonBumpmapsWasPopulated) {
+                    [[bumpmapsCollectionView animator] deleteSections:[NSIndexSet indexSetWithIndex:bumpmapsWasPopulated ? 1 : 0]];
+                }
+
+                if (bumpmapsIsEmpty && bumpmapsWasPopulated) {
+                    [[bumpmapsCollectionView animator] deleteSections:[NSIndexSet indexSetWithIndex:0]];
+                }
+            }
+              completionHandler:^(BOOL finished) {
+              }];
     } else {
         [bumpmapsCollectionView deleteItemsAtIndexPaths:items];
+
+        if (nonBumpmapsIsEmpty && nonBumpmapsWasPopulated) {
+            [bumpmapsCollectionView deleteSections:[NSIndexSet indexSetWithIndex:bumpmapsWasPopulated ? 1 : 0]];
+        }
+
+        if (bumpmapsIsEmpty && bumpmapsWasPopulated) {
+            [bumpmapsCollectionView deleteSections:[NSIndexSet indexSetWithIndex:0]];
+        }
     }
+
+    self.showDropMessage = bumpmapsIsEmpty && nonBumpmapsIsEmpty;
 }
 
 - (void)fileAddingAnalysisComplete:(NSMutableArray<BatchEntry*>*)newEntries
@@ -474,14 +509,21 @@
 
 - (NSInteger)numberOfSectionsInCollectionView:(NSCollectionView*)collectionView
 {
-    return 2;
+    int count = 0;
+    if ([bumpmaps count] > 0) {
+        count++;
+    }
+    if ([nonBumpmaps count] > 0) {
+        count++;
+    }
+    return count;
 }
 
 - (NSInteger)collectionView:(NSCollectionView*)collectionView numberOfItemsInSection:(NSInteger)section
 {
     switch (section) {
     case 0:
-        return [bumpmaps count];
+        return [bumpmaps count] > 0 ? [bumpmaps count] : [nonBumpmaps count];
     case 1:
         return [nonBumpmaps count];
     }
@@ -493,7 +535,7 @@
     NSMutableArray<BatchEntry*>* source = nil;
     switch (indexPath.section) {
     case 0:
-        source = bumpmaps;
+        source = [bumpmaps count] > 0 ? bumpmaps : nonBumpmaps;
         break;
     default:
         source = nonBumpmaps;
@@ -515,14 +557,16 @@
 {
     if ([kind isEqualToString:NSCollectionElementKindSectionHeader]) {
         BatchCollectionViewSectionHeader* header = [collectionView makeSupplementaryViewOfKind:NSCollectionElementKindSectionHeader withIdentifier:kBatchCollectionViewSectionHeaderIdentifier forIndexPath:indexPath];
+
+        NSString* bumpmapHeaderTitle = NSLocalizedString(@"Bumpmaps", @"Title of section holding apparently valid bumpmaps");
+        NSString* nonBumpmapHeaderTitle = NSLocalizedString(@"Non-bumpmaps", "Title of section holding images which don't appear to be bumpmaps");
+
         switch (indexPath.section) {
         case 0:
-            [header.sectionTitle setStringValue:NSLocalizedString(@"Bumpmaps", @"Title of section holding apparently valid bumpmaps")];
-            [header.itemCount setStringValue:[NSString stringWithFormat:@"%lu", [bumpmaps count]]];
+            [header.sectionTitle setStringValue:[bumpmaps count] > 0 ? bumpmapHeaderTitle : nonBumpmapHeaderTitle];
             break;
         case 1:
-            [header.sectionTitle setStringValue:NSLocalizedString(@"Non-bumpmaps", "Title of section holding images which don't appear to be bumpmaps")];
-            [header.itemCount setStringValue:[NSString stringWithFormat:@"%lu", [nonBumpmaps count]]];
+            [header.sectionTitle setStringValue:nonBumpmapHeaderTitle];
             break;
         }
         return header;

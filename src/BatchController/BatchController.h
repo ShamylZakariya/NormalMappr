@@ -6,10 +6,10 @@
 //  Copyright 2009-2019 Shamyl Zakariya. All rights reserved.
 //
 
+#import "BatchCollectionView.h"
+#import "BatchCollectionViewRoot.h"
 #import "BatchEntry.h"
 #import "BatchSettings.h"
-#import "BatchCollectionViewRoot.h"
-#import "BatchCollectionView.h"
 #import <Cocoa/Cocoa.h>
 
 @interface BatchController : NSObject <NSCollectionViewDataSource, NSCollectionViewDelegate, NSCollectionViewDelegateFlowLayout> {

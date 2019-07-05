@@ -6,3 +6,5 @@ TODO:
 - add a toggle on the items in CV to move to bumpmap or move out of bumpmap to non-bumpmap section - I think DnD is not the right solution here for general case usage
 - finally, inter-section dnd
 
+BUGS:
+- animation of item removal has stopped working - likely need to git bisect to track down breakage

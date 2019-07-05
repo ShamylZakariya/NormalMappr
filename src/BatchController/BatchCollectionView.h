@@ -11,12 +11,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface BatchCollectionView : NSCollectionView
-{
+@interface BatchCollectionView : NSCollectionView {
     BOOL isDropTarget;
 }
 
-@property (weak,readwrite,nonatomic) BatchController* batchController;
+@property (weak, readwrite, nonatomic) BatchController* batchController;
 
 @end
 

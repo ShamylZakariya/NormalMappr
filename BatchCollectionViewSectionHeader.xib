@@ -14,45 +14,19 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zcL-It-C5M">
-                    <rect key="frame" x="63" y="14" width="86" height="17"/>
+                    <rect key="frame" x="20" y="14" width="86" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Section Title" id="ZDW-Sx-ZaB">
                         <font key="font" metaFont="systemBold"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <customView translatesAutoresizingMaskIntoConstraints="NO" id="O4k-fA-KUN" customClass="ItemCountBackgroundView">
-                    <rect key="frame" x="20" y="11" width="25" height="23"/>
-                    <subviews>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YBf-Pr-xYT">
-                            <rect key="frame" x="2" y="4" width="21" height="17"/>
-                            <constraints>
-                                <constraint firstAttribute="width" relation="greaterThanOrEqual" secondItem="YBf-Pr-xYT" secondAttribute="height" id="kFi-YJ-M5U"/>
-                            </constraints>
-                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="0" id="aWG-7B-YMW">
-                                <font key="font" metaFont="systemBlack" size="13"/>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                    </subviews>
-                    <constraints>
-                        <constraint firstItem="YBf-Pr-xYT" firstAttribute="top" secondItem="O4k-fA-KUN" secondAttribute="top" constant="2" id="9lw-U8-N53"/>
-                        <constraint firstAttribute="bottom" secondItem="YBf-Pr-xYT" secondAttribute="bottom" constant="4" id="a1b-iG-6b4"/>
-                        <constraint firstItem="YBf-Pr-xYT" firstAttribute="leading" secondItem="O4k-fA-KUN" secondAttribute="leading" constant="4" id="fZS-R9-c4g"/>
-                        <constraint firstAttribute="trailing" secondItem="YBf-Pr-xYT" secondAttribute="trailing" constant="4" id="m9J-IB-9cx"/>
-                    </constraints>
-                </customView>
             </subviews>
             <constraints>
-                <constraint firstItem="zcL-It-C5M" firstAttribute="leading" secondItem="O4k-fA-KUN" secondAttribute="trailing" constant="20" id="1bK-Pz-8Hu"/>
-                <constraint firstItem="O4k-fA-KUN" firstAttribute="leading" secondItem="Z8y-cf-p4C" secondAttribute="leading" constant="20" id="I7g-p9-dBB"/>
                 <constraint firstItem="zcL-It-C5M" firstAttribute="centerY" secondItem="Z8y-cf-p4C" secondAttribute="centerY" id="J5Y-Ye-FwA"/>
-                <constraint firstItem="O4k-fA-KUN" firstAttribute="centerY" secondItem="Z8y-cf-p4C" secondAttribute="centerY" id="MjY-1w-BLB"/>
+                <constraint firstItem="zcL-It-C5M" firstAttribute="leading" secondItem="Z8y-cf-p4C" secondAttribute="leading" constant="22" id="rWC-8j-UXU"/>
             </constraints>
             <connections>
-                <outlet property="itemCount" destination="YBf-Pr-xYT" id="Idt-uB-13l"/>
-                <outlet property="itemCountContainer" destination="O4k-fA-KUN" id="TrD-MU-GiA"/>
                 <outlet property="sectionTitle" destination="zcL-It-C5M" id="9z8-0X-Jtl"/>
             </connections>
             <point key="canvasLocation" x="84.5" y="-157.5"/>
