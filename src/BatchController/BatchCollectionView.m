@@ -14,13 +14,7 @@
     if (isDropTarget) {
         
         // draw an inset highlight in the highlight color
-        
-        if (@available(macOS 10.14, *)) {
-            [[NSColor selectedContentBackgroundColor] set];
-        } else {
-            [[NSColor alternateSelectedControlColor] set];
-        }
-        
+        [[NSColor selectedControlColor] set];
         NSRect insetBounds = NSInsetRect([self bounds], 4, 4);
         NSBezierPath *p = [NSBezierPath bezierPathWithRoundedRect:insetBounds xRadius:4 yRadius:4];
         p.lineWidth = 2;
