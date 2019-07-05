@@ -280,7 +280,7 @@ DQ
                             </popUpButton>
                         </subviews>
                     </customView>
-                    <customView id="GBm-E1-1xG">
+                    <customView id="GBm-E1-1xG" customClass="BatchCollectionViewRoot">
                         <rect key="frame" x="0.0" y="143" width="1022" height="428"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -291,7 +291,7 @@ DQ
                                     <rect key="frame" x="0.0" y="0.0" width="1022" height="428"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <collectionView selectable="YES" allowsMultipleSelection="YES" id="dmv-IW-L03">
+                                        <collectionView selectable="YES" allowsMultipleSelection="YES" id="dmv-IW-L03" customClass="BatchCollectionView">
                                             <rect key="frame" x="0.0" y="0.0" width="1022" height="428"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                             <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="9cb-4W-j73">

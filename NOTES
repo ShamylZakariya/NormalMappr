@@ -1,4 +1,9 @@
-10.14
-- need to implement drag/drop between batch sections
+PRESENTLY:
+- tap delete to remove an item from the collection
+
+TODO:
 - need to fix drop target situation - either do it through colleciton view or make a proxy drag target from finder-to-window drag
+- need to improve appearance of bumpmap/non-bumpmap divide - maybe through background color?
+- add a toggle on the items in CV to move to bumpmap or move out of bumpmap to non-bumpmap section - I think DnD is not the right solution here for general case usage
+- finally, inter-section dnd
 
