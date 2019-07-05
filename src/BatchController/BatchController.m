@@ -54,7 +54,8 @@
     bumpmapsCollectionView.delegate = self;
     bumpmapsCollectionView.selectable = YES;
     bumpmapsCollectionView.allowsMultipleSelection = YES;
-
+    bumpmapsCollectionView.batchController = self;
+    
     NSNib* itemNib = [[NSNib alloc] initWithNibNamed:@"BatchCollectionViewItem" bundle:[NSBundle mainBundle]];
     [bumpmapsCollectionView registerNib:itemNib forItemWithIdentifier:kBatchCollectionViewItemIdentifier];
 
@@ -531,30 +532,6 @@
 }
 
 #pragma mark - NSCollectionViewDelegate
-
-- (NSDragOperation)collectionView:(NSCollectionView*)collectionView validateDrop:(id<NSDraggingInfo>)draggingInfo proposedIndexPath:(NSIndexPath* __nonnull* __nonnull)proposedDropIndexPath dropOperation:(NSCollectionViewDropOperation*)proposedDropOperation
-{
-    *proposedDropIndexPath = [NSIndexPath indexPathForItem:0 inSection:0];
-    return NSDragOperationGeneric;
-}
-
-- (BOOL)collectionView:(NSCollectionView*)collectionView acceptDrop:(id<NSDraggingInfo>)draggingInfo indexPath:(NSIndexPath*)indexPath dropOperation:(NSCollectionViewDropOperation)dropOperation
-{
-    NSMutableArray<NSURL*>* droppedFileURLs = [NSMutableArray array];
-    [draggingInfo enumerateDraggingItemsWithOptions:NSDraggingItemEnumerationConcurrent
-                                            forView:collectionView
-                                            classes:@ [[NSURL class]]
-                                            searchOptions:@{
-                                                NSPasteboardURLReadingFileURLsOnlyKey : @(1)
-                                            }
-                                         usingBlock:^(NSDraggingItem* _Nonnull draggingItem, NSInteger idx, BOOL* _Nonnull stop) {
-                                             NSURL* url = draggingItem.item;
-                                             [droppedFileURLs addObject:url];
-                                         }];
-
-    [self addFiles:droppedFileURLs];
-    return YES;
-}
 
 - (NSSet<NSIndexPath*>*)collectionView:(NSCollectionView*)collectionView shouldChangeItemsAtIndexPaths:(NSSet<NSIndexPath*>*)indexPaths toHighlightState:(NSCollectionViewItemHighlightState)highlightState
 {

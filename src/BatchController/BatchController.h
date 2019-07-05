@@ -8,6 +8,8 @@
 
 #import "BatchEntry.h"
 #import "BatchSettings.h"
+#import "BatchCollectionViewRoot.h"
+#import "BatchCollectionView.h"
 #import <Cocoa/Cocoa.h>
 
 @interface BatchController : NSObject <NSCollectionViewDataSource, NSCollectionViewDelegate, NSCollectionViewDelegateFlowLayout> {
@@ -27,8 +29,10 @@
 
     __weak IBOutlet NSWindow* batchWindow;
     IBOutlet NSPanel* progressSheet;
-    __weak IBOutlet NSCollectionView* bumpmapsCollectionView;
+    __weak IBOutlet BatchCollectionView* bumpmapsCollectionView;
+    __weak IBOutlet NSScrollView* bumpmapsCollectionViewScrollView;
     __weak IBOutlet NSCollectionViewFlowLayout* bumpmapsCollectionViewFL;
+    __weak IBOutlet BatchCollectionViewRoot* bumpmapCollectionViewRoot;
     __weak IBOutlet NSButton* runButton;
     __weak IBOutlet NSPopUpButton* saveLocationPopup;
 }
