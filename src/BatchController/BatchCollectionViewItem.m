@@ -13,12 +13,19 @@
 @implementation BatchCollectionViewItem
 
 @synthesize batchEntry = batchEntry;
+@synthesize isIncludedInBumpmapsBatch = isIncludedInBumpmapsBatch;
 
 - (void)setBatchEntry:(BatchEntry*)batchEntry
 {
     self->batchEntry = batchEntry;
     [label setStringValue:[[batchEntry.filePath lastPathComponent] stringByDeletingPathExtension]];
     [thumb setImage:batchEntry.thumb];
+}
+
+- (void) setIsIncludedInBumpmapsBatch:(BOOL)isIncludedInBumpmapsBatch
+{
+    self->isIncludedInBumpmapsBatch = isIncludedInBumpmapsBatch;
+    batchItemView.alphaValue = isIncludedInBumpmapsBatch ? 1 : 0.5;
 }
 
 - (void)setSelected:(BOOL)selected

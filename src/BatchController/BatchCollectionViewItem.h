@@ -18,9 +18,11 @@
     __weak IBOutlet BatchItemView* batchItemView;
     BatchEntry* batchEntry;
     NSClickGestureRecognizer* clickRecognizer;
+    BOOL isIncludedInBumpmapsBatch;
 }
 
 @property (readwrite, nonatomic) BatchEntry* batchEntry;
+@property (readwrite, nonatomic) BOOL isIncludedInBumpmapsBatch;
 
 @end
 

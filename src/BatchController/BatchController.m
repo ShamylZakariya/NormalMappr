@@ -447,6 +447,9 @@
             for (int i = 0; i < count; i++) {
                 NSIndexPath *source = [NSIndexPath indexPathForItem:i inSection:1];
                 NSIndexPath *dest = [NSIndexPath indexPathForItem:startIndex + i inSection:0];
+                
+                ((BatchCollectionViewItem*)[bumpmapsCollectionView itemAtIndexPath:source]).isIncludedInBumpmapsBatch = YES;
+                
                 [[bumpmapsCollectionView animator] moveItemAtIndexPath:source toIndexPath:dest];
             }
             
@@ -565,6 +568,7 @@
     BatchCollectionViewItem* item = [collectionView makeItemWithIdentifier:kBatchCollectionViewItemIdentifier forIndexPath:indexPath];
     
     item.batchEntry = entry;
+    item.isIncludedInBumpmapsBatch = isBatchSection;
 
     return item;
 }
