@@ -10,6 +10,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface BatchCollectionViewSectionHeader : NSView
+@property (weak) IBOutlet NSButton* addToBatchButton;
 @property (weak) IBOutlet NSTextField* sectionTitle;
 @end
 

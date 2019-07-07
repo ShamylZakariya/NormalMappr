@@ -309,7 +309,7 @@ DQ
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="GUo-iO-R3H">
-                                    <rect key="frame" x="560" y="0.0" width="16" height="428"/>
+                                    <rect key="frame" x="1006" y="0.0" width="16" height="328"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>

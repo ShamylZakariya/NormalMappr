@@ -25,6 +25,7 @@
 - (NSMutableArray<NSURL*>*)gatherFiles:(NSArray<NSURL*>*)fileURLs;
 - (void)loadDroppedFiles:(NSArray<NSURL*>*)fileURLs;
 - (void)removeItems:(NSSet<NSIndexPath*>*)items animated:(BOOL)animated;
+- (void)addExcludedItemsToBatch: (id) sender;
 - (void)fileAddingAnalysisComplete:(NSMutableArray<BatchEntry*>*)addableFiles;
 - (void)normalmapFiles:(NSArray<BatchEntry*>*)files;
 
@@ -369,17 +370,12 @@
     NSMutableIndexSet* bumpmapIndices = [[NSMutableIndexSet alloc] init];
     NSMutableIndexSet* nonBumpmapIndices = [[NSMutableIndexSet alloc] init];
     for (NSIndexPath* indexPath in items) {
-        switch (indexPath.section) {
-        case 0:
-            if ([bumpmaps count] > 0) {
-                [bumpmapIndices addIndex:indexPath.item];
-            } else {
-                [nonBumpmapIndices addIndex:indexPath.item];
-            }
-            break;
-        case 1:
+
+        BOOL isBatchSection = indexPath.section == 0 && [bumpmaps count] > 0;
+        if (isBatchSection) {
+            [bumpmapIndices addIndex:indexPath.item];
+        } else {
             [nonBumpmapIndices addIndex:indexPath.item];
-            break;
         }
     }
 
@@ -429,6 +425,38 @@
     }
 
     self.showDropMessage = bumpmapsIsEmpty && nonBumpmapsIsEmpty;
+}
+
+- (void)addExcludedItemsToBatch: (id) sender
+{
+    int startIndex = [bumpmaps count];
+    int count = [nonBumpmaps count];
+    [bumpmaps addObjectsFromArray:nonBumpmaps];
+    [nonBumpmaps removeAllObjects];
+
+    //
+    //  If we have no bumpmaps, only non-bumpmaps, we can't move them from section 0 to section 0...
+    //  so we need to just do a reload data
+    //
+    if (startIndex == 0) {
+        [bumpmapsCollectionView reloadData];
+    } else {
+        // we have both sections, we can perform a move
+        [bumpmapsCollectionView performBatchUpdates:^{
+            
+            for (int i = 0; i < count; i++) {
+                NSIndexPath *source = [NSIndexPath indexPathForItem:i inSection:1];
+                NSIndexPath *dest = [NSIndexPath indexPathForItem:startIndex + i inSection:0];
+                [[bumpmapsCollectionView animator] moveItemAtIndexPath:source toIndexPath:dest];
+            }
+            
+            [[bumpmapsCollectionView animator] deleteSections:[NSIndexSet indexSetWithIndex:1]];
+            
+        } completionHandler:^(BOOL finished) {
+            ;
+        }];
+    }
+
 }
 
 - (void)fileAddingAnalysisComplete:(NSMutableArray<BatchEntry*>*)newEntries
@@ -521,34 +549,22 @@
 
 - (NSInteger)collectionView:(NSCollectionView*)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    switch (section) {
-    case 0:
-        return [bumpmaps count] > 0 ? [bumpmaps count] : [nonBumpmaps count];
-    case 1:
-        return [nonBumpmaps count];
+    BOOL isBatchSection = section == 0 && [bumpmaps count] > 0;
+    if (isBatchSection) {
+        return bumpmaps.count;
+    } else {
+        return nonBumpmaps.count;
     }
-    return 0;
 }
 
 - (NSCollectionViewItem*)collectionView:(NSCollectionView*)collectionView itemForRepresentedObjectAtIndexPath:(NSIndexPath*)indexPath
 {
-    NSMutableArray<BatchEntry*>* source = nil;
-    switch (indexPath.section) {
-    case 0:
-        source = [bumpmaps count] > 0 ? bumpmaps : nonBumpmaps;
-        break;
-    default:
-        source = nonBumpmaps;
-        break;
-    }
-
+    BOOL isBatchSection = indexPath.section == 0 && [bumpmaps count] > 0;
+    NSMutableArray<BatchEntry*>* source = isBatchSection ? bumpmaps : nonBumpmaps;
     BatchEntry* entry = source[indexPath.item];
     BatchCollectionViewItem* item = [collectionView makeItemWithIdentifier:kBatchCollectionViewItemIdentifier forIndexPath:indexPath];
-    if (item != nil) {
-        item.batchEntry = entry;
-    } else {
-        DebugLog(@"Unable to vend item %d section %d", indexPath.item, indexPath.section);
-    }
+    
+    item.batchEntry = entry;
 
     return item;
 }
@@ -559,16 +575,25 @@
         BatchCollectionViewSectionHeader* header = [collectionView makeSupplementaryViewOfKind:NSCollectionElementKindSectionHeader withIdentifier:kBatchCollectionViewSectionHeaderIdentifier forIndexPath:indexPath];
 
         NSString* bumpmapHeaderTitle = NSLocalizedString(@"Bumpmaps", @"Title of section holding apparently valid bumpmaps");
-        NSString* nonBumpmapHeaderTitle = NSLocalizedString(@"Non-bumpmaps", "Title of section holding images which don't appear to be bumpmaps");
+        NSString* nonBumpmapHeaderTitle = NSLocalizedString(@"Excluded", "Title of section holding images which don't appear to be bumpmaps");
 
-        switch (indexPath.section) {
-        case 0:
-            [header.sectionTitle setStringValue:[bumpmaps count] > 0 ? bumpmapHeaderTitle : nonBumpmapHeaderTitle];
-            break;
-        case 1:
+        BOOL isBatchSection = indexPath.section == 0 && [bumpmaps count] > 0;
+        if (isBatchSection) {
+
+            [header.sectionTitle setStringValue:bumpmapHeaderTitle];
+            [header.addToBatchButton setHidden:YES];
+            [header.addToBatchButton setEnabled:NO];
+
+        } else {
+
             [header.sectionTitle setStringValue:nonBumpmapHeaderTitle];
-            break;
+            [header.addToBatchButton setHidden:NO];
+            [header.addToBatchButton setEnabled:YES];
+            
+            [header.addToBatchButton setTarget:self];
+            [header.addToBatchButton setAction:@selector(addExcludedItemsToBatch:)];
         }
+
         return header;
     }
 
