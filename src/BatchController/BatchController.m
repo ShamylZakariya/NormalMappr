@@ -39,8 +39,8 @@
 {
     if (self = [super init]) {
         batchSettings = [[BatchSettings alloc] init];
-        bumpmaps = [[NSMutableArray alloc] init];
-        nonBumpmaps = [[NSMutableArray alloc] init];
+        batch = [[NSMutableArray alloc] init];
+        excludedFromBatch = [[NSMutableArray alloc] init];
 
         [[NSBundle mainBundle] loadNibNamed:@"BatchWindow" owner:self topLevelObjects:nil];
     }
@@ -118,7 +118,7 @@
 - (void)setIconSize:(CGFloat)size
 {
     iconSize = size;
-    bumpmapsCollectionViewFL.itemSize = NSMakeSize(size * 1.3, size);
+    bumpmapsCollectionViewFL.itemSize = NSMakeSize(size * 1.1, size);
 }
 
 - (void)setShowDropMessage:(BOOL)sdm
@@ -126,16 +126,6 @@
     if (sdm != showDropMessage) {
         showDropMessage = sdm;
     }
-}
-
-- (NSInteger)bumpmapCount
-{
-    return [bumpmaps count];
-}
-
-- (NSInteger)nonBumpmapCount
-{
-    return [nonBumpmaps count];
 }
 
 - (void)addFiles:(NSArray<NSURL*>*)fileURLs
@@ -167,11 +157,6 @@
     });
 }
 
-- (void)removeFiles:(NSArray<NSURL*>*)fileURLs
-{
-    DebugLog(@"remove %@", [fileURLs componentsJoinedByString:@"\n"]);
-}
-
 - (IBAction)executeBatch:(id)sender
 {
     if (self.sheetProcessRunning) {
@@ -200,7 +185,7 @@
     WEAK_SELF;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         STRONG_SELF;
-        [strongSelf normalmapFiles:bumpmaps];
+        [strongSelf normalmapFiles:batch];
     });
 }
 
@@ -373,7 +358,7 @@
     NSMutableIndexSet* nonBumpmapIndices = [[NSMutableIndexSet alloc] init];
     for (NSIndexPath* indexPath in items) {
 
-        BOOL isBatchSection = indexPath.section == 0 && [bumpmaps count] > 0;
+        BOOL isBatchSection = indexPath.section == 0 && [batch count] > 0;
         if (isBatchSection) {
             [bumpmapIndices addIndex:indexPath.item];
         } else {
@@ -381,25 +366,22 @@
         }
     }
 
-    BOOL bumpmapsWasPopulated = [bumpmaps count] > 0;
-    BOOL nonBumpmapsWasPopulated = [nonBumpmaps count] > 0;
+    BOOL bumpmapsWasPopulated = [batch count] > 0;
+    BOOL nonBumpmapsWasPopulated = [excludedFromBatch count] > 0;
 
     if (bumpmapIndices.count > 0) {
-        [bumpmaps removeObjectsAtIndexes:bumpmapIndices];
+        [batch removeObjectsAtIndexes:bumpmapIndices];
     }
 
     if (nonBumpmapIndices.count > 0) {
-        [nonBumpmaps removeObjectsAtIndexes:nonBumpmapIndices];
+        [excludedFromBatch removeObjectsAtIndexes:nonBumpmapIndices];
     }
 
-    BOOL bumpmapsIsEmpty = [bumpmaps count] == 0;
-    BOOL nonBumpmapsIsEmpty = [nonBumpmaps count] == 0;
+    BOOL bumpmapsIsEmpty = [batch count] == 0;
+    BOOL nonBumpmapsIsEmpty = [excludedFromBatch count] == 0;
 
     // remove from collection view
     if (animated) {
-
-#warning Animation has stopped working
-
         NSAnimationContext.currentContext.duration = 0.2;
         [[bumpmapsCollectionView animator]
             performBatchUpdates:^{
@@ -431,10 +413,10 @@
 
 - (void)addExcludedItemsToBatch:(id)sender
 {
-    int startIndex = [bumpmaps count];
-    int count = [nonBumpmaps count];
-    [bumpmaps addObjectsFromArray:nonBumpmaps];
-    [nonBumpmaps removeAllObjects];
+    int startIndex = [batch count];
+    int count = [excludedFromBatch count];
+    [batch addObjectsFromArray:excludedFromBatch];
+    [excludedFromBatch removeAllObjects];
 
     //
     //  If we have no bumpmaps, only non-bumpmaps, we can't move them from section 0 to section 0...
@@ -465,21 +447,21 @@
 
 - (void)moveEntry:(BatchEntry*)batchEntry toBatch:(BOOL)includedInBatch
 {
-    if (YES && [bumpmaps count] > 0 && [nonBumpmaps count] > 0) {
+    if (YES && [batch count] > 0 && [excludedFromBatch count] > 0) {
         NSIndexPath* source = nil;
         NSIndexPath* dest = nil;
         if (includedInBatch) {
             // moving from exclusion to inclusion
-            source = [NSIndexPath indexPathForItem:[nonBumpmaps indexOfObject:batchEntry] inSection:1];
-            dest = [NSIndexPath indexPathForItem:bumpmaps.count inSection:0];
-            [nonBumpmaps removeObject:batchEntry];
-            [bumpmaps addObject:batchEntry];
+            source = [NSIndexPath indexPathForItem:[excludedFromBatch indexOfObject:batchEntry] inSection:1];
+            dest = [NSIndexPath indexPathForItem:batch.count inSection:0];
+            [excludedFromBatch removeObject:batchEntry];
+            [batch addObject:batchEntry];
         } else {
             // moving from inclusion to exclusion
-            source = [NSIndexPath indexPathForItem:[bumpmaps indexOfObject:batchEntry] inSection:0];
-            dest = [NSIndexPath indexPathForItem:nonBumpmaps.count inSection:1];
-            [bumpmaps removeObject:batchEntry];
-            [nonBumpmaps addObject:batchEntry];
+            source = [NSIndexPath indexPathForItem:[batch indexOfObject:batchEntry] inSection:0];
+            dest = [NSIndexPath indexPathForItem:excludedFromBatch.count inSection:1];
+            [batch removeObject:batchEntry];
+            [excludedFromBatch addObject:batchEntry];
         }
 
         if (source != nil && dest != nil) {
@@ -487,10 +469,13 @@
             [[bumpmapsCollectionView animator]
                 performBatchUpdates:^{
                     [bumpmapsCollectionView moveItemAtIndexPath:source toIndexPath:dest];
+                    if (batch.count == 0) {
+                        [bumpmapsCollectionView deleteSections:[NSIndexSet indexSetWithIndex:0]];
+                    } else if (excludedFromBatch.count == 0) {
+                        [bumpmapsCollectionView deleteSections:[NSIndexSet indexSetWithIndex:1]];
+                    }
                 }
                 completionHandler:^(BOOL finished) {
-
-#warning includedInBatch is not being applied correctly
                     BatchCollectionViewItem* item = (BatchCollectionViewItem*)[bumpmapsCollectionView itemAtIndexPath:dest];
                     [self prepareItem:item forBatchEntry:batchEntry inBatch:includedInBatch];
                 }];
@@ -503,21 +488,21 @@
         // instead, for now just call reloadData
         if (includedInBatch) {
             // moving from exclusion to inclusion
-            NSIndexPath* source = [NSIndexPath indexPathForItem:[nonBumpmaps indexOfObject:batchEntry] inSection:1];
+            NSIndexPath* source = [NSIndexPath indexPathForItem:[excludedFromBatch indexOfObject:batchEntry] inSection:1];
             BatchCollectionViewItem* item = (BatchCollectionViewItem*)[bumpmapsCollectionView itemAtIndexPath:source];
             [self prepareItem:item forBatchEntry:batchEntry inBatch:YES];
 
-            [nonBumpmaps removeObject:batchEntry];
-            [bumpmaps addObject:batchEntry];
+            [excludedFromBatch removeObject:batchEntry];
+            [batch addObject:batchEntry];
         } else {
             // moving from inclusion to exclusion
 
-            NSIndexPath* source = [NSIndexPath indexPathForItem:[bumpmaps indexOfObject:batchEntry] inSection:0];
+            NSIndexPath* source = [NSIndexPath indexPathForItem:[batch indexOfObject:batchEntry] inSection:0];
             BatchCollectionViewItem* item = (BatchCollectionViewItem*)[bumpmapsCollectionView itemAtIndexPath:source];
             [self prepareItem:item forBatchEntry:batchEntry inBatch:NO];
 
-            [bumpmaps removeObject:batchEntry];
-            [nonBumpmaps addObject:batchEntry];
+            [batch removeObject:batchEntry];
+            [excludedFromBatch addObject:batchEntry];
         }
         [bumpmapsCollectionView reloadData];
     }
@@ -552,14 +537,14 @@
 
     for (BatchEntry* entry in newEntries) {
         if (entry.looksLikeBumpmap) {
-            [bumpmaps addObject:entry];
+            [batch addObject:entry];
         } else {
-            [nonBumpmaps addObject:entry];
+            [excludedFromBatch addObject:entry];
         }
     }
 
     [bumpmapsCollectionView reloadData];
-    self.showDropMessage = (bumpmaps.count == 0) && (nonBumpmaps.count == 0);
+    self.showDropMessage = (batch.count == 0) && (excludedFromBatch.count == 0);
 }
 
 #pragma mark - Normal Mapping
@@ -623,10 +608,10 @@
 - (NSInteger)numberOfSectionsInCollectionView:(NSCollectionView*)collectionView
 {
     int count = 0;
-    if ([bumpmaps count] > 0) {
+    if ([batch count] > 0) {
         count++;
     }
-    if ([nonBumpmaps count] > 0) {
+    if ([excludedFromBatch count] > 0) {
         count++;
     }
     return count;
@@ -634,18 +619,18 @@
 
 - (NSInteger)collectionView:(NSCollectionView*)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    BOOL isBatchSection = section == 0 && [bumpmaps count] > 0;
+    BOOL isBatchSection = section == 0 && [batch count] > 0;
     if (isBatchSection) {
-        return bumpmaps.count;
+        return batch.count;
     } else {
-        return nonBumpmaps.count;
+        return excludedFromBatch.count;
     }
 }
 
 - (NSCollectionViewItem*)collectionView:(NSCollectionView*)collectionView itemForRepresentedObjectAtIndexPath:(NSIndexPath*)indexPath
 {
-    BOOL isBatchSection = indexPath.section == 0 && [bumpmaps count] > 0;
-    NSMutableArray<BatchEntry*>* source = isBatchSection ? bumpmaps : nonBumpmaps;
+    BOOL isBatchSection = indexPath.section == 0 && [batch count] > 0;
+    NSMutableArray<BatchEntry*>* source = isBatchSection ? batch : excludedFromBatch;
     BatchEntry* entry = source[indexPath.item];
     BatchCollectionViewItem* item = [collectionView makeItemWithIdentifier:kBatchCollectionViewItemIdentifier forIndexPath:indexPath];
 
@@ -662,7 +647,7 @@
         NSString* bumpmapHeaderTitle = NSLocalizedString(@"Bumpmaps", @"Title of section holding apparently valid bumpmaps");
         NSString* nonBumpmapHeaderTitle = NSLocalizedString(@"Excluded", "Title of section holding images which don't appear to be bumpmaps");
 
-        BOOL isBatchSection = indexPath.section == 0 && [bumpmaps count] > 0;
+        BOOL isBatchSection = indexPath.section == 0 && [batch count] > 0;
         if (isBatchSection) {
 
             [header.sectionTitle setStringValue:bumpmapHeaderTitle];

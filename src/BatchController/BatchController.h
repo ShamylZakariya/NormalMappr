@@ -16,8 +16,8 @@
     BatchSettings* batchSettings;
 
     CGFloat iconSize;
-    NSMutableArray<BatchEntry*>* bumpmaps;
-    NSMutableArray<BatchEntry*>* nonBumpmaps;
+    NSMutableArray<BatchEntry*>* batch;
+    NSMutableArray<BatchEntry*>* excludedFromBatch;
 
     NSUInteger sheetProcessStepTotal, sheetProcessStep;
     BOOL sheetProcessRunning;
@@ -53,11 +53,7 @@
 @property (readwrite, nonatomic) BOOL showDropMessage;
 @property (readwrite, nonatomic) CGFloat iconSize;
 
-- (NSInteger)bumpmapCount;
-- (NSInteger)nonBumpmapCount;
-
 - (void)addFiles:(NSArray<NSURL*>*)fileURLs;
-- (void)removeFiles:(NSArray<NSURL*>*)fileURLs;
 
 - (IBAction)executeBatch:(id)sender;
 - (IBAction)onSaveLocationPopupAction:(id)sender;
