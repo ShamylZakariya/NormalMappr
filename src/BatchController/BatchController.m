@@ -341,19 +341,19 @@
     panel.canChooseFiles = NO;
     panel.canChooseDirectories = YES;
     panel.allowsMultipleSelection = NO;
-    
+
     [panel beginSheetModalForWindow:self.batchWindow
                   completionHandler:^(NSModalResponse result) {
                       switch (result) {
-                          case NSFileHandlingPanelOKButton:
-                              DebugLog(@"user selected OK, urls: %@", panel.URLs.firstObject);
-                              self.batchSettings.userSaveDestination = panel.URLs.firstObject;
-                              [self addUserSaveDestination:self.batchSettings.userSaveDestination];
-                              break;
-                          default:
-                              // user cancelled, select the previously selected item
-                              [saveLocationPopup selectItemWithTag:previousSaveLocationPopupTag];
-                              break;
+                      case NSFileHandlingPanelOKButton:
+                          DebugLog(@"user selected OK, urls: %@", panel.URLs.firstObject);
+                          self.batchSettings.userSaveDestination = panel.URLs.firstObject;
+                          [self addUserSaveDestination:self.batchSettings.userSaveDestination];
+                          break;
+                      default:
+                          // user cancelled, select the previously selected item
+                          [saveLocationPopup selectItemWithTag:previousSaveLocationPopupTag];
+                          break;
                       }
                   }];
 }
@@ -364,7 +364,7 @@
     if (existingIndex >= 0) {
         [saveLocationPopup removeItemAtIndex:existingIndex];
     }
-    
+
     const int index = 1; // element 0 is the default, "Current directory"
     [saveLocationPopup insertItemWithTitle:[destination.absoluteString lastPathComponent] atIndex:index];
     [[saveLocationPopup itemAtIndex:index] setTag:kUserSaveLocationTag];
@@ -375,25 +375,25 @@
 {
     extension = [extension lowercaseString];
     return ([extension isEqualToString:@"tif"] ||
-            [extension isEqualToString:@"tiff"] ||
-            [extension isEqualToString:@"jp2"] ||
-            [extension isEqualToString:@"jpg"] ||
-            [extension isEqualToString:@"jpeg"] ||
-            [extension isEqualToString:@"png"] ||
-            [extension isEqualToString:@"gif"] ||
-            [extension isEqualToString:@"psd"]);
+        [extension isEqualToString:@"tiff"] ||
+        [extension isEqualToString:@"jp2"] ||
+        [extension isEqualToString:@"jpg"] ||
+        [extension isEqualToString:@"jpeg"] ||
+        [extension isEqualToString:@"png"] ||
+        [extension isEqualToString:@"gif"] ||
+        [extension isEqualToString:@"psd"]);
 }
 
 - (NSMutableArray<NSURL*>*)gatherFiles:(NSArray<NSURL*>*)fileURLs;
 {
     NSFileManager* fm = [NSFileManager defaultManager];
-    
+
     //
     // we'll stick addable images here
     //
-    
+
     NSMutableArray<NSURL*>* result = [NSMutableArray array];
-    
+
     for (NSURL* fileURL in fileURLs) {
         BOOL isDir = NO;
         NSString* path = @([fileURL fileSystemRepresentation]);
@@ -402,7 +402,7 @@
                 //
                 // subpaths performs a complete filesystem traversal -- no need to recurse!
                 //
-                
+
                 for (NSString* subpath in [fm subpathsAtPath:path]) {
                     NSString* actualPath = [path stringByAppendingPathComponent:subpath];
                     if ([self canOpenFileWithExtension:[actualPath pathExtension]]) {
@@ -416,54 +416,54 @@
             }
         }
     }
-    
+
     return result;
 }
 
 - (void)loadDroppedFiles:(NSArray<NSURL*>*)fileURLs
 {
     WEAK_SELF;
-    
+
     //
     // gather image files we recognize
     //
-    
+
     fileURLs = [self gatherFiles:fileURLs];
     NSMutableArray<BatchEntry*>* entries = [NSMutableArray array];
-    
+
     //
     // now we know how many we need to examine
     //
-    
+
     dispatch_async(dispatch_get_main_queue(), ^{
         STRONG_SELF;
-        
+
         strongSelf.sheetProcessStepTotal = fileURLs.count;
         strongSelf.sheetProcessStep = 0;
         strongSelf.sheetProcessIndeterminate = NO;
     });
-    
+
     //
     // Now load batch entries
     //
-    
+
     for (NSURL* fileURL in fileURLs) {
         BatchEntry* be = [BatchEntry fromFileURL:fileURL];
         if (be) {
             [entries addObject:be];
         }
-        
+
         dispatch_async(dispatch_get_main_queue(), ^{
             STRONG_SELF;
             strongSelf.sheetProcessStep = strongSelf.sheetProcessStep + 1;
             strongSelf.sheetProcessProgress = (float)strongSelf.sheetProcessStep / (float)strongSelf.sheetProcessStepTotal;
         });
     }
-    
+
     //
     // we're done, notify self on main thread
     //
-    
+
     dispatch_async(dispatch_get_main_queue(), ^{
         STRONG_SELF;
         [strongSelf fileAddingAnalysisComplete:entries];
@@ -473,12 +473,12 @@
 - (void)removeItems:(NSSet<NSIndexPath*>*)items animated:(BOOL)animated
 {
     [batchCollectionView deselectItemsAtIndexPaths:items];
-    
+
     // remove these items from internal store
     NSMutableIndexSet* bumpmapIndices = [[NSMutableIndexSet alloc] init];
     NSMutableIndexSet* nonBumpmapIndices = [[NSMutableIndexSet alloc] init];
     for (NSIndexPath* indexPath in items) {
-        
+
         BOOL isBatchSection = indexPath.section == 0 && [batch count] > 0;
         if (isBatchSection) {
             [bumpmapIndices addIndex:indexPath.item];
@@ -486,49 +486,49 @@
             [nonBumpmapIndices addIndex:indexPath.item];
         }
     }
-    
+
     BOOL bumpmapsWasPopulated = [batch count] > 0;
     BOOL nonBumpmapsWasPopulated = [excludedFromBatch count] > 0;
-    
+
     if (bumpmapIndices.count > 0) {
         [batch removeObjectsAtIndexes:bumpmapIndices];
     }
-    
+
     if (nonBumpmapIndices.count > 0) {
         [excludedFromBatch removeObjectsAtIndexes:nonBumpmapIndices];
     }
-    
+
     BOOL bumpmapsIsEmpty = [batch count] == 0;
     BOOL nonBumpmapsIsEmpty = [excludedFromBatch count] == 0;
-    
+
     // remove from collection view
     if (animated) {
         NSAnimationContext.currentContext.duration = 0.2;
         [[batchCollectionView animator]
-         performBatchUpdates:^{
-             [batchCollectionView deleteItemsAtIndexPaths:items];
-             if (nonBumpmapsIsEmpty && nonBumpmapsWasPopulated) {
-                 [batchCollectionView deleteSections:[NSIndexSet indexSetWithIndex:bumpmapsWasPopulated ? 1 : 0]];
-             }
-             
-             if (bumpmapsIsEmpty && bumpmapsWasPopulated) {
-                 [batchCollectionView deleteSections:[NSIndexSet indexSetWithIndex:0]];
-             }
-         }
-         completionHandler:^(BOOL finished) {
-         }];
+            performBatchUpdates:^{
+                [batchCollectionView deleteItemsAtIndexPaths:items];
+                if (nonBumpmapsIsEmpty && nonBumpmapsWasPopulated) {
+                    [batchCollectionView deleteSections:[NSIndexSet indexSetWithIndex:bumpmapsWasPopulated ? 1 : 0]];
+                }
+
+                if (bumpmapsIsEmpty && bumpmapsWasPopulated) {
+                    [batchCollectionView deleteSections:[NSIndexSet indexSetWithIndex:0]];
+                }
+            }
+              completionHandler:^(BOOL finished) {
+              }];
     } else {
         [batchCollectionView deleteItemsAtIndexPaths:items];
-        
+
         if (nonBumpmapsIsEmpty && nonBumpmapsWasPopulated) {
             [batchCollectionView deleteSections:[NSIndexSet indexSetWithIndex:bumpmapsWasPopulated ? 1 : 0]];
         }
-        
+
         if (bumpmapsIsEmpty && bumpmapsWasPopulated) {
             [batchCollectionView deleteSections:[NSIndexSet indexSetWithIndex:0]];
         }
     }
-    
+
     self.showDropMessage = bumpmapsIsEmpty && nonBumpmapsIsEmpty;
 }
 
@@ -538,7 +538,7 @@
     int count = [excludedFromBatch count];
     [batch addObjectsFromArray:excludedFromBatch];
     [excludedFromBatch removeAllObjects];
-    
+
     //
     //  If we have no bumpmaps, only non-bumpmaps, we can't move them from section 0 to section 0...
     //  so we need to just do a reload data
@@ -548,21 +548,21 @@
     } else {
         // we have both sections, we can perform a move
         [[batchCollectionView animator]
-         performBatchUpdates:^{
-             for (int i = 0; i < count; i++) {
-                 NSIndexPath* source = [NSIndexPath indexPathForItem:i inSection:1];
-                 NSIndexPath* dest = [NSIndexPath indexPathForItem:startIndex + i inSection:0];
-                 
-                 BatchCollectionViewItem* item = (BatchCollectionViewItem*)[batchCollectionView itemAtIndexPath:source];
-                 [self prepareItem:item forBatchEntry:item.batchEntry inBatch:YES];
-                 [batchCollectionView moveItemAtIndexPath:source toIndexPath:dest];
-             }
-             
-             [batchCollectionView deleteSections:[NSIndexSet indexSetWithIndex:1]];
-         }
-         completionHandler:^(BOOL finished) {
-             ;
-         }];
+            performBatchUpdates:^{
+                for (int i = 0; i < count; i++) {
+                    NSIndexPath* source = [NSIndexPath indexPathForItem:i inSection:1];
+                    NSIndexPath* dest = [NSIndexPath indexPathForItem:startIndex + i inSection:0];
+
+                    BatchCollectionViewItem* item = (BatchCollectionViewItem*)[batchCollectionView itemAtIndexPath:source];
+                    [self prepareItem:item forBatchEntry:item.batchEntry inBatch:YES];
+                    [batchCollectionView moveItemAtIndexPath:source toIndexPath:dest];
+                }
+
+                [batchCollectionView deleteSections:[NSIndexSet indexSetWithIndex:1]];
+            }
+            completionHandler:^(BOOL finished) {
+                ;
+            }];
     }
 }
 
@@ -584,23 +584,23 @@
             [batch removeObject:batchEntry];
             [excludedFromBatch addObject:batchEntry];
         }
-        
+
         if (source != nil && dest != nil) {
-            
+
             [[batchCollectionView animator]
-             performBatchUpdates:^{
-                 [batchCollectionView moveItemAtIndexPath:source toIndexPath:dest];
-                 if (batch.count == 0) {
-                     [batchCollectionView deleteSections:[NSIndexSet indexSetWithIndex:0]];
-                 } else if (excludedFromBatch.count == 0) {
-                     [batchCollectionView deleteSections:[NSIndexSet indexSetWithIndex:1]];
-                 }
-             }
-             completionHandler:^(BOOL finished) {
-                 BatchCollectionViewItem* item = (BatchCollectionViewItem*)[batchCollectionView itemAtIndexPath:dest];
-                 [self prepareItem:item forBatchEntry:batchEntry inBatch:includedInBatch];
-             }];
-            
+                performBatchUpdates:^{
+                    [batchCollectionView moveItemAtIndexPath:source toIndexPath:dest];
+                    if (batch.count == 0) {
+                        [batchCollectionView deleteSections:[NSIndexSet indexSetWithIndex:0]];
+                    } else if (excludedFromBatch.count == 0) {
+                        [batchCollectionView deleteSections:[NSIndexSet indexSetWithIndex:1]];
+                    }
+                }
+                completionHandler:^(BOOL finished) {
+                    BatchCollectionViewItem* item = (BatchCollectionViewItem*)[batchCollectionView itemAtIndexPath:dest];
+                    [self prepareItem:item forBatchEntry:batchEntry inBatch:includedInBatch];
+                }];
+
         } else {
             DebugLog(@"Unable to perform move - Missing one or both of source (%@) and dest (%@) index paths", source, dest);
         }
@@ -612,16 +612,16 @@
             NSIndexPath* source = [NSIndexPath indexPathForItem:[excludedFromBatch indexOfObject:batchEntry] inSection:1];
             BatchCollectionViewItem* item = (BatchCollectionViewItem*)[batchCollectionView itemAtIndexPath:source];
             [self prepareItem:item forBatchEntry:batchEntry inBatch:YES];
-            
+
             [excludedFromBatch removeObject:batchEntry];
             [batch addObject:batchEntry];
         } else {
             // moving from inclusion to exclusion
-            
+
             NSIndexPath* source = [NSIndexPath indexPathForItem:[batch indexOfObject:batchEntry] inSection:0];
             BatchCollectionViewItem* item = (BatchCollectionViewItem*)[batchCollectionView itemAtIndexPath:source];
             [self prepareItem:item forBatchEntry:batchEntry inBatch:NO];
-            
+
             [batch removeObject:batchEntry];
             [excludedFromBatch addObject:batchEntry];
         }
@@ -633,17 +633,15 @@
 {
     item.batchEntry = entry;
     item.isIncludedInBumpmapsBatch = inBatch;
-    item.addRemoveButton.title = inBatch ? @"-" : @"+";
-    
-    item.addRemoveButton.target = self;
+
     WEAK_SELF;
     if (inBatch) {
-        item.addRemoveButton.onClick = ^() {
+        item.onAddRemoveButtonTapped = ^() {
             STRONG_SELF;
             [strongSelf moveEntry:entry toBatch:NO];
         };
     } else {
-        item.addRemoveButton.onClick = ^() {
+        item.onAddRemoveButtonTapped = ^() {
             STRONG_SELF;
             [strongSelf moveEntry:entry toBatch:YES];
         };
@@ -653,9 +651,9 @@
 - (void)fileAddingAnalysisComplete:(NSMutableArray<BatchEntry*>*)newEntries
 {
     self.sheetProcessRunning = NO;
-    
+
     [NSApp endSheet:progressSheet];
-    
+
     for (BatchEntry* entry in newEntries) {
         if (entry.looksLikeBumpmap) {
             [batch addObject:entry];
@@ -663,7 +661,7 @@
             [excludedFromBatch addObject:entry];
         }
     }
-    
+
     [batchCollectionView reloadData];
     self.showDropMessage = (batch.count == 0) && (excludedFromBatch.count == 0);
 }
@@ -671,33 +669,33 @@
 - (void)normalmapFiles:(NSArray<BatchEntry*>*)entries
 {
     WEAK_SELF;
-    
+
     dispatch_async(dispatch_get_main_queue(), ^{
         STRONG_SELF;
         strongSelf.sheetProcessStepTotal = entries.count;
         strongSelf.sheetProcessStep = 0;
         strongSelf.sheetProcessIndeterminate = NO;
     });
-    
+
     //
     // Now load batch entries
     //
-    
+
     for (BatchEntry* entry in entries) {
         BatchOperation* op = [[BatchOperation alloc] initWithEntry:entry andSettings:batchSettings];
         [op run];
-        
+
         dispatch_async(dispatch_get_main_queue(), ^{
             STRONG_SELF;
             strongSelf.sheetProcessStep = strongSelf.sheetProcessStep + 1;
             strongSelf.sheetProcessProgress = (float)strongSelf.sheetProcessStep / (float)strongSelf.sheetProcessStepTotal;
         });
     }
-    
+
     //
     // we're done, notify self on main thread
     //
-    
+
     dispatch_async(dispatch_get_main_queue(), ^{
         self.sheetProcessRunning = NO;
         [NSApp endSheet:progressSheet];

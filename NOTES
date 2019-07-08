@@ -1,6 +1,6 @@
 PRESENTLY:
+- we don't need the section header on the "Bumpmaps" section - only for the Excluded section.
 - make add/remove buttons look good
-- make add/remove buttons only appear on hover
 
 TODO:
 - need to improve appearance of bumpmap/non-bumpmap divide - maybe through background color?

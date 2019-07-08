@@ -14,9 +14,6 @@
 
 @interface AddRemoveButton : NSButton {
 }
-
-@property (nonatomic, copy) void (^onClick)();
-
 @end
 
 @interface BatchCollectionViewItem : NSCollectionViewItem {
@@ -32,6 +29,8 @@
 
 @property (readwrite, nonatomic) BatchEntry* batchEntry;
 @property (readwrite, nonatomic) BOOL isIncludedInBumpmapsBatch;
+
+@property (nonatomic, copy) void (^onAddRemoveButtonTapped)();
 
 @end
 
