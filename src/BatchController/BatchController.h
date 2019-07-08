@@ -28,11 +28,9 @@
     NSInteger previousSaveLocationPopupTag;
 
     __weak IBOutlet NSWindow* batchWindow;
-    IBOutlet NSPanel* progressSheet;
-    __weak IBOutlet BatchCollectionView* bumpmapsCollectionView;
-    __weak IBOutlet NSScrollView* bumpmapsCollectionViewScrollView;
-    __weak IBOutlet NSCollectionViewFlowLayout* bumpmapsCollectionViewFL;
-    __weak IBOutlet BatchCollectionViewRoot* bumpmapCollectionViewRoot;
+    IBOutlet NSPanel* progressSheet; // intentionally strong to keep it alive when not visible
+    __weak IBOutlet BatchCollectionView* batchCollectionView;
+    __weak IBOutlet NSCollectionViewFlowLayout* batchCollectionViewFlowLayout;
     __weak IBOutlet NSButton* runButton;
     __weak IBOutlet NSPopUpButton* saveLocationPopup;
 }

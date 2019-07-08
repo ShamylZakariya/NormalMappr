@@ -8,11 +8,9 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="BatchController">
             <connections>
+                <outlet property="batchCollectionView" destination="dmv-IW-L03" id="yVO-7O-0Sb"/>
+                <outlet property="batchCollectionViewFlowLayout" destination="9cb-4W-j73" id="SOM-fC-wzo"/>
                 <outlet property="batchWindow" destination="3" id="43"/>
-                <outlet property="bumpmapCollectionViewRoot" destination="GBm-E1-1xG" id="lWh-hG-29v"/>
-                <outlet property="bumpmapsCollectionView" destination="dmv-IW-L03" id="yVO-7O-0Sb"/>
-                <outlet property="bumpmapsCollectionViewFL" destination="9cb-4W-j73" id="SOM-fC-wzo"/>
-                <outlet property="bumpmapsCollectionViewScrollView" destination="7Mb-zT-vPU" id="Z1p-Go-fkD"/>
                 <outlet property="progressSheet" destination="4" id="137"/>
                 <outlet property="runButton" destination="108" id="NPj-kJ-Hab"/>
                 <outlet property="saveLocationPopup" destination="gK0-5K-lFj" id="4o6-LY-elJ"/>
