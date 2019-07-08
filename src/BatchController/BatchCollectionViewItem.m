@@ -10,13 +10,14 @@
 
 #pragma mark - AddRemoveButton
 
-@interface AddRemoveButton(Private)
-- (void) _onClick:(id) sender;
+@interface AddRemoveButton (Private)
+- (void)_onClick:(id)sender;
 @end
 
 @implementation AddRemoveButton
 
-- (BOOL)sendAction:(SEL)action to:(id)target {
+- (BOOL)sendAction:(SEL)action to:(id)target
+{
     if (self.onClick != nil) {
         self.onClick();
     }
@@ -39,10 +40,10 @@
     [self.thumbView setImage:batchEntry.thumb];
 }
 
-- (void) setIsIncludedInBumpmapsBatch:(BOOL)isIncludedInBumpmapsBatch
+- (void)setIsIncludedInBumpmapsBatch:(BOOL)isIncludedInBumpmapsBatch
 {
     self->isIncludedInBumpmapsBatch = isIncludedInBumpmapsBatch;
-    
+
     CGFloat alpha = isIncludedInBumpmapsBatch ? 1 : 0.5;
     [self.thumbView animator].alphaValue = alpha * alpha;
     [self.nameTextField animator].alphaValue = alpha;
