@@ -8,6 +8,23 @@
 
 #import "BatchCollectionViewItem.h"
 
+#pragma mark - AddRemoveButton
+
+@interface AddRemoveButton(Private)
+- (void) _onClick:(id) sender;
+@end
+
+@implementation AddRemoveButton
+
+- (BOOL)sendAction:(SEL)action to:(id)target {
+    if (self.onClick != nil) {
+        self.onClick();
+    }
+    return [super sendAction:action to:target];
+}
+
+@end
+
 #pragma mark - BatchCollectionViewItem
 
 @implementation BatchCollectionViewItem
@@ -18,21 +35,24 @@
 - (void)setBatchEntry:(BatchEntry*)batchEntry
 {
     self->batchEntry = batchEntry;
-    [label setStringValue:[[batchEntry.filePath lastPathComponent] stringByDeletingPathExtension]];
-    [thumb setImage:batchEntry.thumb];
+    [self.nameTextField setStringValue:[[batchEntry.filePath lastPathComponent] stringByDeletingPathExtension]];
+    [self.thumbView setImage:batchEntry.thumb];
 }
 
 - (void) setIsIncludedInBumpmapsBatch:(BOOL)isIncludedInBumpmapsBatch
 {
     self->isIncludedInBumpmapsBatch = isIncludedInBumpmapsBatch;
-    batchItemView.alphaValue = isIncludedInBumpmapsBatch ? 1 : 0.5;
+    
+    CGFloat alpha = isIncludedInBumpmapsBatch ? 1 : 0.5;
+    [self.thumbView animator].alphaValue = alpha * alpha;
+    [self.nameTextField animator].alphaValue = alpha;
 }
 
 - (void)setSelected:(BOOL)selected
 {
     [super setSelected:selected];
-    batchItemView.selected = selected;
-    [batchItemView setNeedsDisplay:YES];
+    self.batchItemView.selected = selected;
+    [self.batchItemView setNeedsDisplay:YES];
 
     BOOL lightMode = YES;
     if (@available(macOS 10.14, *)) {
@@ -42,9 +62,9 @@
     }
 
     if (lightMode) {
-        label.textColor = selected ? [NSColor whiteColor] : [NSColor controlTextColor];
+        self.nameTextField.textColor = selected ? [NSColor whiteColor] : [NSColor controlTextColor];
     } else {
-        label.textColor = [NSColor whiteColor];
+        self.nameTextField.textColor = [NSColor whiteColor];
     }
 }
 

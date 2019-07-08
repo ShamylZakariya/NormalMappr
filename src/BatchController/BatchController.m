@@ -26,6 +26,8 @@
 - (void)loadDroppedFiles:(NSArray<NSURL*>*)fileURLs;
 - (void)removeItems:(NSSet<NSIndexPath*>*)items animated:(BOOL)animated;
 - (void)addExcludedItemsToBatch: (id) sender;
+- (void)moveEntry:(BatchEntry*) batchEntry toBatch:(BOOL) includedInBatch;
+- (void)prepareItem:(BatchCollectionViewItem*) item forBatchEntry:(BatchEntry*) entry inBatch:(BOOL) inBatch;
 - (void)fileAddingAnalysisComplete:(NSMutableArray<BatchEntry*>*)addableFiles;
 - (void)normalmapFiles:(NSArray<BatchEntry*>*)files;
 
@@ -399,15 +401,14 @@
 #warning Animation has stopped working
 
         NSAnimationContext.currentContext.duration = 0.2;
-        [bumpmapsCollectionView
-            performBatchUpdates:^{
-                [[bumpmapsCollectionView animator] deleteItemsAtIndexPaths:items];
+        [[bumpmapsCollectionView animator] performBatchUpdates:^{
+                [bumpmapsCollectionView deleteItemsAtIndexPaths:items];
                 if (nonBumpmapsIsEmpty && nonBumpmapsWasPopulated) {
-                    [[bumpmapsCollectionView animator] deleteSections:[NSIndexSet indexSetWithIndex:bumpmapsWasPopulated ? 1 : 0]];
+                    [bumpmapsCollectionView deleteSections:[NSIndexSet indexSetWithIndex:bumpmapsWasPopulated ? 1 : 0]];
                 }
 
                 if (bumpmapsIsEmpty && bumpmapsWasPopulated) {
-                    [[bumpmapsCollectionView animator] deleteSections:[NSIndexSet indexSetWithIndex:0]];
+                    [bumpmapsCollectionView deleteSections:[NSIndexSet indexSetWithIndex:0]];
                 }
             }
               completionHandler:^(BOOL finished) {
@@ -442,24 +443,104 @@
         [bumpmapsCollectionView reloadData];
     } else {
         // we have both sections, we can perform a move
-        [bumpmapsCollectionView performBatchUpdates:^{
+        [[bumpmapsCollectionView animator] performBatchUpdates:^{
             
             for (int i = 0; i < count; i++) {
                 NSIndexPath *source = [NSIndexPath indexPathForItem:i inSection:1];
                 NSIndexPath *dest = [NSIndexPath indexPathForItem:startIndex + i inSection:0];
                 
-                ((BatchCollectionViewItem*)[bumpmapsCollectionView itemAtIndexPath:source]).isIncludedInBumpmapsBatch = YES;
-                
-                [[bumpmapsCollectionView animator] moveItemAtIndexPath:source toIndexPath:dest];
+                BatchCollectionViewItem *item = (BatchCollectionViewItem*)[bumpmapsCollectionView itemAtIndexPath:source];
+                [self prepareItem:item forBatchEntry:item.batchEntry inBatch:YES];
+                [bumpmapsCollectionView moveItemAtIndexPath:source toIndexPath:dest];
             }
             
-            [[bumpmapsCollectionView animator] deleteSections:[NSIndexSet indexSetWithIndex:1]];
+            [bumpmapsCollectionView deleteSections:[NSIndexSet indexSetWithIndex:1]];
             
         } completionHandler:^(BOOL finished) {
             ;
         }];
     }
+}
 
+- (void)moveEntry:(BatchEntry*) batchEntry toBatch:(BOOL) includedInBatch
+{
+    if (YES && [bumpmaps count] > 0 && [nonBumpmaps count] > 0) {
+        NSIndexPath *source = nil;
+        NSIndexPath *dest = nil;
+        if (includedInBatch) {
+            // moving from exclusion to inclusion
+            source = [NSIndexPath indexPathForItem:[nonBumpmaps indexOfObject:batchEntry] inSection:1];
+            dest = [NSIndexPath indexPathForItem:bumpmaps.count inSection:0];
+            [nonBumpmaps removeObject:batchEntry];
+            [bumpmaps addObject:batchEntry];
+        } else {
+            // moving from inclusion to exclusion
+            source = [NSIndexPath indexPathForItem:[bumpmaps indexOfObject:batchEntry] inSection:0];
+            dest = [NSIndexPath indexPathForItem:nonBumpmaps.count inSection:1];
+            [bumpmaps removeObject:batchEntry];
+            [nonBumpmaps addObject:batchEntry];
+        }
+        
+        if (source != nil && dest != nil) {
+            
+            [[bumpmapsCollectionView animator] performBatchUpdates:^{
+                [bumpmapsCollectionView moveItemAtIndexPath:source toIndexPath:dest];
+            } completionHandler:^(BOOL finished) {
+                
+#warning includedInBatch is not being applied correctly
+                BatchCollectionViewItem *item = (BatchCollectionViewItem*)[bumpmapsCollectionView itemAtIndexPath:dest];
+                [self prepareItem:item forBatchEntry:batchEntry inBatch:includedInBatch];
+            }];
+            
+            
+        } else {
+            DebugLog(@"Unable to perform move - Missing one or both of source (%@) and dest (%@) index paths", source, dest);
+        }
+    } else {
+        // we don't have a bumpmaps (or) non-bumpmaps section - this complicates the move.
+        // instead, for now just call reloadData
+        if (includedInBatch) {
+            // moving from exclusion to inclusion
+            NSIndexPath *source = [NSIndexPath indexPathForItem:[nonBumpmaps indexOfObject:batchEntry] inSection:1];
+            BatchCollectionViewItem *item = (BatchCollectionViewItem*)[bumpmapsCollectionView itemAtIndexPath:source];
+            [self prepareItem:item forBatchEntry:batchEntry inBatch:YES];
+
+            [nonBumpmaps removeObject:batchEntry];
+            [bumpmaps addObject:batchEntry];
+        } else {
+            // moving from inclusion to exclusion
+            
+            NSIndexPath *source = [NSIndexPath indexPathForItem:[bumpmaps indexOfObject:batchEntry] inSection:0];
+            BatchCollectionViewItem *item = (BatchCollectionViewItem*)[bumpmapsCollectionView itemAtIndexPath:source];
+            [self prepareItem:item forBatchEntry:batchEntry inBatch:NO];
+
+            [bumpmaps removeObject:batchEntry];
+            [nonBumpmaps addObject:batchEntry];
+        }
+        [bumpmapsCollectionView reloadData];
+    }
+    
+}
+
+- (void)prepareItem:(BatchCollectionViewItem*) item forBatchEntry:(BatchEntry*) entry inBatch:(BOOL) inBatch
+{
+    item.batchEntry = entry;
+    item.isIncludedInBumpmapsBatch = inBatch;
+    item.addRemoveButton.title = inBatch ? @"-" : @"+";
+    
+    item.addRemoveButton.target = self;
+    WEAK_SELF;
+    if (inBatch) {
+        item.addRemoveButton.onClick = ^() {
+            STRONG_SELF;
+            [strongSelf moveEntry:entry toBatch:NO];
+        };
+    } else {
+        item.addRemoveButton.onClick = ^() {
+            STRONG_SELF;
+            [strongSelf moveEntry:entry toBatch:YES];
+        };
+    }
 }
 
 - (void)fileAddingAnalysisComplete:(NSMutableArray<BatchEntry*>*)newEntries
@@ -567,8 +648,7 @@
     BatchEntry* entry = source[indexPath.item];
     BatchCollectionViewItem* item = [collectionView makeItemWithIdentifier:kBatchCollectionViewItemIdentifier forIndexPath:indexPath];
     
-    item.batchEntry = entry;
-    item.isIncludedInBumpmapsBatch = isBatchSection;
+    [self prepareItem:item forBatchEntry: entry inBatch:isBatchSection];
 
     return item;
 }

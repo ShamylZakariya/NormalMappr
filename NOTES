@@ -1,5 +1,4 @@
 PRESENTLY:
-- add a toggle on the items in CV to move to bumpmap or move out of bumpmap to non-bumpmap section - I think DnD is not the right solution here for general case usage
 
 TODO:
 - need to improve appearance of bumpmap/non-bumpmap divide - maybe through background color?
@@ -7,5 +6,7 @@ TODO:
     - this might not be possible now that I've overridden default DnD behavior on collectionview
     - might still work for when CV is drag source? I could selectively disable batch drop behavior if dragging inside
 
-BUGS:
-- animation of item removal has stopped working - likely need to git bisect to track down breakage
+KNOWN BUGS:
+
+UNKNOWN BUGS:
+- plenty!

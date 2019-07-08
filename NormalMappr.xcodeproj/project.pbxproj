@@ -40,6 +40,7 @@
 		63A761912296F908004E6EC3 /* BatchCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63A761902296F908004E6EC3 /* BatchCollectionViewItem.xib */; };
 		63F367FB22CE9F440044D921 /* BatchCollectionViewRoot.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F367FA22CE9F440044D921 /* BatchCollectionViewRoot.m */; };
 		63F367FE22CEA0C40044D921 /* BatchCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F367FD22CEA0C40044D921 /* BatchCollectionView.m */; };
+		8B1686A3D8A4F58088A3580C /* Pods_NormalMappr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14BFC9E782FDE3BA39D24331 /* Pods_NormalMappr.framework */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
 		8D15AC2D0486D014006FF6A4 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B6FDCFA73011CA2CEA /* MainMenu.nib */; };
 		8D15AC2E0486D014006FF6A4 /* NormalMapprDoc.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B4FDCFA73011CA2CEA /* NormalMapprDoc.nib */; };
@@ -61,6 +62,7 @@
 /* Begin PBXFileReference section */
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		14BFC9E782FDE3BA39D24331 /* Pods_NormalMappr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NormalMappr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A37F4B0FDCFA73011CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -98,6 +100,7 @@
 		36F951070F644B130003C8EF /* TilingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TilingImageView.m; sourceTree = "<group>"; };
 		36F9516F0F64A0590003C8EF /* CGImageCreateWithFileURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGImageCreateWithFileURL.h; sourceTree = "<group>"; };
 		36F951700F64A0590003C8EF /* CGImageCreateWithFileURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGImageCreateWithFileURL.m; sourceTree = "<group>"; };
+		4FAB9D7CD1B343986157129D /* Pods-NormalMappr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NormalMappr.debug.xcconfig"; path = "Target Support Files/Pods-NormalMappr/Pods-NormalMappr.debug.xcconfig"; sourceTree = "<group>"; };
 		632A312A2299E17C00A9D01A /* BatchCollectionViewSectionHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BatchCollectionViewSectionHeader.xib; sourceTree = "<group>"; };
 		632A312C2299E25700A9D01A /* BatchCollectionViewSectionHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BatchCollectionViewSectionHeader.h; sourceTree = "<group>"; };
 		632A312D2299E25700A9D01A /* BatchCollectionViewSectionHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BatchCollectionViewSectionHeader.m; sourceTree = "<group>"; };
@@ -131,6 +134,7 @@
 		63F367FD22CEA0C40044D921 /* BatchCollectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BatchCollectionView.m; sourceTree = "<group>"; };
 		8D15AC360486D014006FF6A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* NormalMappr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NormalMappr.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CD6004B36F4077F238209AE /* Pods-NormalMappr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NormalMappr.release.xcconfig"; path = "Target Support Files/Pods-NormalMappr/Pods-NormalMappr.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,12 +144,23 @@
 			files = (
 				8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */,
 				36F94F920F6095A90003C8EF /* QuartzCore.framework in Frameworks */,
+				8B1686A3D8A4F58088A3580C /* Pods_NormalMappr.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E655F4DCBDED40FAAB75596 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4FAB9D7CD1B343986157129D /* Pods-NormalMappr.debug.xcconfig */,
+				9CD6004B36F4077F238209AE /* Pods-NormalMappr.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -172,7 +187,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		2A37F4AAFDCFA73011CA2CEA /* NormalMappr */ = {
+		2A37F4AAFDCFA73011CA2CEA = {
 			isa = PBXGroup;
 			children = (
 				63608ADB228895630062CD4C /* 3rd-party */,
@@ -182,6 +197,7 @@
 				2A37F4C3FDCFA73011CA2CEA /* Frameworks */,
 				19C28FB0FE9D524F11CA2CBB /* Products */,
 				36A71732112ABC4600D88461 /* NOTES */,
+				0E655F4DCBDED40FAAB75596 /* Pods */,
 			);
 			name = NormalMappr;
 			sourceTree = "<group>";
@@ -218,6 +234,7 @@
 				36F94F910F6095A90003C8EF /* QuartzCore.framework */,
 				1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */,
 				1058C7A8FEA54F5311CA2CBB /* Other Frameworks */,
+				14BFC9E782FDE3BA39D24331 /* Pods_NormalMappr.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -352,6 +369,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C05733C708A9546B00998B17 /* Build configuration list for PBXNativeTarget "NormalMappr" */;
 			buildPhases = (
+				C29BB13A6DC1CCF86075F957 /* [CP] Check Pods Manifest.lock */,
 				8D15AC2B0486D014006FF6A4 /* Resources */,
 				8D15AC300486D014006FF6A4 /* Sources */,
 				8D15AC330486D014006FF6A4 /* Frameworks */,
@@ -382,7 +400,8 @@
 				en,
 				Base,
 			);
-			mainGroup = 2A37F4AAFDCFA73011CA2CEA /* NormalMappr */;
+			mainGroup = 2A37F4AAFDCFA73011CA2CEA;
+			productRefGroup = 19C28FB0FE9D524F11CA2CBB /* Products */;
 			projectDirPath = "";
 			projectReferences = (
 				{
@@ -431,6 +450,31 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C29BB13A6DC1CCF86075F957 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NormalMappr-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8D15AC300486D014006FF6A4 /* Sources */ = {
@@ -518,6 +562,7 @@
 /* Begin XCBuildConfiguration section */
 		C05733C808A9546B00998B17 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4FAB9D7CD1B343986157129D /* Pods-NormalMappr.debug.xcconfig */;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -536,6 +581,7 @@
 		};
 		C05733C908A9546B00998B17 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9CD6004B36F4077F238209AE /* Pods-NormalMappr.release.xcconfig */;
 			buildSettings = {
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;

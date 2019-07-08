@@ -12,14 +12,23 @@
 
 @class BatchItemView;
 
+@interface AddRemoveButton : NSButton {
+}
+
+@property (nonatomic, copy) void (^onClick)();
+
+@end
+
 @interface BatchCollectionViewItem : NSCollectionViewItem {
-    __weak IBOutlet ThumbView* thumb;
-    __weak IBOutlet NSTextField* label;
-    __weak IBOutlet BatchItemView* batchItemView;
     BatchEntry* batchEntry;
     NSClickGestureRecognizer* clickRecognizer;
     BOOL isIncludedInBumpmapsBatch;
 }
+
+@property (weak) IBOutlet ThumbView* thumbView;
+@property (weak) IBOutlet NSTextField* nameTextField;
+@property (weak) IBOutlet BatchItemView* batchItemView;
+@property (weak) IBOutlet AddRemoveButton* addRemoveButton;
 
 @property (readwrite, nonatomic) BatchEntry* batchEntry;
 @property (readwrite, nonatomic) BOOL isIncludedInBumpmapsBatch;

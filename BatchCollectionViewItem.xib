@@ -27,14 +27,23 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     </textFieldCell>
                 </textField>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="doK-2h-v4o" customClass="AddRemoveButton">
+                    <rect key="frame" x="521" y="243" width="30" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="inline" title="+" bezelStyle="inline" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="upa-7e-WET">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="smallSystemBold"/>
+                    </buttonCell>
+                </button>
             </subviews>
             <point key="canvasLocation" x="195.5" y="140"/>
         </view>
         <collectionViewItem id="XK8-ZF-4lc" customClass="BatchCollectionViewItem">
             <connections>
-                <outlet property="batchItemView" destination="cx3-xd-JcS" id="dS8-ZD-ylA"/>
-                <outlet property="label" destination="5K5-Yd-Gss" id="qnf-1X-hKk"/>
-                <outlet property="thumb" destination="B7A-uD-pF8" id="bSd-TQ-9R8"/>
+                <outlet property="addRemoveButton" destination="doK-2h-v4o" id="HFZ-cs-uaq"/>
+                <outlet property="batchItemView" destination="cx3-xd-JcS" id="3UO-FJ-Cqx"/>
+                <outlet property="nameTextField" destination="5K5-Yd-Gss" id="Saw-ly-e38"/>
+                <outlet property="thumbView" destination="B7A-uD-pF8" id="beT-SU-yyV"/>
                 <outlet property="view" destination="cx3-xd-JcS" id="Hg3-A7-by6"/>
             </connections>
         </collectionViewItem>
