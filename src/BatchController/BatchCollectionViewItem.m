@@ -33,11 +33,19 @@
 @synthesize batchEntry = batchEntry;
 @synthesize isIncludedInBumpmapsBatch = isIncludedInBumpmapsBatch;
 
+- (void) awakeFromNib {
+    [self.addRemoveButton setHidden:YES];
+}
+
 - (void)setBatchEntry:(BatchEntry*)batchEntry
 {
     self->batchEntry = batchEntry;
     [self.nameTextField setStringValue:[[batchEntry.filePath lastPathComponent] stringByDeletingPathExtension]];
     [self.thumbView setImage:batchEntry.thumb];
+    
+    self.batchItemView.onMouseHoverStateChange = ^(BOOL mouseInside) {
+        [[self.addRemoveButton animator] setHidden:!mouseInside];
+    };
 }
 
 - (void)setIsIncludedInBumpmapsBatch:(BOOL)isIncludedInBumpmapsBatch
@@ -77,6 +85,11 @@
 
 @synthesize selected;
 
+- (void) awakeFromNib {
+    NSTrackingArea *ta = [[NSTrackingArea alloc] initWithRect:self.bounds options:NSTrackingInVisibleRect | NSTrackingActiveInKeyWindow | NSTrackingMouseEnteredAndExited  owner:self userInfo:nil];
+    [self addTrackingArea: ta];
+}
+
 - (void)drawRect:(NSRect)rect
 {
     if (selected) {
@@ -88,6 +101,14 @@
 
         [[NSBezierPath bezierPathWithRoundedRect:NSInsetRect(self.bounds, 5, 5) xRadius:6 yRadius:6] fill];
     }
+}
+     
+- (void)mouseEntered:(NSEvent *)event {
+    self.onMouseHoverStateChange(YES);
+}
+     
+- (void)mouseExited:(NSEvent *)event {
+    self.onMouseHoverStateChange(NO);
 }
 
 @end

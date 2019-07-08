@@ -39,5 +39,6 @@
 }
 
 @property (readwrite, nonatomic) BOOL selected;
+@property (nonatomic, copy) void (^onMouseHoverStateChange)(BOOL mouseInside);
 
 @end
