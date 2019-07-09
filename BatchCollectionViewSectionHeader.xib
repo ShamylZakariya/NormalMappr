@@ -13,6 +13,9 @@
             <rect key="frame" x="0.0" y="0.0" width="497" height="45"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="Xam-pa-IMP" customClass="BatchCollectionViewSectionHeaderBackground">
+                    <rect key="frame" x="0.0" y="0.0" width="497" height="45"/>
+                </customView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zcL-It-C5M">
                     <rect key="frame" x="20" y="14" width="86" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Section Title" id="ZDW-Sx-ZaB">
@@ -30,13 +33,18 @@
                 </button>
             </subviews>
             <constraints>
+                <constraint firstItem="Xam-pa-IMP" firstAttribute="top" secondItem="Z8y-cf-p4C" secondAttribute="top" id="0gW-Mh-pVP"/>
                 <constraint firstItem="EvL-T5-G3D" firstAttribute="centerY" secondItem="Z8y-cf-p4C" secondAttribute="centerY" id="7nI-Lw-Qhx"/>
+                <constraint firstItem="Xam-pa-IMP" firstAttribute="leading" secondItem="Z8y-cf-p4C" secondAttribute="leading" id="IEq-i5-cwF"/>
                 <constraint firstItem="zcL-It-C5M" firstAttribute="centerY" secondItem="Z8y-cf-p4C" secondAttribute="centerY" id="J5Y-Ye-FwA"/>
+                <constraint firstAttribute="bottom" secondItem="Xam-pa-IMP" secondAttribute="bottom" id="LaM-Yc-5ZD"/>
+                <constraint firstAttribute="trailing" secondItem="Xam-pa-IMP" secondAttribute="trailing" id="dyy-3K-ebh"/>
                 <constraint firstItem="zcL-It-C5M" firstAttribute="leading" secondItem="Z8y-cf-p4C" secondAttribute="leading" constant="22" id="rWC-8j-UXU"/>
                 <constraint firstAttribute="trailing" secondItem="EvL-T5-G3D" secondAttribute="trailing" constant="20" id="wFB-Z5-XDB"/>
             </constraints>
             <connections>
                 <outlet property="addToBatchButton" destination="EvL-T5-G3D" id="ZhD-XE-C4d"/>
+                <outlet property="backgroundView" destination="Xam-pa-IMP" id="leM-Fx-mYM"/>
                 <outlet property="sectionTitle" destination="zcL-It-C5M" id="9z8-0X-Jtl"/>
             </connections>
             <point key="canvasLocation" x="84.5" y="-157.5"/>

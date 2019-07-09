@@ -11,6 +11,7 @@
                 <outlet property="batchCollectionView" destination="dmv-IW-L03" id="yVO-7O-0Sb"/>
                 <outlet property="batchCollectionViewFlowLayout" destination="9cb-4W-j73" id="SOM-fC-wzo"/>
                 <outlet property="batchWindow" destination="3" id="43"/>
+                <outlet property="dropMessage" destination="zio-IM-XUJ" id="IuH-Vf-red"/>
                 <outlet property="progressSheet" destination="4" id="137"/>
                 <outlet property="runButton" destination="108" id="NPj-kJ-Hab"/>
                 <outlet property="saveLocationPopup" destination="gK0-5K-lFj" id="4o6-LY-elJ"/>
@@ -319,13 +320,6 @@ DQ
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
-                                <connections>
-                                    <binding destination="-2" name="hidden" keyPath="showDropMessage" id="Mwm-LS-f7K">
-                                        <dictionary key="options">
-                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                        </dictionary>
-                                    </binding>
-                                </connections>
                             </textField>
                         </subviews>
                     </customView>

@@ -19,6 +19,7 @@
 
 @interface BatchController (Private)
 
+- (BOOL)isEmpty;
 - (void)requestUserSaveDestination;
 - (void)addUserSaveDestination:(NSURL*)destination;
 - (BOOL)canOpenFileWithExtension:(NSString*)extension;
@@ -26,7 +27,7 @@
 - (void)loadDroppedFiles:(NSArray<NSURL*>*)fileURLs;
 - (void)removeItems:(NSSet<NSIndexPath*>*)items;
 - (void)addExcludedItemsToBatch:(id)sender;
-- (void)updateExcludedSectionHeaderVisibility;
+- (void)updateExcludedSectionHeaderAnimated:(BOOL)animated;
 - (void)moveEntry:(BatchEntry*)batchEntry toBatch:(BOOL)includedInBatch;
 - (void)prepareItem:(BatchCollectionViewItem*)item forBatchEntry:(BatchEntry*)entry inBatch:(BOOL)inBatch;
 - (void)fileAddingAnalysisComplete:(NSMutableArray<BatchEntry*>*)addableFiles;
@@ -128,6 +129,7 @@
 {
     if (sdm != showDropMessage) {
         showDropMessage = sdm;
+        dropMessage.animator.hidden = !showDropMessage;
     }
 }
 
@@ -273,7 +275,7 @@
         [excludedFromBatchSectionHeader.addToBatchButton setTarget:self];
         [excludedFromBatchSectionHeader.addToBatchButton setAction:@selector(addExcludedItemsToBatch:)];
 
-        excludedFromBatchSectionHeader.hidden = excludedFromBatch.count == 0;
+        [self updateExcludedSectionHeaderAnimated:NO];
 
         return excludedFromBatchSectionHeader;
     }
@@ -304,11 +306,16 @@
 
 - (NSSize)collectionView:(NSCollectionView*)collectionView layout:(NSCollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
-    return NSMakeSize(0, 80);
+    switch (section) {
+    case 0:
+        return NSMakeSize(0, 20);
+    case 1:
+        return NSMakeSize(0, 80);
+    }
+    return NSZeroSize;
 }
 
 #pragma mark - Keyboard interaction
-
 - (void)deleteForward:(id)sender
 {
     [self removeItems:batchCollectionView.selectionIndexPaths];
@@ -320,6 +327,11 @@
 }
 
 #pragma mark - Private
+
+- (BOOL)isEmpty
+{
+    return batch.count == 0 && excludedFromBatch.count == 0;
+}
 
 - (void)requestUserSaveDestination
 {
@@ -482,18 +494,14 @@
         [excludedFromBatch removeObjectsAtIndexes:excludedFromBatchIndices];
     }
 
-    BOOL bumpmapsIsEmpty = [batch count] == 0;
-    BOOL nonBumpmapsIsEmpty = [excludedFromBatch count] == 0;
-
     [[batchCollectionView animator]
         performBatchUpdates:^{
             [batchCollectionView deleteItemsAtIndexPaths:items];
         }
         completionHandler:^(BOOL finished) {
-            [self updateExcludedSectionHeaderVisibility];
+            self.showDropMessage = self.isEmpty;
+            [self updateExcludedSectionHeaderAnimated:YES];
         }];
-
-    self.showDropMessage = bumpmapsIsEmpty && nonBumpmapsIsEmpty;
 }
 
 - (void)addExcludedItemsToBatch:(id)sender
@@ -515,14 +523,21 @@
             }
         }
         completionHandler:^(BOOL finished) {
-            [self updateExcludedSectionHeaderVisibility];
+            [self updateExcludedSectionHeaderAnimated:YES];
         }];
 }
 
-- (void)updateExcludedSectionHeaderVisibility
+- (void)updateExcludedSectionHeaderAnimated:(BOOL)animated
 {
     if (excludedFromBatchSectionHeader != nil) {
-        [[excludedFromBatchSectionHeader animator] setHidden:excludedFromBatch.count == 0];
+        BOOL hidden = excludedFromBatch.count == 0;
+        if (animated) {
+            [excludedFromBatchSectionHeader setContentHidden:self.isEmpty animated:YES];
+            excludedFromBatchSectionHeader.addToBatchButton.animator.hidden = hidden;
+        } else {
+            [excludedFromBatchSectionHeader setContentHidden:self.isEmpty animated:NO];
+            excludedFromBatchSectionHeader.addToBatchButton.hidden = hidden;
+        }
     }
 }
 
@@ -553,7 +568,7 @@
             completionHandler:^(BOOL finished) {
                 BatchCollectionViewItem* item = (BatchCollectionViewItem*)[batchCollectionView itemAtIndexPath:dest];
                 [self prepareItem:item forBatchEntry:batchEntry inBatch:includedInBatch];
-                [self updateExcludedSectionHeaderVisibility];
+                [self updateExcludedSectionHeaderAnimated:YES];
             }];
 
     } else {
@@ -595,7 +610,8 @@
     }
 
     [batchCollectionView reloadData];
-    self.showDropMessage = (batch.count == 0) && (excludedFromBatch.count == 0);
+    [self updateExcludedSectionHeaderAnimated:NO];
+    self.showDropMessage = self.isEmpty;
 }
 
 - (void)normalmapFiles:(NSArray<BatchEntry*>*)entries

@@ -35,6 +35,7 @@
     __weak IBOutlet NSCollectionViewFlowLayout* batchCollectionViewFlowLayout;
     __weak IBOutlet NSButton* runButton;
     __weak IBOutlet NSPopUpButton* saveLocationPopup;
+    __weak IBOutlet NSTextField* dropMessage;
 }
 
 - (void)dismiss;
