@@ -253,7 +253,6 @@ const NSSize kItemSize = { 200, 140 };
     BatchCollectionViewItem* item = [collectionView makeItemWithIdentifier:kBatchCollectionViewItemIdentifier forIndexPath:indexPath];
 
     [self prepareItem:item forBatchEntry:entry inBatch:isBatchSection];
-
     return item;
 }
 
@@ -310,14 +309,19 @@ const NSSize kItemSize = { 200, 140 };
 }
 
 #pragma mark - Keyboard interaction
+
 - (void)deleteForward:(id)sender
 {
-    [self removeItems:batchCollectionView.selectionIndexPaths];
+    if (batchWindow.firstResponder == batchCollectionView) {
+        [self removeItems:batchCollectionView.selectionIndexPaths];
+    }
 }
 
 - (void)deleteBackward:(id)sender
 {
-    [self removeItems:batchCollectionView.selectionIndexPaths];
+    if (batchWindow.firstResponder == batchCollectionView) {
+        [self removeItems:batchCollectionView.selectionIndexPaths];
+    }
 }
 
 #pragma mark - Private
