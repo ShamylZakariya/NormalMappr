@@ -3,51 +3,45 @@
 //  FilteredImageList
 //
 //  Created by Shamyl Zakariya on 3/12/09.
-//  Copyright 2009 Shamyl Zakariya. All rights reserved.
+//  Copyright 2009-2019 Shamyl Zakariya. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
-#import "BatchView.h"
-#import "StackView.h"
-#import "BatchLabel.h"
+#import "BatchCollectionView.h"
+#import "BatchCollectionViewRoot.h"
+#import "BatchCollectionViewSectionHeader.h"
+#import "BatchEntry.h"
 #import "BatchSettings.h"
+#import <Cocoa/Cocoa.h>
 
-@interface BatchController : NSObject {
-	BatchSettings					*batchSettings;
+@interface BatchController : NSObject <NSCollectionViewDataSource, NSCollectionViewDelegate, NSCollectionViewDelegateFlowLayout> {
+    BatchSettings* batchSettings;
 
-	CGFloat							iconSize;
-	NSMutableArray					*bumpmaps;
-	NSMutableArray					*nonBumpmaps;
-	
-	IBOutlet NSArrayController		*bumpmapsArrayController;
-	IBOutlet NSArrayController		*nonBumpmapsArrayController;
+    CGFloat iconSize;
+    NSMutableArray<BatchEntry*>* batch;
+    NSMutableArray<BatchEntry*>* excludedFromBatch;
 
-	NSUInteger						sheetProcessStepTotal, sheetProcessStep;
-	BOOL							allowUIAnimations;
-	BOOL							showWindow;
-	BOOL							sheetProcessRunning;
-	BOOL							sheetProcessIndeterminate;
-	BOOL							showDropMessage;
-	BOOL							nonBumpmapPaneVisible;
-	CGFloat							sheetProcessProgress;
-	NSString						*sheetMessage;
+    NSUInteger sheetProcessStepTotal, sheetProcessStep;
+    BOOL sheetProcessRunning;
+    BOOL sheetProcessIndeterminate;
+    BOOL showDropMessage;
+    CGFloat sheetProcessProgress;
+    NSString* sheetMessage;
+    NSInteger previousSaveLocationPopupTag;
+    BatchCollectionViewSectionHeader* excludedFromBatchSectionHeader;
 
-	IBOutlet NSWindow               *batchWindow;
-	IBOutlet BatchView				*bumpmapCollectionView;
-	IBOutlet BatchView				*nonBumpmapCollectionView;
-	IBOutlet StackView				*collectionStack;
-	IBOutlet BatchLabel				*bumpmapCollectionViewLabel;
-	IBOutlet BatchLabel				*nonBumpmapCollectionViewLabel;
-	IBOutlet NSPanel				*progressSheet;
+    __weak IBOutlet NSWindow* batchWindow;
+    IBOutlet NSPanel* progressSheet; // intentionally strong to keep it alive when not visible
+    __weak IBOutlet BatchCollectionView* batchCollectionView;
+    __weak IBOutlet NSCollectionViewFlowLayout* batchCollectionViewFlowLayout;
+    __weak IBOutlet NSButton* runButton;
+    __weak IBOutlet NSPopUpButton* saveLocationPopup;
+    __weak IBOutlet NSTextField* dropMessage;
 }
 
-@property (readwrite,retain) BatchSettings* batchSettings;
-@property (readwrite) BOOL showWindow;
-@property (readwrite) CGFloat iconSize;
-@property (readwrite,retain) NSMutableArray* bumpmaps;
-@property (readwrite,retain) NSMutableArray* nonBumpmaps;
-@property (readonly) NSArrayController *bumpmapsArrayController;
-@property (readonly) NSArrayController *nonBumpmapsArrayController;
+- (void)dismiss;
+
+@property (readwrite, retain) BatchSettings* batchSettings;
+@property (weak, readonly) NSWindow* batchWindow;
 
 @property (readwrite) NSUInteger sheetProcessStepTotal;
 @property (readwrite) NSUInteger sheetProcessStep;
@@ -55,20 +49,13 @@
 @property (readwrite) BOOL sheetProcessRunning;
 @property (readwrite) BOOL sheetProcessIndeterminate;
 @property (readwrite) CGFloat sheetProcessProgress;
-@property (readwrite,retain) NSString* sheetMessage;
+@property (readwrite, retain) NSString* sheetMessage;
 
-@property (readwrite) BOOL showDropMessage;
-@property (readwrite) BOOL nonBumpmapPaneVisible;
+@property (readwrite, nonatomic) BOOL showDropMessage;
 
-- (NSInteger) bumpmapCount;
-- (NSInteger) nonBumpmapCount;
+- (void)addFiles:(NSArray<NSURL*>*)fileURLs;
 
-- (void) addFiles:(NSArray *)inFiles;
-- (void) makeBumpmap: (NSArray*) paths;
-- (void) makeNonBumpmap: (NSArray*) paths;
-- (void) remove: (NSArray*) paths;
-- (void) savePreferences;
-
-- (IBAction) executeBatch: (id) sender;
+- (IBAction)executeBatch:(id)sender;
+- (IBAction)onSaveLocationPopupAction:(id)sender;
 
 @end

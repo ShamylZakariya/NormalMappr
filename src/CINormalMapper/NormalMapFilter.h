@@ -3,7 +3,7 @@
 //  CINormapMappr
 //
 //  Created by Shamyl Zakariya on 2/25/09.
-//  Copyright 2009 Shamyl Zakariya. All rights reserved.
+//  Copyright 2009-2019 Shamyl Zakariya. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
@@ -13,18 +13,18 @@
 #define NORMAL_MAP_5X5 2
 
 @interface NormalMapFilter : CIFilter {
-	NSMutableDictionary	*kernelsByName;
-	CIKernel			*currentKernel;
-	CIImage				*inputImage;
-	CGFloat				strength;
-	NSUInteger			sampleRadius;
-	BOOL				clampToEdge;
+    NSMutableDictionary* kernelsByName;
+    CIKernel* currentKernel;
+    CIImage* inputImage;
+    CGFloat strength;
+    NSUInteger sampleRadius;
+    BOOL clampToEdge;
 }
 
-@property (readwrite) CGFloat strength;
-@property (readwrite) NSUInteger sampleRadius;
-@property (readwrite) BOOL clampToEdge;
+@property (nonatomic, readwrite) CGFloat strength;
+@property (nonatomic, readwrite) NSUInteger sampleRadius;
+@property (nonatomic, readwrite) BOOL clampToEdge;
 
-- (CIImage *)outputImage;
+- (CIImage*)outputImage;
 
 @end

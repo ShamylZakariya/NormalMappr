@@ -1,20 +1,11 @@
+PRESENTLY:
 
-Mac OSX 10.6
+TODO:
+- finally, inter-section dnd
+    - this might not be possible now that I've overridden default DnD behavior on collectionview
+    - might still work for when CV is drag source? I could selectively disable batch drop behavior if dragging inside
 
-- Seem to have fixed the crash bugs by switching to GC
+KNOWN BUGS:
 
-- API Deprecations
-	FIXED
-	
-- The icon view no longer seems to support drag and drop -- it DID before under 10.5
-	- It seems that the selection indices are ordered 0->N but the computation of the index clicked is N->0
-	- FIXED
-	
-- initiating a drag on an unselected icon doesn't drag it.
-	- did this ever work? 
-	- IMPLEMENTED, works.
-
-- The initial message on the batch view "Drop files and folders here" is not vertically centered
-
-- Normalmaps are vertically flipped. wtf?
-	- Fixed via affine transform
+UNKNOWN BUGS:
+- plenty!

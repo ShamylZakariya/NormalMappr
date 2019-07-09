@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment version="101000" identifier="macosx"/>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,7 +12,8 @@
                 <outlet property="docWindow" destination="5" id="167"/>
                 <outlet property="imageView" destination="178" id="179"/>
                 <outlet property="imageViewContainer" destination="172" id="173"/>
-                <outlet property="outputDimensionsForm" destination="34" id="67"/>
+                <outlet property="linkWidthHeightToggleButton" destination="106" id="ERR-sl-2K2"/>
+                <outlet property="sampleRadiusSlider" destination="37" id="Ep8-5R-2aZ"/>
                 <outlet property="savePanelDialog" destination="73" id="82"/>
                 <outlet property="savePanelQualityControls" destination="88" id="90"/>
                 <outlet property="strengthSlider" destination="37" id="165"/>
@@ -21,34 +22,23 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="NormalMappr" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="5" userLabel="Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="227" y="268" width="644" height="562"/>
+            <rect key="contentRect" x="227" y="268" width="729" height="562"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
-            <value key="minSize" type="size" width="600" height="400"/>
+            <value key="minSize" type="size" width="256" height="300"/>
             <view key="contentView" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="644" height="562"/>
+                <rect key="frame" x="0.0" y="0.0" width="729" height="562"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <customView id="108" customClass="ControlPanelView">
-                        <rect key="frame" x="0.0" y="0.0" width="644" height="66"/>
+                    <customView id="108" customClass="NSVisualEffectView">
+                        <rect key="frame" x="0.0" y="0.0" width="729" height="66"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button hidden="YES" imageHugsTitle="YES" id="201">
-                                <rect key="frame" x="127" y="32" width="63" height="18"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="check" title="Clamp" bezelStyle="regularSquare" imagePosition="leading" alignment="left" state="on" inset="2" id="202">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <binding destination="41" name="value" keyPath="selection.clampToEdge" id="203"/>
-                                </connections>
-                            </button>
                             <textField verticalHuggingPriority="750" id="199">
-                                <rect key="frame" x="18" y="15" width="166" height="14"/>
+                                <rect key="frame" x="18" y="13" width="166" height="14"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Sample Size" id="200">
                                     <font key="font" metaFont="smallSystem"/>
@@ -61,7 +51,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="5x5" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="2" imageScaling="proportionallyDown" inset="2" selectedItem="196" id="193">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
+                                    <font key="font" metaFont="menu"/>
                                     <menu key="menu" title="OtherViews" id="194">
                                         <items>
                                             <menuItem title="3x3" tag="1" id="195"/>
@@ -74,7 +64,7 @@
                                 </connections>
                             </popUpButton>
                             <textField verticalHuggingPriority="750" id="138">
-                                <rect key="frame" x="253" y="15" width="166" height="14"/>
+                                <rect key="frame" x="136" y="13" width="283" height="14"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Strength:" id="153">
                                     <font key="font" metaFont="smallSystem"/>
@@ -89,78 +79,81 @@
                                     </binding>
                                 </connections>
                             </textField>
-                            <button verticalHuggingPriority="750" imageHugsTitle="YES" id="106">
-                                <rect key="frame" x="612" y="5" width="19" height="54"/>
+                            <button verticalHuggingPriority="750" imageHugsTitle="YES" id="106" customClass="TemplateInDarkModeButton">
+                                <rect key="frame" x="697" y="5" width="19" height="52"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="smallSquare" alternateTitle="Synchronize width and height" bezelStyle="smallSquare" image="LinkButton" imagePosition="only" alignment="center" borderStyle="border" inset="2" id="150">
+                                <buttonCell key="cell" type="smallSquare" alternateTitle="Synchronize width and height" bezelStyle="smallSquare" image="LinkWidthHeight-Button" imagePosition="only" alignment="center" inset="2" id="150">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <binding destination="41" name="value" keyPath="selection.syncDimensions" id="107"/>
+                                    <binding destination="41" name="value" keyPath="selection.syncAspectRatio" id="hnQ-co-RU8"/>
                                 </connections>
                             </button>
+                            <textField verticalHuggingPriority="750" id="wHQ-rK-rNW">
+                                <rect key="frame" x="619" y="34" width="75" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" bezelStyle="round" id="DQo-Lo-MOd">
+                                    <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="u2Q-5M-kLh">
+                                        <real key="minimum" value="0.0"/>
+                                    </numberFormatter>
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <binding destination="41" name="value" keyPath="selection.outputWidth" id="XoZ-kf-gUY"/>
+                                </connections>
+                            </textField>
+                            <textField verticalHuggingPriority="750" id="whT-qM-bHU">
+                                <rect key="frame" x="619" y="9" width="75" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" bezelStyle="round" id="XkA-7A-y6R">
+                                    <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="5ef-0N-bJ0">
+                                        <real key="minimum" value="0.0"/>
+                                    </numberFormatter>
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <binding destination="41" name="value" keyPath="selection.outputHeight" id="nx9-5z-Dtj"/>
+                                </connections>
+                            </textField>
                             <slider verticalHuggingPriority="750" id="37">
-                                <rect key="frame" x="256" y="31" width="160" height="17"/>
+                                <rect key="frame" x="138" y="33" width="378" height="17"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <sliderCell key="cell" controlSize="small" continuous="YES" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="below" numberOfTickMarks="20" sliderType="linear" id="149">
-                                    <font key="font" size="12" name="Helvetica"/>
-                                </sliderCell>
+                                <sliderCell key="cell" continuous="YES" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="below" numberOfTickMarks="20" sliderType="linear" id="149"/>
                                 <connections>
                                     <binding destination="41" name="value" keyPath="selection.strength" id="130"/>
                                 </connections>
                             </slider>
-                            <form verticalHuggingPriority="750" mode="track" allowsEmptySelection="NO" autosizesCells="NO" id="34">
-                                <rect key="frame" x="449" y="6" width="155" height="52"/>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" textCompletion="NO" id="UJ7-I7-vNx">
+                                <rect key="frame" x="538" y="38" width="75" height="14"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                <size key="cellSize" width="155" height="22"/>
-                                <size key="intercellSpacing" width="1" height="8"/>
-                                <formCell key="prototype" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="justified" title="Field:" id="160">
+                                <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" alignment="right" title="Output Width" id="7RT-bW-YFh">
                                     <font key="font" metaFont="smallSystem"/>
-                                    <font key="titleFont" metaFont="smallSystem"/>
-                                </formCell>
-                                <cells>
-                                    <column>
-                                        <formCell scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="justified" title="Output Width" id="35">
-                                            <numberFormatter key="formatter" formatterBehavior="10_0" positiveFormat="###0" negativeFormat="-###0" hasThousandSeparators="NO" thousandSeparator="," id="39">
-                                                <attributedString key="attributedStringForZero">
-                                                    <fragment content="0"/>
-                                                </attributedString>
-                                                <decimal key="minimum" value="1"/>
-                                                <decimal key="maximum" value="NaN"/>
-                                            </numberFormatter>
-                                            <font key="font" metaFont="smallSystem"/>
-                                            <font key="titleFont" metaFont="smallSystem"/>
-                                            <connections>
-                                                <binding destination="41" name="value" keyPath="selection.outputWidth" id="60"/>
-                                            </connections>
-                                        </formCell>
-                                        <formCell scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="justified" tag="1" title="Output Height" id="36">
-                                            <numberFormatter key="formatter" formatterBehavior="10_0" positiveFormat="#,##0" negativeFormat="-#,##0" thousandSeparator="," id="40">
-                                                <attributedString key="attributedStringForZero">
-                                                    <fragment content="0"/>
-                                                </attributedString>
-                                                <decimal key="minimum" value="1"/>
-                                                <decimal key="maximum" value="NaN"/>
-                                            </numberFormatter>
-                                            <font key="font" metaFont="smallSystem"/>
-                                            <font key="titleFont" metaFont="smallSystem"/>
-                                            <connections>
-                                                <binding destination="41" name="value" keyPath="selection.outputHeight" id="61"/>
-                                            </connections>
-                                        </formCell>
-                                    </column>
-                                </cells>
-                            </form>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" textCompletion="NO" id="0ph-zZ-oMc">
+                                <rect key="frame" x="534" y="13" width="79" height="14"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" alignment="right" title="Output Height" id="bqb-eS-Oc1">
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                     </customView>
                     <customView wantsLayer="YES" focusRingType="none" id="172" userLabel="ImageViewContainer">
-                        <rect key="frame" x="0.0" y="65" width="644" height="497"/>
+                        <rect key="frame" x="0.0" y="65" width="729" height="497"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <customView id="178" customClass="ImageView">
-                                <rect key="frame" x="0.0" y="0.0" width="644" height="497"/>
+                                <rect key="frame" x="0.0" y="0.0" width="729" height="497"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </customView>
                         </subviews>
@@ -175,15 +168,15 @@
                     <toolbarItem implicitItemIdentifier="5F43083E-2761-4254-AADE-3407DD636FB5" label="Display Mode" paletteLabel="DisplayMode" id="188">
                         <nil key="toolTip"/>
                         <size key="minSize" width="100" height="19"/>
-                        <size key="maxSize" width="100" height="19"/>
+                        <size key="maxSize" width="126" height="19"/>
                         <segmentedControl key="view" verticalHuggingPriority="750" id="189">
-                            <rect key="frame" x="0.0" y="14" width="100" height="19"/>
+                            <rect key="frame" x="0.0" y="14" width="126" height="19"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             <segmentedCell key="cell" controlSize="small" state="on" borderStyle="border" alignment="left" segmentDistribution="fill" style="texturedRounded" trackingMode="selectOne" id="190">
                                 <font key="font" metaFont="smallSystem"/>
                                 <segments>
-                                    <segment label="Single" width="50"/>
-                                    <segment label="Tiled" width="47" tag="1"/>
+                                    <segment label="Single" width="61"/>
+                                    <segment label="Tiled" width="58" tag="1"/>
                                 </segments>
                             </segmentedCell>
                             <connections>
@@ -201,6 +194,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="17"/>
             </connections>
+            <point key="canvasLocation" x="28" y="256"/>
         </window>
         <objectController id="41" userLabel="DocController">
             <declaredKeys>
@@ -280,7 +274,7 @@
                     <autoresizingMask key="autoresizingMask"/>
                     <popUpButtonCell key="cell" type="push" title="Empty" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="79" id="155">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
+                        <font key="font" metaFont="menu"/>
                         <menu key="menu" title="OtherViews" id="77">
                             <items>
                                 <menuItem title="Empty" state="on" id="79"/>
@@ -318,6 +312,6 @@
         </customView>
     </objects>
     <resources>
-        <image name="LinkButton" width="17" height="50"/>
+        <image name="LinkWidthHeight-Button" width="17" height="50"/>
     </resources>
 </document>

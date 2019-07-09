@@ -3,37 +3,31 @@
 //  FilteredImageList
 //
 //  Created by Shamyl Zakariya on 3/12/09.
-//  Copyright 2009 Shamyl Zakariya. All rights reserved.
+//  Copyright 2009-2019 Shamyl Zakariya. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
 
-
 @interface BatchEntry : NSObject {
-	NSImage *image, *thumb;
-	NSBitmapImageRep *imageBitmap, *thumbBitmap;
-	NSString *path, *displayTitle, *displayPath, *identifier;
-	BOOL looksLikeBumpmap;
-	BOOL isSeparator;
+    NSURL* fileURL;
+    NSImage *image, *thumb;
+    NSBitmapImageRep *imageBitmap, *thumbBitmap;
+    NSString *displayTitle, *displayPath, *identifier;
+    CGFloat bumpmapScore;
 }
 
-+ (BatchEntry*) imageEntryWithURL: (NSURL*) url;
-+ (BatchEntry*) imageEntryWithPath: (NSString*) path;
++ (BatchEntry*)fromFileURL:(NSURL*)fileURL;
 
-- (id) initWithURL: (NSURL*) url;
-- (id) initWithPath: (NSString*) path;
+- (id)initWithFileURL:(NSURL*)fileURL;
 
-@property (readonly,copy) NSString* identifier;
+@property (readonly) NSString* identifier;
 
-@property (readonly,retain) NSImage* image;
-@property (readonly,retain) NSImage* thumb;
-@property (readonly,retain) NSBitmapImageRep* imageBitmap;
-@property (readonly,retain) NSBitmapImageRep* thumbBitmap;
-@property (readonly,retain) NSString* path;
-
-@property (readonly) NSString* displayTitle;
-@property (readonly) NSString* displayPath;
-
-@property (readwrite) BOOL looksLikeBumpmap;
+@property (readonly) NSImage* image;
+@property (readonly) NSImage* thumb;
+@property (readonly) NSBitmapImageRep* imageBitmap;
+@property (readonly) NSBitmapImageRep* thumbBitmap;
+@property (readonly) NSURL* fileURL;
+@property (readonly) NSString* filePath;
+@property (readonly) BOOL looksLikeBumpmap;
 
 @end

@@ -9,7 +9,7 @@
 
 #ifdef DEBUG
 
-#define DebugLog(args...) _DebugLog(__FILE__,__LINE__,__PRETTY_FUNCTION__,args);
+#define DebugLog(args...) _DebugLog(__FILE__, __LINE__, __PRETTY_FUNCTION__, args);
 
 #else
 
@@ -17,4 +17,4 @@
 
 #endif
 
-void _DebugLog(const char *file, int lineNumber, const char *funcName, NSString *format,...);
+void _DebugLog(const char* file, int lineNumber, const char* funcName, NSString* format, ...);
