@@ -12,20 +12,15 @@
 
 @class BatchItemView;
 
-@interface AddRemoveButton : NSButton {
-}
-@end
-
 @interface BatchCollectionViewItem : NSCollectionViewItem {
     BatchEntry* batchEntry;
-    NSClickGestureRecognizer* clickRecognizer;
     BOOL isIncludedInBumpmapsBatch;
 }
 
 @property (weak) IBOutlet ThumbView* thumbView;
 @property (weak) IBOutlet NSTextField* nameTextField;
 @property (weak) IBOutlet BatchItemView* batchItemView;
-@property (weak) IBOutlet AddRemoveButton* addRemoveButton;
+@property (weak) IBOutlet NSButton* addRemoveButton;
 
 @property (readwrite, nonatomic) BatchEntry* batchEntry;
 @property (readwrite, nonatomic) BOOL isIncludedInBumpmapsBatch;
@@ -34,6 +29,9 @@
 
 @end
 
+/**
+ BatchItemView draws selection state
+*/
 @interface BatchItemView : NSBox {
 }
 

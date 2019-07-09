@@ -8,11 +8,6 @@
 
 #import "BatchCollectionViewItem.h"
 
-#pragma mark - AddRemoveButton
-
-@implementation AddRemoveButton
-@end
-
 #pragma mark - BatchCollectionViewItem
 
 @interface BatchCollectionViewItem (Private)
@@ -51,8 +46,15 @@
         : NSLocalizedString(@"Include", @"Title of button to add items to batch");
 
     CGFloat alpha = isIncludedInBumpmapsBatch ? 1 : 0.5;
-    [self.thumbView animator].alphaValue = alpha * alpha;
-    [self.nameTextField animator].alphaValue = alpha;
+    
+    BOOL visibleOnScreen = NSIntersectsRect(self.view.frame, self.collectionView.visibleRect);
+    if (visibleOnScreen) {
+        self.thumbView.animator.alphaValue = alpha * alpha;
+        self.nameTextField.animator.alphaValue = alpha;
+    } else {
+        self.thumbView.alphaValue = alpha * alpha;
+        self.nameTextField.alphaValue = alpha;
+    }
 }
 
 - (void)setSelected:(BOOL)selected

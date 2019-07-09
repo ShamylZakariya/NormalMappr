@@ -1,5 +1,5 @@
 PRESENTLY:
-- the add/remove button falls off the bottom, sometimes. need to constrain max element height to match what we tell the flow layout
+- when batch window is small and excluded items are "offscreen", they don't get the correct alpha applied to them
 
 TODO:
 - finally, inter-section dnd
@@ -7,7 +7,6 @@ TODO:
     - might still work for when CV is drag source? I could selectively disable batch drop behavior if dragging inside
 
 KNOWN BUGS:
-- when batch window is small and excluded items are "offscreen", they don't get the correct alpha applied to them
 
 UNKNOWN BUGS:
 - plenty!
