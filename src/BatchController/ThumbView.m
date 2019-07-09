@@ -38,7 +38,7 @@
     }
 
     NSImage* image = [self image];
-    NSRect imageBounds = NSInsetRect([self bounds], inset + shadow.shadowBlurRadius, inset + 2 * shadow.shadowBlurRadius);
+    NSRect imageBounds = NSInsetRect([self bounds], inset + shadow.shadowBlurRadius, inset + shadow.shadowBlurRadius);
     NSSize imageSize = [image size];
 
     //

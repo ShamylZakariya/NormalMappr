@@ -10,33 +10,51 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <view id="cx3-xd-JcS" customClass="BatchItemView">
-            <rect key="frame" x="0.0" y="0.0" width="563" height="252"/>
+            <rect key="frame" x="0.0" y="0.0" width="563" height="291"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B7A-uD-pF8" customClass="ThumbView">
-                    <rect key="frame" x="0.0" y="56" width="563" height="196"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <imageView translatesAutoresizingMaskIntoConstraints="NO" id="B7A-uD-pF8" customClass="ThumbView">
+                    <rect key="frame" x="0.0" y="207" width="563" height="80"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="80" id="0fd-Ku-nGb"/>
+                    </constraints>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="gYD-IL-bM1"/>
                 </imageView>
-                <textField verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5K5-Yd-Gss">
-                    <rect key="frame" x="18" y="20" width="527" height="28"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                <textField verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5K5-Yd-Gss">
+                    <rect key="frame" x="18" y="193" width="527" height="14"/>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="28" id="GGP-DN-EKS"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="14" id="TOG-1M-fRP"/>
+                    </constraints>
                     <textFieldCell key="cell" controlSize="small" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="cfr-UK-DgW">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="doK-2h-v4o">
-                    <rect key="frame" x="244" y="0.0" width="75" height="17"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <button verticalHuggingPriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="doK-2h-v4o">
+                    <rect key="frame" x="242" y="172" width="80" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="80" id="TmK-37-ccq"/>
+                        <constraint firstAttribute="height" constant="16" id="xNn-vg-pYx"/>
+                    </constraints>
                     <buttonCell key="cell" type="inline" title="Include" bezelStyle="inline" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="upa-7e-WET">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="smallSystemBold"/>
                     </buttonCell>
                 </button>
             </subviews>
-            <point key="canvasLocation" x="195.5" y="130"/>
+            <constraints>
+                <constraint firstItem="B7A-uD-pF8" firstAttribute="leading" secondItem="cx3-xd-JcS" secondAttribute="leading" id="2Ms-7V-AaO"/>
+                <constraint firstItem="5K5-Yd-Gss" firstAttribute="leading" secondItem="cx3-xd-JcS" secondAttribute="leading" constant="20" id="6mb-gM-5bV"/>
+                <constraint firstAttribute="trailing" secondItem="B7A-uD-pF8" secondAttribute="trailing" id="EiW-RC-LwV"/>
+                <constraint firstItem="5K5-Yd-Gss" firstAttribute="top" secondItem="B7A-uD-pF8" secondAttribute="bottom" id="Prc-2q-UwY"/>
+                <constraint firstItem="B7A-uD-pF8" firstAttribute="top" secondItem="cx3-xd-JcS" secondAttribute="top" constant="4" id="Vxe-Dg-hug"/>
+                <constraint firstItem="doK-2h-v4o" firstAttribute="centerX" secondItem="cx3-xd-JcS" secondAttribute="centerX" id="ZRd-y7-aai"/>
+                <constraint firstItem="doK-2h-v4o" firstAttribute="top" secondItem="5K5-Yd-Gss" secondAttribute="bottom" constant="4" id="phT-H9-KBL"/>
+                <constraint firstAttribute="trailing" secondItem="5K5-Yd-Gss" secondAttribute="trailing" constant="20" id="ptK-PI-aNf"/>
+            </constraints>
+            <point key="canvasLocation" x="195.5" y="149.5"/>
         </view>
         <collectionViewItem id="XK8-ZF-4lc" customClass="BatchCollectionViewItem">
             <connections>

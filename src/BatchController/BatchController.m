@@ -16,6 +16,7 @@
 #define kBatchCollectionViewItemIdentifier @"batchCollectionViewItem"
 #define kBatchCollectionViewSectionHeaderIdentifier @"batchCollectionSectionHeader"
 #define kUserSaveLocationTag 100
+const NSSize kItemSize = { 240, 140 };
 
 @interface BatchController (Private)
 
@@ -55,7 +56,7 @@
     NSAnimationContext.currentContext.duration = 0.2;
 
     self.showDropMessage = YES;
-    self.iconSize = 128;
+    batchCollectionViewFlowLayout.itemSize = kItemSize;
 
     batchCollectionView.dataSource = self;
     batchCollectionView.delegate = self;
@@ -117,13 +118,6 @@
 @synthesize sheetProcessProgress;
 @synthesize sheetMessage;
 @synthesize showDropMessage;
-@synthesize iconSize;
-
-- (void)setIconSize:(CGFloat)size
-{
-    iconSize = size;
-    batchCollectionViewFlowLayout.itemSize = NSMakeSize(size * 1.1, size);
-}
 
 - (void)setShowDropMessage:(BOOL)sdm
 {

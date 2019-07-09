@@ -52,7 +52,6 @@
 @property (readwrite, retain) NSString* sheetMessage;
 
 @property (readwrite, nonatomic) BOOL showDropMessage;
-@property (readwrite, nonatomic) CGFloat iconSize;
 
 - (void)addFiles:(NSArray<NSURL*>*)fileURLs;
 

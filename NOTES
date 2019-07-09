@@ -7,7 +7,7 @@ TODO:
     - might still work for when CV is drag source? I could selectively disable batch drop behavior if dragging inside
 
 KNOWN BUGS:
-- excluded from batch section header is visible after calls to reloadData
+- when batch window is small and excluded items are "offscreen", they don't get the correct alpha applied to them
 
 UNKNOWN BUGS:
 - plenty!
