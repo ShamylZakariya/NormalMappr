@@ -1,5 +1,4 @@
 PRESENTLY:
-- when batch window is small and excluded items are "offscreen", they don't get the correct alpha applied to them
 
 TODO:
 - finally, inter-section dnd
