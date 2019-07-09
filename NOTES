@@ -1,6 +1,6 @@
 PRESENTLY:
 - we don't need the section header on the "Bumpmaps" section - only for the Excluded section.
-- make add/remove buttons look good
+- the add/remove button falls off the bottom, sometimes. need to constrain max element height to match what we tell the flow layout
 
 TODO:
 - need to improve appearance of bumpmap/non-bumpmap divide - maybe through background color?
@@ -9,6 +9,8 @@ TODO:
     - might still work for when CV is drag source? I could selectively disable batch drop behavior if dragging inside
 
 KNOWN BUGS:
+- certain add/remove from batch/exclusion scenarios aren't animated.
+- animation only runs when we have BOTH batch and non-batch sections; if one is empty, no section is allocated, and we have no animation
 
 UNKNOWN BUGS:
 - plenty!

@@ -267,29 +267,20 @@
 - (NSView*)collectionView:(NSCollectionView*)collectionView viewForSupplementaryElementOfKind:(NSCollectionViewSupplementaryElementKind)kind atIndexPath:(NSIndexPath*)indexPath
 {
     if ([kind isEqualToString:NSCollectionElementKindSectionHeader]) {
-        BatchCollectionViewSectionHeader* header = [collectionView makeSupplementaryViewOfKind:NSCollectionElementKindSectionHeader withIdentifier:kBatchCollectionViewSectionHeaderIdentifier forIndexPath:indexPath];
-
-        NSString* bumpmapHeaderTitle = NSLocalizedString(@"Bumpmaps", @"Title of section holding apparently valid bumpmaps");
-        NSString* nonBumpmapHeaderTitle = NSLocalizedString(@"Excluded", "Title of section holding images which don't appear to be bumpmaps");
-
         BOOL isBatchSection = indexPath.section == 0 && [batch count] > 0;
-        if (isBatchSection) {
-
-            [header.sectionTitle setStringValue:bumpmapHeaderTitle];
-            [header.addToBatchButton setHidden:YES];
-            [header.addToBatchButton setEnabled:NO];
-
-        } else {
-
+        if (!isBatchSection)
+        {
+            BatchCollectionViewSectionHeader* header = [collectionView makeSupplementaryViewOfKind:NSCollectionElementKindSectionHeader withIdentifier:kBatchCollectionViewSectionHeaderIdentifier forIndexPath:indexPath];
+            NSString* nonBumpmapHeaderTitle = NSLocalizedString(@"Excluded", "Title of section holding images which don't appear to be bumpmaps");
+            
             [header.sectionTitle setStringValue:nonBumpmapHeaderTitle];
             [header.addToBatchButton setHidden:NO];
             [header.addToBatchButton setEnabled:YES];
-
+            
             [header.addToBatchButton setTarget:self];
             [header.addToBatchButton setAction:@selector(addExcludedItemsToBatch:)];
+            return header;
         }
-
-        return header;
     }
 
     return [collectionView makeSupplementaryViewOfKind:kind withIdentifier:@"" forIndexPath:indexPath];
