@@ -9,7 +9,8 @@
 
 @implementation BatchCollectionViewSectionHeader
 
-- (void)drawRect:(NSRect)dirtyRect {
+- (void)drawRect:(NSRect)dirtyRect
+{
     if (@available(macOS 10.13, *)) {
         [[NSColor colorNamed:@"BatchCollectionViewSectionHeaderRule"] set];
     } else {

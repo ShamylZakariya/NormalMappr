@@ -8,6 +8,7 @@
 
 #import "BatchCollectionView.h"
 #import "BatchCollectionViewRoot.h"
+#import "BatchCollectionViewSectionHeader.h"
 #import "BatchEntry.h"
 #import "BatchSettings.h"
 #import <Cocoa/Cocoa.h>
@@ -26,6 +27,7 @@
     CGFloat sheetProcessProgress;
     NSString* sheetMessage;
     NSInteger previousSaveLocationPopupTag;
+    BatchCollectionViewSectionHeader* excludedFromBatchSectionHeader;
 
     __weak IBOutlet NSWindow* batchWindow;
     IBOutlet NSPanel* progressSheet; // intentionally strong to keep it alive when not visible
