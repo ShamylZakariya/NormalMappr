@@ -16,7 +16,7 @@
 #define kBatchCollectionViewItemIdentifier @"batchCollectionViewItem"
 #define kBatchCollectionViewSectionHeaderIdentifier @"batchCollectionSectionHeader"
 #define kUserSaveLocationTag 100
-const NSSize kItemSize = { 240, 140 };
+const NSSize kItemSize = { 200, 140 };
 
 @interface BatchController (Private)
 
