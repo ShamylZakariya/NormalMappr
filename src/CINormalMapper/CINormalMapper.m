@@ -28,7 +28,7 @@
     return self;
 }
 
-- (id)initWithBumpmap:(NSURL*)bumpmapURL strength:(float)strength sampleRadius:(float)sampleRadius andClampToEdge:(BOOL)cte
+- (id)initWithBumpmap:(NSURL*)bumpmapURL strength:(float)strength sampleSize:(NMSampleSize)sampleSize andClampToEdge:(BOOL)cte
 {
     if (self = [self init]) {
         NSData* data = [NSData dataWithContentsOfURL:bumpmapURL];
@@ -37,7 +37,7 @@
             if (bitmap) {
                 self.bumpmap = bitmap;
                 self.strength = strength;
-                self.sampleRadius = sampleRadius;
+                self.sampleSize = sampleSize;
                 self.clampToEdge = cte;
             } else {
                 NSLog(@"Unable to open image at URL %@", bumpmapURL);
@@ -93,15 +93,15 @@
     return filter.strength;
 }
 
-- (void)setSampleRadius:(float)newSampleRadius
+- (void)setSampleSize:(NMSampleSize)newSampleSize
 {
-    filter.sampleRadius = newSampleRadius;
+    filter.sampleSize = newSampleSize;
     dirty = YES;
 }
 
-- (float)sampleRadius
+- (NMSampleSize)sampleSize
 {
-    return filter.sampleRadius;
+    return filter.sampleSize;
 }
 
 - (void)setSize:(CGSize)newSize

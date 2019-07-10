@@ -9,20 +9,23 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
 
-#define NORMAL_MAP_3X3 1
-#define NORMAL_MAP_5X5 2
+typedef NS_ENUM(NSInteger, NMSampleSize) {
+    NMSampleSize3x3 = 0,
+    NMSampleSize5x5 = 1
+};
+
 
 @interface NormalMapFilter : CIFilter {
     NSMutableDictionary* kernelsByName;
     CIKernel* currentKernel;
     CIImage* inputImage;
     CGFloat strength;
-    NSUInteger sampleRadius;
+    NMSampleSize sampleSize;
     BOOL clampToEdge;
 }
 
 @property (nonatomic, readwrite) CGFloat strength;
-@property (nonatomic, readwrite) NSUInteger sampleRadius;
+@property (nonatomic, readwrite) NMSampleSize sampleSize;
 @property (nonatomic, readwrite) BOOL clampToEdge;
 
 - (CIImage*)outputImage;

@@ -69,7 +69,7 @@
     CINormalMapper* nm = [[CINormalMapper alloc] init];
     nm.bumpmap = entry.imageBitmap;
     nm.strength = settings.strength / 100.0;
-    nm.sampleRadius = settings.sampleRadius;
+    nm.sampleSize = settings.sampleSize;
 
     nm.size = entry.imageBitmap.size;
     if (settings.resizeHeight && settings.resizeHeight) {

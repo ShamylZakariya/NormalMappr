@@ -35,7 +35,7 @@ typedef NS_ENUM(NSInteger, NMSaveDestinationType) {
 @property (nonatomic, readwrite) BOOL resizeHeight;
 @property (nonatomic, readwrite) int outputWidth;
 @property (nonatomic, readwrite) int outputHeight;
-@property (nonatomic, readwrite) int sampleRadius;
+@property (nonatomic, readwrite) int sampleSize;
 @property (nonatomic, readwrite) int saveFormat;
 @property (readonly) NSString* saveFormatExtension;
 @property (nonatomic, readwrite) NSString* nameDecoration;

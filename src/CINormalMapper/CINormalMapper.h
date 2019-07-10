@@ -20,12 +20,12 @@
 }
 
 - (id)init;
-- (id)initWithBumpmap:(NSURL*)bumpmapURL strength:(float)strength sampleRadius:(float)sampleRadius andClampToEdge:(BOOL)cte;
+- (id)initWithBumpmap:(NSURL*)bumpmapURL strength:(float)strength sampleSize:(NMSampleSize)sampleSize andClampToEdge:(BOOL)cte;
 
 @property (readwrite, retain) NSBitmapImageRep* bumpmap;
 @property (readonly) NSBitmapImageRep* normalmap;
 @property (readwrite) float strength;
-@property (readwrite) float sampleRadius;
+@property (readwrite) NMSampleSize sampleSize;
 @property (readwrite) BOOL clampToEdge;
 @property (readwrite) CGSize size;
 @property (readonly) BOOL dirty;

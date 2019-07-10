@@ -116,18 +116,18 @@ DQ
                             <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" id="C4x-V2-4UA">
                                 <rect key="frame" x="18" y="94" width="100" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <popUpButtonCell key="cell" type="push" title="5x5" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="2" imageScaling="proportionallyDown" inset="2" selectedItem="SE6-eh-7Sf" id="yOo-8f-K4G">
+                                <popUpButtonCell key="cell" type="push" title="5x5" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" imageScaling="proportionallyDown" inset="2" selectedItem="SE6-eh-7Sf" id="yOo-8f-K4G">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
                                     <menu key="menu" title="OtherViews" id="1FR-oS-Ju2">
                                         <items>
-                                            <menuItem title="3x3" tag="1" id="Jp1-C2-vef"/>
-                                            <menuItem title="5x5" state="on" tag="2" id="SE6-eh-7Sf"/>
+                                            <menuItem title="3x3" id="Jp1-C2-vef"/>
+                                            <menuItem title="5x5" state="on" tag="1" id="SE6-eh-7Sf"/>
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
                                 <connections>
-                                    <binding destination="-2" name="selectedTag" keyPath="batchSettings.sampleRadius" id="mm3-hJ-Hyd"/>
+                                    <binding destination="-2" name="selectedTag" keyPath="batchSettings.sampleSize" id="VRf-5v-raH"/>
                                 </connections>
                             </popUpButton>
                             <textField verticalHuggingPriority="750" id="ZPo-lY-l7k">

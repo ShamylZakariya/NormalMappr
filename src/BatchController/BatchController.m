@@ -72,7 +72,8 @@ const NSSize kItemSize = { 200, 140 };
     [batchCollectionView registerNib:headerNib forSupplementaryViewOfKind:NSCollectionElementKindSectionHeader withIdentifier:kBatchCollectionViewSectionHeaderIdentifier];
 
     [batchCollectionView registerForDraggedTypes:@[ NSURLPboardType ]];
-
+    [batchCollectionView setDraggingSourceOperationMask:NSDragOperationEvery forLocal:YES];
+    [batchCollectionView setDraggingSourceOperationMask:NSDragOperationEvery forLocal:NO];
 
     //
     // sync up user save dir popup
