@@ -205,7 +205,7 @@ static NSSet* _supportedImageUTIs = nil;
           }];
 
     //
-    // Image analysis is expensive, so we'll spawn a thread
+    // Image processing is expensive, so we'll spawn a thread
     //
 
     WEAK_SELF;
@@ -448,7 +448,7 @@ static NSSet* _supportedImageUTIs = nil;
     // now we know how many we need to examine
     //
 
-    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_sync(dispatch_get_main_queue(), ^{
         STRONG_SELF;
 
         strongSelf.sheetProcessStepTotal = fileURLs.count;
@@ -466,7 +466,7 @@ static NSSet* _supportedImageUTIs = nil;
             [entries addObject:be];
         }
 
-        dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_sync(dispatch_get_main_queue(), ^{
             STRONG_SELF;
             strongSelf.sheetProcessStep = strongSelf.sheetProcessStep + 1;
             strongSelf.sheetProcessProgress = (float)strongSelf.sheetProcessStep / (float)strongSelf.sheetProcessStepTotal;
@@ -633,7 +633,7 @@ static NSSet* _supportedImageUTIs = nil;
 {
     WEAK_SELF;
 
-    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_sync(dispatch_get_main_queue(), ^{
         STRONG_SELF;
         strongSelf.sheetProcessStepTotal = entries.count;
         strongSelf.sheetProcessStep = 0;
@@ -648,7 +648,7 @@ static NSSet* _supportedImageUTIs = nil;
         BatchOperation* op = [[BatchOperation alloc] initWithEntry:entry andSettings:batchSettings];
         [op run];
 
-        dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_sync(dispatch_get_main_queue(), ^{
             STRONG_SELF;
             strongSelf.sheetProcessStep = strongSelf.sheetProcessStep + 1;
             strongSelf.sheetProcessProgress = (float)strongSelf.sheetProcessStep / (float)strongSelf.sheetProcessStepTotal;

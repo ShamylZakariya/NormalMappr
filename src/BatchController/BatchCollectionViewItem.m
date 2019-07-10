@@ -46,8 +46,8 @@
         : NSLocalizedString(@"Include", @"Title of button to add items to batch");
 
     CGFloat alpha = isIncludedInBumpmapsBatch ? 1 : 0.5;
-    
     BOOL visibleOnScreen = NSIntersectsRect(self.view.frame, self.collectionView.visibleRect);
+
     if (visibleOnScreen) {
         self.thumbView.animator.alphaValue = alpha * alpha;
         self.nameTextField.animator.alphaValue = alpha;
