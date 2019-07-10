@@ -38,6 +38,11 @@
     __weak IBOutlet NSTextField* dropMessage;
 }
 
+/**
+ Returns true iff url is (a file on disk && supported image type) || a directory.
+ */
++ (BOOL)canHandleURL:(NSURL*)url;
+
 - (void)dismiss;
 
 @property (readwrite, retain) BatchSettings* batchSettings;

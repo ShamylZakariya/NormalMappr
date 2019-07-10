@@ -12,7 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface BatchCollectionView : NSCollectionView {
-    BOOL isDropTarget;
+    BOOL isReceivingDropFromExternalSource;
 }
 
 @property (weak, readwrite, nonatomic) BatchController* batchController;

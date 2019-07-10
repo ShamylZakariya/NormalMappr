@@ -23,7 +23,6 @@ const NSSize kItemSize = { 200, 140 };
 - (BOOL)isEmpty;
 - (void)requestUserSaveDestination;
 - (void)addUserSaveDestination:(NSURL*)destination;
-- (BOOL)canOpenFileWithExtension:(NSString*)extension;
 - (NSMutableArray<NSURL*>*)gatherFiles:(NSArray<NSURL*>*)fileURLs;
 - (void)loadDroppedFiles:(NSArray<NSURL*>*)fileURLs;
 - (void)removeItems:(NSSet<NSIndexPath*>*)items;
@@ -92,6 +91,34 @@ const NSSize kItemSize = { 200, 140 };
     if (batchSettings.saveDestinationType == NMSaveDestinationInPlace) {
         [saveLocationPopup selectItemWithTag:NMSaveDestinationInPlace];
     }
+}
+
+static NSSet* _supportedImageUTIs = nil;
+
++ (BOOL)canHandleURL:(NSURL*)url
+{
+    if (_supportedImageUTIs == nil) {
+        _supportedImageUTIs = [NSSet setWithArray:NSImage.imageTypes];
+    }
+
+    NSFileManager* fm = [NSFileManager defaultManager];
+    NSWorkspace* ws = [NSWorkspace sharedWorkspace];
+    NSString* path = @(url.fileSystemRepresentation);
+    BOOL isDir = NO;
+
+    if ([fm fileExistsAtPath:path isDirectory:&isDir]) {
+        if (isDir) {
+            // directories are fine
+            return YES;
+        }
+
+        NSString* fileUti = [ws typeOfFile:path error:nil];
+        if (fileUti) {
+            return [_supportedImageUTIs containsObject:fileUti];
+        }
+    }
+
+    return NO;
 }
 
 - (void)dismiss
@@ -367,19 +394,6 @@ const NSSize kItemSize = { 200, 140 };
     [saveLocationPopup selectItemAtIndex:index];
 }
 
-- (BOOL)canOpenFileWithExtension:(NSString*)extension
-{
-    extension = [extension lowercaseString];
-    return ([extension isEqualToString:@"tif"] ||
-        [extension isEqualToString:@"tiff"] ||
-        [extension isEqualToString:@"jp2"] ||
-        [extension isEqualToString:@"jpg"] ||
-        [extension isEqualToString:@"jpeg"] ||
-        [extension isEqualToString:@"png"] ||
-        [extension isEqualToString:@"gif"] ||
-        [extension isEqualToString:@"psd"]);
-}
-
 - (NSMutableArray<NSURL*>*)gatherFiles:(NSArray<NSURL*>*)fileURLs;
 {
     NSFileManager* fm = [NSFileManager defaultManager];
@@ -395,18 +409,21 @@ const NSSize kItemSize = { 200, 140 };
         NSString* path = @([fileURL fileSystemRepresentation]);
         if ([fm fileExistsAtPath:path isDirectory:&isDir]) {
             if (isDir) {
+
                 //
                 // subpaths performs a complete filesystem traversal -- no need to recurse!
                 //
 
                 for (NSString* subpath in [fm subpathsAtPath:path]) {
                     NSString* actualPath = [path stringByAppendingPathComponent:subpath];
-                    if ([self canOpenFileWithExtension:[actualPath pathExtension]]) {
-                        [result addObject:[NSURL fileURLWithPath:actualPath]];
+                    NSURL* fileURL = [NSURL fileURLWithPath:actualPath];
+                    if ([[self class] canHandleURL:fileURL]) {
+                        [result addObject:fileURL];
                     }
                 }
             } else {
-                if ([self canOpenFileWithExtension:[path pathExtension]]) {
+                NSURL* fileURL = [NSURL fileURLWithPath:path];
+                if ([[self class] canHandleURL:fileURL]) {
                     [result addObject:fileURL];
                 }
             }
