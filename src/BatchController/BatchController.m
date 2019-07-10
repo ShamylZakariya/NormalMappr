@@ -54,14 +54,16 @@ const NSSize kItemSize = { 200, 140 };
 {
     NSAnimationContext.currentContext.duration = 0.2;
 
-    self.showDropMessage = YES;
-    batchCollectionViewFlowLayout.itemSize = kItemSize;
+    //
+    //  Configure the batch collection view
+    //
 
     batchCollectionView.dataSource = self;
     batchCollectionView.delegate = self;
     batchCollectionView.selectable = YES;
     batchCollectionView.allowsMultipleSelection = YES;
     batchCollectionView.batchController = self;
+    batchCollectionViewFlowLayout.itemSize = kItemSize;
 
     NSNib* itemNib = [[NSNib alloc] initWithNibNamed:@"BatchCollectionViewItem" bundle:[NSBundle mainBundle]];
     [batchCollectionView registerNib:itemNib forItemWithIdentifier:kBatchCollectionViewItemIdentifier];
@@ -71,8 +73,6 @@ const NSSize kItemSize = { 200, 140 };
 
     [batchCollectionView registerForDraggedTypes:@[ NSURLPboardType ]];
 
-    [batchWindow makeKeyAndOrderFront:self];
-    batchWindow.defaultButtonCell = runButton.cell;
 
     //
     // sync up user save dir popup
@@ -91,16 +91,18 @@ const NSSize kItemSize = { 200, 140 };
     if (batchSettings.saveDestinationType == NMSaveDestinationInPlace) {
         [saveLocationPopup selectItemWithTag:NMSaveDestinationInPlace];
     }
-}
 
-static NSSet* _supportedImageUTIs = nil;
+    //
+    //  Finally show the window
+    //
+
+    self.showDropMessage = YES;
+    batchWindow.defaultButtonCell = runButton.cell;
+    [batchWindow makeKeyAndOrderFront:self];
+}
 
 + (BOOL)canHandleURL:(NSURL*)url
 {
-    if (_supportedImageUTIs == nil) {
-        _supportedImageUTIs = [NSSet setWithArray:NSImage.imageTypes];
-    }
-
     NSFileManager* fm = [NSFileManager defaultManager];
     NSWorkspace* ws = [NSWorkspace sharedWorkspace];
     NSString* path = @(url.fileSystemRepresentation);
@@ -114,7 +116,7 @@ static NSSet* _supportedImageUTIs = nil;
 
         NSString* fileUti = [ws typeOfFile:path error:nil];
         if (fileUti) {
-            return [_supportedImageUTIs containsObject:fileUti];
+            return UTTypeConformsTo((__bridge CFStringRef)fileUti, (__bridge CFStringRef)@"public.image");
         }
     }
 
