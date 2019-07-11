@@ -10,10 +10,12 @@
 
 #import "AppDelegate.h"
 #import "BatchCollectionViewItem.h"
+#import "BatchCollectionViewItemDropPlaceholder.h"
 #import "BatchCollectionViewSectionHeader.h"
 #import "BatchOperation.h"
 
 #define kBatchCollectionViewItemIdentifier @"batchCollectionViewItem"
+#define kBatchCollectionViewItemDropPlaceholderIdentifier @"batchCollectionViewItemDropPlaceholderIdentifier"
 #define kBatchCollectionViewSectionHeaderIdentifier @"batchCollectionSectionHeader"
 #define kUserSaveLocationTag 100
 const NSSize kItemSize = { 200, 140 };
@@ -33,6 +35,7 @@ const NSSize kItemSize = { 200, 140 };
 - (void)prepareItem:(BatchCollectionViewItem*)item forBatchEntry:(BatchEntry*)entry inBatch:(BOOL)inBatch;
 - (void)fileAddingAnalysisComplete:(NSMutableArray<BatchEntry*>*)addableFiles;
 - (void)normalmapFiles:(NSArray<BatchEntry*>*)files;
+- (NSSet<NSIndexPath*>*)userInteractableIndexPathsFrom:(NSSet<NSIndexPath*>*)proposedIndexPaths;
 
 @end
 
@@ -68,6 +71,9 @@ const NSSize kItemSize = { 200, 140 };
 
     NSNib* itemNib = [[NSNib alloc] initWithNibNamed:@"BatchCollectionViewItem" bundle:[NSBundle mainBundle]];
     [batchCollectionView registerNib:itemNib forItemWithIdentifier:kBatchCollectionViewItemIdentifier];
+
+    NSNib* placeholderNib = [[NSNib alloc] initWithNibNamed:@"BatchCollectionViewItemDropPlaceholder" bundle:[NSBundle mainBundle]];
+    [batchCollectionView registerNib:placeholderNib forItemWithIdentifier:kBatchCollectionViewItemDropPlaceholderIdentifier];
 
     NSNib* headerNib = [[NSNib alloc] initWithNibNamed:@"BatchCollectionViewSectionHeader" bundle:[NSBundle mainBundle]];
     [batchCollectionView registerNib:headerNib forSupplementaryViewOfKind:NSCollectionElementKindSectionHeader withIdentifier:kBatchCollectionViewSectionHeaderIdentifier];
@@ -118,7 +124,7 @@ const NSSize kItemSize = { 200, 140 };
 
         NSString* fileUti = [ws typeOfFile:path error:nil];
         if (fileUti) {
-            return UTTypeConformsTo((__bridge CFStringRef)fileUti, (__bridge CFStringRef)@"public.image");
+            return UTTypeConformsTo((__bridge CFStringRef)fileUti, (__bridge CFStringRef) @"public.image");
         }
     }
 
@@ -269,9 +275,9 @@ const NSSize kItemSize = { 200, 140 };
 {
     switch (section) {
     case 0:
-        return batch.count;
+        return batch.count + 1;
     case 1:
-        return excludedFromBatch.count;
+        return excludedFromBatch.count + 1;
     }
     return 0;
 }
@@ -280,10 +286,17 @@ const NSSize kItemSize = { 200, 140 };
 {
     BOOL isBatchSection = indexPath.section == 0;
     NSMutableArray<BatchEntry*>* source = isBatchSection ? batch : excludedFromBatch;
-    BatchEntry* entry = source[indexPath.item];
-    BatchCollectionViewItem* item = [collectionView makeItemWithIdentifier:kBatchCollectionViewItemIdentifier forIndexPath:indexPath];
 
-    [self prepareItem:item forBatchEntry:entry inBatch:isBatchSection];
+    if (indexPath.item < source.count) {
+        BatchCollectionViewItem* item = [collectionView makeItemWithIdentifier:kBatchCollectionViewItemIdentifier forIndexPath:indexPath];
+        BatchEntry* entry = source[indexPath.item];
+        [self prepareItem:item forBatchEntry:entry inBatch:isBatchSection];
+        return item;
+    }
+
+    // vend the drop placeholder view
+    BatchCollectionViewItemDropPlaceholder* item = [collectionView makeItemWithIdentifier:kBatchCollectionViewItemDropPlaceholderIdentifier forIndexPath:indexPath];
+
     return item;
 }
 
@@ -314,106 +327,110 @@ const NSSize kItemSize = { 200, 140 };
 
 - (NSSet<NSIndexPath*>*)collectionView:(NSCollectionView*)collectionView shouldChangeItemsAtIndexPaths:(NSSet<NSIndexPath*>*)indexPaths toHighlightState:(NSCollectionViewItemHighlightState)highlightState
 {
-    return indexPaths;
+    return [self userInteractableIndexPathsFrom:indexPaths];
 }
 
 - (NSSet<NSIndexPath*>*)collectionView:(NSCollectionView*)collectionView shouldSelectItemsAtIndexPaths:(NSSet<NSIndexPath*>*)indexPaths
 {
-    // all selection is OK
-    return indexPaths;
+    return [self userInteractableIndexPathsFrom:indexPaths];
 }
 
 - (NSSet<NSIndexPath*>*)collectionView:(NSCollectionView*)collectionView shouldDeselectItemsAtIndexPaths:(NSSet<NSIndexPath*>*)indexPaths
 {
-    // all deselection is OK
-    return indexPaths;
+    return [self userInteractableIndexPathsFrom:indexPaths];
 }
 
-- (BOOL)collectionView:(NSCollectionView *)collectionView canDragItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths withEvent:(NSEvent *)event
+- (BOOL)collectionView:(NSCollectionView*)collectionView canDragItemsAtIndexPaths:(NSSet<NSIndexPath*>*)indexPaths withEvent:(NSEvent*)event
 {
     return YES;
 }
 
-- (id<NSPasteboardWriting>)collectionView:(NSCollectionView *)collectionView pasteboardWriterForItemAtIndexPath:(NSIndexPath *)indexPath
+- (id<NSPasteboardWriting>)collectionView:(NSCollectionView*)collectionView pasteboardWriterForItemAtIndexPath:(NSIndexPath*)indexPath
 {
     BatchCollectionViewItem* item = (BatchCollectionViewItem*)[batchCollectionView itemAtIndexPath:indexPath];
     return item.batchEntry.fileURL;
 }
 
-- (void)collectionView:(NSCollectionView *)collectionView draggingSession:(NSDraggingSession *)session willBeginAtPoint:(NSPoint)screenPoint forItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths
+- (void)collectionView:(NSCollectionView*)collectionView draggingSession:(NSDraggingSession*)session willBeginAtPoint:(NSPoint)screenPoint forItemsAtIndexPaths:(NSSet<NSIndexPath*>*)indexPaths
 {
     indexPathsOfDraggingItems = indexPaths;
     draggingItems = [NSMutableArray array];
-    for (NSIndexPath *indexPath in indexPaths) {
-        BatchCollectionViewItem *item = (BatchCollectionViewItem*)[collectionView itemAtIndexPath:indexPath];
+    for (NSIndexPath* indexPath in indexPaths) {
+        BatchCollectionViewItem* item = (BatchCollectionViewItem*)[collectionView itemAtIndexPath:indexPath];
         [draggingItems addObject:item.batchEntry];
     }
 }
 
-- (NSDragOperation)collectionView:(NSCollectionView *)collectionView validateDrop:(id<NSDraggingInfo>)draggingInfo proposedIndexPath:(NSIndexPath * _Nonnull *)proposedDropIndexPath dropOperation:(NSCollectionViewDropOperation *)proposedDropOperation
+- (NSDragOperation)collectionView:(NSCollectionView*)collectionView validateDrop:(id<NSDraggingInfo>)draggingInfo proposedIndexPath:(NSIndexPath* _Nonnull*)proposedDropIndexPath dropOperation:(NSCollectionViewDropOperation*)proposedDropOperation
 {
     if (draggingItems != nil) {
         // NOTE: I never seem to get NSCollectionViewDropOn, only 'Before
-        if (*proposedDropOperation == NSCollectionViewDropOn) {
-            *proposedDropOperation = NSCollectionViewDropBefore;
+        //        if (*proposedDropOperation == NSCollectionViewDropOn) {
+        //            *proposedDropOperation = NSCollectionViewDropBefore;
+        //        }
+
+        NSArray<BatchEntry*>* source = (*proposedDropIndexPath).section == 0 ? batch : excludedFromBatch;
+        if ((*proposedDropIndexPath).item > source.count) {
+            *proposedDropIndexPath = [NSIndexPath indexPathForItem:source.count inSection:(*proposedDropIndexPath).section];
         }
+
         return NSDragOperationMove;
     }
     return NSDragOperationNone;
 }
 
-- (BOOL)collectionView:(NSCollectionView *)collectionView acceptDrop:(id<NSDraggingInfo>)draggingInfo indexPath:(NSIndexPath *)dropIndexPath dropOperation:(NSCollectionViewDropOperation)dropOperation;
+- (BOOL)collectionView:(NSCollectionView*)collectionView acceptDrop:(id<NSDraggingInfo>)draggingInfo indexPath:(NSIndexPath*)dropIndexPath dropOperation:(NSCollectionViewDropOperation)dropOperation;
 {
     if (draggingItems != nil) {
         // 1) remove these items from batch and excludedFromBatch
-        
-        NSMutableIndexSet *indexesToRemoveFromBatch = [NSMutableIndexSet indexSet];
-        NSMutableIndexSet *indexesToRemoveFromExcluded = [NSMutableIndexSet indexSet];
-        for (NSIndexPath *indexPath in indexPathsOfDraggingItems) {
-            switch(indexPath.section) {
-                case 0:
-                    [indexesToRemoveFromBatch addIndex:indexPath.item];
-                    break;
-                case 1:
-                    [indexesToRemoveFromExcluded addIndex:indexPath.item];
-                    break;
+
+        NSMutableIndexSet* indexesToRemoveFromBatch = [NSMutableIndexSet indexSet];
+        NSMutableIndexSet* indexesToRemoveFromExcluded = [NSMutableIndexSet indexSet];
+        for (NSIndexPath* indexPath in indexPathsOfDraggingItems) {
+            switch (indexPath.section) {
+            case 0:
+                [indexesToRemoveFromBatch addIndex:indexPath.item];
+                break;
+            case 1:
+                [indexesToRemoveFromExcluded addIndex:indexPath.item];
+                break;
             }
         }
-        
+
         [batch removeObjectsAtIndexes:indexesToRemoveFromBatch];
         [excludedFromBatch removeObjectsAtIndexes:indexesToRemoveFromExcluded];
-        
-        [[batchCollectionView animator] performBatchUpdates:^{
-            
-            // 2) remove the index paths from the collection view
-            [batchCollectionView deleteItemsAtIndexPaths:indexPathsOfDraggingItems];
-            
-            // 3) add draggingItems to the right position in batch or excludedFromBatch
-            // note 1: dropOperation will always be NSCollectionViewDropBefore here
-            // note 2: adding items using reverse object enumerator so they land in same order as collected
-            NSMutableArray<BatchEntry*> *destination = dropIndexPath.section == 0 ? batch : excludedFromBatch;
-            NSIndexPath *destIndexPath = [NSIndexPath indexPathForItem:MIN(dropIndexPath.item, destination.count-1) inSection:dropIndexPath.section];
-            
-            for(BatchEntry* entry in draggingItems.reverseObjectEnumerator) {
-                [destination insertObject:entry atIndex:destIndexPath.item];
+
+        [[batchCollectionView animator]
+            performBatchUpdates:^{
+                // 2) remove the index paths from the collection view
+                [batchCollectionView deleteItemsAtIndexPaths:indexPathsOfDraggingItems];
+
+                // 3) add draggingItems to the right position in batch or excludedFromBatch
+                // note 1: dropOperation will always be NSCollectionViewDropBefore here
+                // note 2: adding items using reverse object enumerator so they land in same order as collected
+                NSMutableArray<BatchEntry*>* destination = dropIndexPath.section == 0 ? batch : excludedFromBatch;
+                NSIndexPath* destIndexPath = [NSIndexPath indexPathForItem:MIN(dropIndexPath.item, destination.count) inSection:dropIndexPath.section];
+
+                for (BatchEntry* entry in draggingItems.reverseObjectEnumerator) {
+                    [destination insertObject:entry atIndex:destIndexPath.item];
+                }
+
+                // 4) add the iems to the collection view
+                for (int i = 0; i < draggingItems.count; i++) {
+                    [batchCollectionView insertItemsAtIndexPaths:[NSSet setWithObject:[NSIndexPath indexPathForItem:destIndexPath.item + i inSection:destIndexPath.section]]];
+                }
             }
-            
-            // 4) add the iems to the collection view
-            for (int i = 0; i < draggingItems.count; i++) {
-                [batchCollectionView insertItemsAtIndexPaths:[NSSet setWithObject:[NSIndexPath indexPathForItem:destIndexPath.item + i inSection:destIndexPath.section]]];
-            }
-            
-        } completionHandler:^(BOOL finished) {
-            [self updateExcludedSectionHeaderAnimated:YES];
-        }];
-        
+            completionHandler:^(BOOL finished) {
+                [self updateExcludedSectionHeaderAnimated:YES];
+            }];
+
         // approve the drop
         return YES;
     }
     return NO;
 }
 
-- (void)collectionView:(NSCollectionView *)collectionView draggingSession:(NSDraggingSession *)session endedAtPoint:(NSPoint)screenPoint dragOperation:(NSDragOperation)operation
+- (void)collectionView:(NSCollectionView*)collectionView draggingSession:(NSDraggingSession*)session endedAtPoint:(NSPoint)screenPoint dragOperation:(NSDragOperation)operation
 {
     // we're done
     indexPathsOfDraggingItems = nil;
@@ -438,9 +455,9 @@ const NSSize kItemSize = { 200, 140 };
 - (void)deleteForward:(id)sender
 {
     [batchCollectionView reloadData];
-//    if (batchWindow.firstResponder == batchCollectionView) {
-//        [self removeItems:batchCollectionView.selectionIndexPaths];
-//    }
+    //    if (batchWindow.firstResponder == batchCollectionView) {
+    //        [self removeItems:batchCollectionView.selectionIndexPaths];
+    //    }
 }
 
 - (void)deleteBackward:(id)sender
@@ -645,20 +662,19 @@ const NSSize kItemSize = { 200, 140 };
 {
     int count = [excludedFromBatch count];
     [excludedFromBatch removeAllObjects];
-    
-    [[batchCollectionView animator]
-     performBatchUpdates:^{
-         NSMutableSet<NSIndexPath*> *itemsToDelete = [NSMutableSet set];
-         for (int i = 0; i < count; i++) {
-             [itemsToDelete addObject:[NSIndexPath indexPathForItem:i inSection:1]];
-         }
-         [batchCollectionView deleteItemsAtIndexPaths:itemsToDelete];
-     }
-     completionHandler:^(BOOL finished) {
-         [self updateExcludedSectionHeaderAnimated:YES];
-     }];
-}
 
+    [[batchCollectionView animator]
+        performBatchUpdates:^{
+            NSMutableSet<NSIndexPath*>* itemsToDelete = [NSMutableSet set];
+            for (int i = 0; i < count; i++) {
+                [itemsToDelete addObject:[NSIndexPath indexPathForItem:i inSection:1]];
+            }
+            [batchCollectionView deleteItemsAtIndexPaths:itemsToDelete];
+        }
+        completionHandler:^(BOOL finished) {
+            [self updateExcludedSectionHeaderAnimated:YES];
+        }];
+}
 
 - (void)updateExcludedSectionHeaderAnimated:(BOOL)animated
 {
@@ -783,6 +799,18 @@ const NSSize kItemSize = { 200, 140 };
         self.sheetProcessRunning = NO;
         [NSApp endSheet:progressSheet];
     });
+}
+
+- (NSSet<NSIndexPath*>*)userInteractableIndexPathsFrom:(NSSet<NSIndexPath*>*)proposedIndexPaths
+{
+    NSMutableSet<NSIndexPath*>* pruned = [NSMutableSet set];
+    for (NSIndexPath* p in proposedIndexPaths) {
+        NSArray<BatchEntry*>* source = p.section == 0 ? batch : excludedFromBatch;
+        if (p.item < source.count) {
+            [pruned addObject:p];
+        }
+    }
+    return pruned;
 }
 
 @end

@@ -98,9 +98,6 @@
 
 - (void)drawRect:(NSRect)rect
 {
-//    [[NSColor redColor] set];
-//    NSRectFill(self.bounds);
-
     if (selected) {
         if (@available(macOS 10.14, *)) {
             [[NSColor selectedContentBackgroundColor] set];
@@ -114,12 +111,16 @@
 
 - (void)mouseEntered:(NSEvent*)event
 {
-    self.onMouseHoverStateChange(YES);
+    if (self.onMouseHoverStateChange != nil) {
+        self.onMouseHoverStateChange(YES);
+    }
 }
 
 - (void)mouseExited:(NSEvent*)event
 {
-    self.onMouseHoverStateChange(NO);
+    if (self.onMouseHoverStateChange != nil) {
+        self.onMouseHoverStateChange(NO);
+    }
 }
 
 @end

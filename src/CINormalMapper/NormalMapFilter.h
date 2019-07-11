@@ -14,7 +14,6 @@ typedef NS_ENUM(NSInteger, NMSampleSize) {
     NMSampleSize5x5 = 1
 };
 
-
 @interface NormalMapFilter : CIFilter {
     NSMutableDictionary* kernelsByName;
     CIKernel* currentKernel;

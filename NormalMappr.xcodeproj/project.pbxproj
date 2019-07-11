@@ -38,6 +38,8 @@
 		63608B1A228C52130062CD4C /* CTBadge_4.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 63608B10228C51E50062CD4C /* CTBadge_4.pdf */; };
 		63608B1B228C52150062CD4C /* CTBadge_5.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 63608B11228C51E50062CD4C /* CTBadge_5.pdf */; };
 		63A761912296F908004E6EC3 /* BatchCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63A761902296F908004E6EC3 /* BatchCollectionViewItem.xib */; };
+		63F1D27222D78AA500BC0CEF /* BatchCollectionViewItemDropPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F1D27122D78AA500BC0CEF /* BatchCollectionViewItemDropPlaceholder.m */; };
+		63F1D27322D78BD900BC0CEF /* BatchCollectionViewItemDropPlaceholder.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63F1D26E22D78A5A00BC0CEF /* BatchCollectionViewItemDropPlaceholder.xib */; };
 		63F367FB22CE9F440044D921 /* BatchCollectionViewRoot.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F367FA22CE9F440044D921 /* BatchCollectionViewRoot.m */; };
 		63F367FE22CEA0C40044D921 /* BatchCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F367FD22CEA0C40044D921 /* BatchCollectionView.m */; };
 		8B1686A3D8A4F58088A3580C /* Pods_NormalMappr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14BFC9E782FDE3BA39D24331 /* Pods_NormalMappr.framework */; };
@@ -128,6 +130,9 @@
 		63AAE609227BF61B00926382 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		63AAE60C227BF62100926382 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		63AAE60D227BF62100926382 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/NormalMapprDoc.nib; sourceTree = "<group>"; };
+		63F1D26E22D78A5A00BC0CEF /* BatchCollectionViewItemDropPlaceholder.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BatchCollectionViewItemDropPlaceholder.xib; sourceTree = "<group>"; };
+		63F1D27022D78AA500BC0CEF /* BatchCollectionViewItemDropPlaceholder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BatchCollectionViewItemDropPlaceholder.h; sourceTree = "<group>"; };
+		63F1D27122D78AA500BC0CEF /* BatchCollectionViewItemDropPlaceholder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BatchCollectionViewItemDropPlaceholder.m; sourceTree = "<group>"; };
 		63F367F922CE9F440044D921 /* BatchCollectionViewRoot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BatchCollectionViewRoot.h; sourceTree = "<group>"; };
 		63F367FA22CE9F440044D921 /* BatchCollectionViewRoot.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BatchCollectionViewRoot.m; sourceTree = "<group>"; };
 		63F367FC22CEA0C40044D921 /* BatchCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BatchCollectionView.h; sourceTree = "<group>"; };
@@ -157,7 +162,6 @@
 				4FAB9D7CD1B343986157129D /* Pods-NormalMappr.debug.xcconfig */,
 				9CD6004B36F4077F238209AE /* Pods-NormalMappr.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -187,7 +191,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		2A37F4AAFDCFA73011CA2CEA = {
+		2A37F4AAFDCFA73011CA2CEA /* NormalMappr */ = {
 			isa = PBXGroup;
 			children = (
 				63608ADB228895630062CD4C /* 3rd-party */,
@@ -223,6 +227,7 @@
 				36A586410F8F6BCF00AC6E58 /* BatchWindow.xib */,
 				63608AEB2288D3F80062CD4C /* Media.xcassets */,
 				63A761902296F908004E6EC3 /* BatchCollectionViewItem.xib */,
+				63F1D26E22D78A5A00BC0CEF /* BatchCollectionViewItemDropPlaceholder.xib */,
 				632A312A2299E17C00A9D01A /* BatchCollectionViewSectionHeader.xib */,
 			);
 			name = Resources;
@@ -291,6 +296,8 @@
 				63F367FA22CE9F440044D921 /* BatchCollectionViewRoot.m */,
 				63F367FC22CEA0C40044D921 /* BatchCollectionView.h */,
 				63F367FD22CEA0C40044D921 /* BatchCollectionView.m */,
+				63F1D27022D78AA500BC0CEF /* BatchCollectionViewItemDropPlaceholder.h */,
+				63F1D27122D78AA500BC0CEF /* BatchCollectionViewItemDropPlaceholder.m */,
 			);
 			path = BatchController;
 			sourceTree = "<group>";
@@ -400,7 +407,7 @@
 				en,
 				Base,
 			);
-			mainGroup = 2A37F4AAFDCFA73011CA2CEA;
+			mainGroup = 2A37F4AAFDCFA73011CA2CEA /* NormalMappr */;
 			productRefGroup = 19C28FB0FE9D524F11CA2CBB /* Products */;
 			projectDirPath = "";
 			projectReferences = (
@@ -431,6 +438,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63F1D27322D78BD900BC0CEF /* BatchCollectionViewItemDropPlaceholder.xib in Resources */,
 				8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */,
 				8D15AC2D0486D014006FF6A4 /* MainMenu.nib in Resources */,
 				8D15AC2E0486D014006FF6A4 /* NormalMapprDoc.nib in Resources */,
@@ -489,6 +497,7 @@
 				63F367FB22CE9F440044D921 /* BatchCollectionViewRoot.m in Sources */,
 				63608AEA2288D0CF0062CD4C /* TemplateInDarkModeButton.m in Sources */,
 				3617E5470C32828200276C8A /* ImageView.m in Sources */,
+				63F1D27222D78AA500BC0CEF /* BatchCollectionViewItemDropPlaceholder.m in Sources */,
 				3617E87D0C332D9700276C8A /* AppDelegate.m in Sources */,
 				36F94F8C0F60957E0003C8EF /* CINormalMapper.m in Sources */,
 				632A312E2299E25700A9D01A /* BatchCollectionViewSectionHeader.m in Sources */,

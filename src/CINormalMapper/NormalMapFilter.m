@@ -139,13 +139,13 @@
 - (void)selectKernel
 {
     NSString* kernelName = nil;
-    switch(sampleSize) {
-        case NMSampleSize3x3:
-            kernelName = @"normalMap3x3";
-            break;
-        case NMSampleSize5x5:
-            kernelName = @"normalMap5x5";
-            break;
+    switch (sampleSize) {
+    case NMSampleSize3x3:
+        kernelName = @"normalMap3x3";
+        break;
+    case NMSampleSize5x5:
+        kernelName = @"normalMap5x5";
+        break;
     }
 
     if (self.clampToEdge) {

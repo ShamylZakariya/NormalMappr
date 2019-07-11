@@ -185,13 +185,13 @@
 
 - (void)setSampleSize:(int)sampleSize
 {
-    switch(sampleSize) {
-        case 0:
-            _normalmapper.sampleSize = NMSampleSize3x3;
-            break;
-        case 1:
-            _normalmapper.sampleSize = NMSampleSize5x5;
-            break;
+    switch (sampleSize) {
+    case 0:
+        _normalmapper.sampleSize = NMSampleSize3x3;
+        break;
+    case 1:
+        _normalmapper.sampleSize = NMSampleSize5x5;
+        break;
     }
     [self update];
 }
