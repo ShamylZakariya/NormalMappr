@@ -1,7 +1,6 @@
 PRESENTLY:
-- finally, inter-section dnd
-    - this might not be possible now that I've overridden default DnD behavior on collectionview
-    - might still work for when CV is drag source? I could selectively disable batch drop behavior if dragging inside
+- dnd between sections works, so long as the sections have elements in them
+    - now sure how to drag from populated section to non-populated - we don't get a drop indicator
 
 TODO:
 

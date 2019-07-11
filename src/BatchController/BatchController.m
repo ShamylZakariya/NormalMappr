@@ -343,11 +343,17 @@ const NSSize kItemSize = { 200, 140 };
 - (void)collectionView:(NSCollectionView *)collectionView draggingSession:(NSDraggingSession *)session willBeginAtPoint:(NSPoint)screenPoint forItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths
 {
     indexPathsOfDraggingItems = indexPaths;
+    draggingItems = [NSMutableArray array];
+    for (NSIndexPath *indexPath in indexPaths) {
+        BatchCollectionViewItem *item = (BatchCollectionViewItem*)[collectionView itemAtIndexPath:indexPath];
+        [draggingItems addObject:item.batchEntry];
+    }
 }
 
 - (NSDragOperation)collectionView:(NSCollectionView *)collectionView validateDrop:(id<NSDraggingInfo>)draggingInfo proposedIndexPath:(NSIndexPath * _Nonnull *)proposedDropIndexPath dropOperation:(NSCollectionViewDropOperation *)proposedDropOperation
 {
-    if (indexPathsOfDraggingItems != nil) {
+    if (draggingItems != nil) {
+        // NOTE: I never seem to get NSCollectionViewDropOn, only 'Before
         if (*proposedDropOperation == NSCollectionViewDropOn) {
             *proposedDropOperation = NSCollectionViewDropBefore;
         }
@@ -356,10 +362,53 @@ const NSSize kItemSize = { 200, 140 };
     return NSDragOperationNone;
 }
 
-- (BOOL)collectionView:(NSCollectionView *)collectionView acceptDrop:(id<NSDraggingInfo>)draggingInfo indexPath:(NSIndexPath *)indexPath dropOperation:(NSCollectionViewDropOperation)dropOperation;
+- (BOOL)collectionView:(NSCollectionView *)collectionView acceptDrop:(id<NSDraggingInfo>)draggingInfo indexPath:(NSIndexPath *)dropIndexPath dropOperation:(NSCollectionViewDropOperation)dropOperation;
 {
-    if (indexPathsOfDraggingItems != nil) {
+    if (draggingItems != nil) {
+        // 1) remove these items from batch and excludedFromBatch
         
+        NSMutableIndexSet *indexesToRemoveFromBatch = [NSMutableIndexSet indexSet];
+        NSMutableIndexSet *indexesToRemoveFromExcluded = [NSMutableIndexSet indexSet];
+        for (NSIndexPath *indexPath in indexPathsOfDraggingItems) {
+            switch(indexPath.section) {
+                case 0:
+                    [indexesToRemoveFromBatch addIndex:indexPath.item];
+                    break;
+                case 1:
+                    [indexesToRemoveFromExcluded addIndex:indexPath.item];
+                    break;
+            }
+        }
+        
+        [batch removeObjectsAtIndexes:indexesToRemoveFromBatch];
+        [excludedFromBatch removeObjectsAtIndexes:indexesToRemoveFromExcluded];
+        
+        [[batchCollectionView animator] performBatchUpdates:^{
+            
+            // 2) remove the index paths from the collection view
+            [batchCollectionView deleteItemsAtIndexPaths:indexPathsOfDraggingItems];
+            
+            // 3) add draggingItems to the right position in batch or excludedFromBatch
+            // note 1: dropOperation will always be NSCollectionViewDropBefore here
+            // note 2: adding items using reverse object enumerator so they land in same order as collected
+            NSMutableArray<BatchEntry*> *destination = dropIndexPath.section == 0 ? batch : excludedFromBatch;
+            NSIndexPath *destIndexPath = [NSIndexPath indexPathForItem:MIN(dropIndexPath.item, destination.count-1) inSection:dropIndexPath.section];
+            
+            for(BatchEntry* entry in draggingItems.reverseObjectEnumerator) {
+                [destination insertObject:entry atIndex:destIndexPath.item];
+            }
+            
+            // 4) add the iems to the collection view
+            for (int i = 0; i < draggingItems.count; i++) {
+                [batchCollectionView insertItemsAtIndexPaths:[NSSet setWithObject:[NSIndexPath indexPathForItem:destIndexPath.item + i inSection:destIndexPath.section]]];
+            }
+            
+        } completionHandler:^(BOOL finished) {
+            [self updateExcludedSectionHeaderAnimated:YES];
+        }];
+        
+        // approve the drop
+        return YES;
     }
     return NO;
 }
@@ -368,6 +417,7 @@ const NSSize kItemSize = { 200, 140 };
 {
     // we're done
     indexPathsOfDraggingItems = nil;
+    draggingItems = nil;
 }
 
 #pragma mark - NSCollectionViewDelegateFlowLayout
@@ -387,9 +437,10 @@ const NSSize kItemSize = { 200, 140 };
 
 - (void)deleteForward:(id)sender
 {
-    if (batchWindow.firstResponder == batchCollectionView) {
-        [self removeItems:batchCollectionView.selectionIndexPaths];
-    }
+    [batchCollectionView reloadData];
+//    if (batchWindow.firstResponder == batchCollectionView) {
+//        [self removeItems:batchCollectionView.selectionIndexPaths];
+//    }
 }
 
 - (void)deleteBackward:(id)sender

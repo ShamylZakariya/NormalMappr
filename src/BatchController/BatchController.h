@@ -29,6 +29,7 @@
     NSInteger previousSaveLocationPopupTag;
     BatchCollectionViewSectionHeader* excludedFromBatchSectionHeader;
     NSSet<NSIndexPath*>* indexPathsOfDraggingItems;
+    NSMutableArray<BatchEntry*>* draggingItems;
 
     __weak IBOutlet NSWindow* batchWindow;
     IBOutlet NSPanel* progressSheet; // intentionally strong to keep it alive when not visible
