@@ -28,6 +28,8 @@
     NSString* sheetMessage;
     NSInteger previousSaveLocationPopupTag;
     BatchCollectionViewSectionHeader* excludedFromBatchSectionHeader;
+    NSSet<NSIndexPath*>* indexPathsOfDraggingItems;
+    NSMutableArray<BatchEntry*>* draggingItems;
 
     __weak IBOutlet NSWindow* batchWindow;
     IBOutlet NSPanel* progressSheet; // intentionally strong to keep it alive when not visible
@@ -37,6 +39,11 @@
     __weak IBOutlet NSPopUpButton* saveLocationPopup;
     __weak IBOutlet NSTextField* dropMessage;
 }
+
+/**
+ Returns true iff url is (a file on disk && supported image type) || a directory.
+ */
++ (BOOL)canHandleURL:(NSURL*)url;
 
 - (void)dismiss;
 

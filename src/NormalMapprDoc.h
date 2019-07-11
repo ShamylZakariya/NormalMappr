@@ -47,7 +47,7 @@
 }
 
 @property (readwrite) int strength;
-@property (readwrite) int sampleRadius;
+@property (readwrite) int sampleSize;
 @property (readwrite) BOOL clampToEdge;
 @property (readwrite) int outputWidth;
 @property (readwrite) int outputHeight;

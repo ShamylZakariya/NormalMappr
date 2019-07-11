@@ -49,18 +49,18 @@
                             <popUpButton verticalHuggingPriority="750" imageHugsTitle="YES" id="192">
                                 <rect key="frame" x="17" y="27" width="100" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <popUpButtonCell key="cell" type="push" title="5x5" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="2" imageScaling="proportionallyDown" inset="2" selectedItem="196" id="193">
+                                <popUpButtonCell key="cell" type="push" title="5x5" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" imageScaling="proportionallyDown" inset="2" selectedItem="196" id="193">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
                                     <menu key="menu" title="OtherViews" id="194">
                                         <items>
-                                            <menuItem title="3x3" tag="1" id="195"/>
-                                            <menuItem title="5x5" state="on" tag="2" id="196"/>
+                                            <menuItem title="3x3" id="195"/>
+                                            <menuItem title="5x5" state="on" tag="1" id="196"/>
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
                                 <connections>
-                                    <binding destination="41" name="selectedTag" keyPath="selection.sampleRadius" id="198"/>
+                                    <binding destination="41" name="selectedTag" keyPath="selection.sampleSize" id="H23-KW-Fwo"/>
                                 </connections>
                             </popUpButton>
                             <textField verticalHuggingPriority="750" id="138">

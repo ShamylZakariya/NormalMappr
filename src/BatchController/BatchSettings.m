@@ -8,6 +8,7 @@
 
 #import "BatchSettings.h"
 #import "BatchController.h"
+#import "NormalMapFilter.h"
 
 @implementation BatchSettings
 
@@ -20,7 +21,7 @@
         self.strength = 0.5;
         self.outputWidth = 512;
         self.outputHeight = 512;
-        self.sampleRadius = 2;
+        self.sampleSize = NMSampleSize3x3;
         self.saveFormat = NSPNGFileType;
         self.nameDecoration = @"_normal";
         self.nameDecorationStyle = NMNameDecorationAppend;
@@ -38,7 +39,7 @@
 #define kPrefStrength @"Strength"
 #define kPrefOutputWidth @"OutputWidth"
 #define kPrefOutputHeight @"OutputHeight"
-#define kPrefSampleRadius @"SampleRadius"
+#define kPrefSampleSize @"SampleSize"
 #define kPrefResizeWidth @"ResizeWidth"
 #define kPrefResizeHeight @"ResizeHeight"
 #define kPrefNameDecoration @"NameDecoration"
@@ -69,8 +70,8 @@
             self.outputHeight = [value intValue];
         }
 
-        if ((value = [settings valueForKey:kPrefSampleRadius])) {
-            self.sampleRadius = [value intValue];
+        if ((value = [settings valueForKey:kPrefSampleSize])) {
+            self.sampleSize = [value intValue];
         }
 
         if ((value = [settings valueForKey:kPrefResizeWidth])) {
@@ -113,7 +114,7 @@
     [settings setObject:[NSNumber numberWithInt:self.strength] forKey:kPrefStrength];
     [settings setObject:[NSNumber numberWithInt:self.outputWidth] forKey:kPrefOutputWidth];
     [settings setObject:[NSNumber numberWithInt:self.outputHeight] forKey:kPrefOutputHeight];
-    [settings setObject:[NSNumber numberWithInt:self.sampleRadius] forKey:kPrefSampleRadius];
+    [settings setObject:[NSNumber numberWithInt:self.sampleSize] forKey:kPrefSampleSize];
     [settings setObject:[NSNumber numberWithBool:self.resizeWidth] forKey:kPrefResizeWidth];
     [settings setObject:[NSNumber numberWithBool:self.resizeHeight] forKey:kPrefResizeHeight];
 
@@ -140,7 +141,7 @@
 @synthesize strength;
 @synthesize outputWidth;
 @synthesize outputHeight;
-@synthesize sampleRadius;
+@synthesize sampleSize;
 @synthesize saveFormat;
 @synthesize nameDecoration;
 @synthesize nameDecorationStyle;

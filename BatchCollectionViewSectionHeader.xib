@@ -10,11 +10,33 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView wantsLayer="YES" id="Z8y-cf-p4C" customClass="BatchCollectionViewSectionHeader">
-            <rect key="frame" x="0.0" y="0.0" width="497" height="45"/>
+            <rect key="frame" x="0.0" y="0.0" width="720" height="45"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="Xam-pa-IMP" customClass="BatchCollectionViewSectionHeaderBackground">
-                    <rect key="frame" x="0.0" y="0.0" width="497" height="45"/>
+                    <rect key="frame" x="0.0" y="0.0" width="720" height="45"/>
+                    <subviews>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EvL-T5-G3D">
+                            <rect key="frame" x="539" y="14" width="51" height="17"/>
+                            <buttonCell key="cell" type="bevel" title="Discard" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="Jns-8K-3Hy">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Jyn-Rm-r9Q">
+                            <rect key="frame" x="610" y="14" width="100" height="17"/>
+                            <buttonCell key="cell" type="bevel" title="Add all to Batch" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="a0M-UL-yaG">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="Jyn-Rm-r9Q" firstAttribute="leading" secondItem="EvL-T5-G3D" secondAttribute="trailing" constant="20" id="1Ll-lh-SeA"/>
+                        <constraint firstAttribute="trailing" secondItem="Jyn-Rm-r9Q" secondAttribute="trailing" constant="10" id="Wab-b3-Ua7"/>
+                        <constraint firstItem="EvL-T5-G3D" firstAttribute="centerY" secondItem="Xam-pa-IMP" secondAttribute="centerY" id="bKJ-Qs-e8P"/>
+                        <constraint firstItem="Jyn-Rm-r9Q" firstAttribute="centerY" secondItem="Xam-pa-IMP" secondAttribute="centerY" id="yCH-2N-vID"/>
+                    </constraints>
                 </customView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zcL-It-C5M">
                     <rect key="frame" x="20" y="14" width="86" height="17"/>
@@ -24,30 +46,22 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EvL-T5-G3D">
-                    <rect key="frame" x="377" y="14" width="100" height="17"/>
-                    <buttonCell key="cell" type="bevel" title="Add all to Batch" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="Jns-8K-3Hy">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="Xam-pa-IMP" firstAttribute="top" secondItem="Z8y-cf-p4C" secondAttribute="top" id="0gW-Mh-pVP"/>
-                <constraint firstItem="EvL-T5-G3D" firstAttribute="centerY" secondItem="Z8y-cf-p4C" secondAttribute="centerY" id="7nI-Lw-Qhx"/>
                 <constraint firstItem="Xam-pa-IMP" firstAttribute="leading" secondItem="Z8y-cf-p4C" secondAttribute="leading" id="IEq-i5-cwF"/>
                 <constraint firstItem="zcL-It-C5M" firstAttribute="centerY" secondItem="Z8y-cf-p4C" secondAttribute="centerY" id="J5Y-Ye-FwA"/>
                 <constraint firstAttribute="bottom" secondItem="Xam-pa-IMP" secondAttribute="bottom" id="LaM-Yc-5ZD"/>
                 <constraint firstAttribute="trailing" secondItem="Xam-pa-IMP" secondAttribute="trailing" id="dyy-3K-ebh"/>
                 <constraint firstItem="zcL-It-C5M" firstAttribute="leading" secondItem="Z8y-cf-p4C" secondAttribute="leading" constant="22" id="rWC-8j-UXU"/>
-                <constraint firstAttribute="trailing" secondItem="EvL-T5-G3D" secondAttribute="trailing" constant="20" id="wFB-Z5-XDB"/>
             </constraints>
             <connections>
-                <outlet property="addToBatchButton" destination="EvL-T5-G3D" id="ZhD-XE-C4d"/>
+                <outlet property="addToBatchButton" destination="Jyn-Rm-r9Q" id="oxR-AL-xCi"/>
                 <outlet property="backgroundView" destination="Xam-pa-IMP" id="leM-Fx-mYM"/>
+                <outlet property="discardItems" destination="EvL-T5-G3D" id="UhF-lf-yMa"/>
                 <outlet property="sectionTitle" destination="zcL-It-C5M" id="9z8-0X-Jtl"/>
             </connections>
-            <point key="canvasLocation" x="84.5" y="-157.5"/>
+            <point key="canvasLocation" x="196" y="-157.5"/>
         </customView>
     </objects>
 </document>

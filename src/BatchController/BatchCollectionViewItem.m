@@ -46,8 +46,8 @@
         : NSLocalizedString(@"Include", @"Title of button to add items to batch");
 
     CGFloat alpha = isIncludedInBumpmapsBatch ? 1 : 0.5;
-    
     BOOL visibleOnScreen = NSIntersectsRect(self.view.frame, self.collectionView.visibleRect);
+
     if (visibleOnScreen) {
         self.thumbView.animator.alphaValue = alpha * alpha;
         self.nameTextField.animator.alphaValue = alpha;
@@ -105,18 +105,22 @@
             [[NSColor alternateSelectedControlColor] set];
         }
 
-        [[NSBezierPath bezierPathWithRoundedRect:NSInsetRect(self.bounds, 5, 5) xRadius:6 yRadius:6] fill];
+        [[NSBezierPath bezierPathWithRoundedRect:NSInsetRect(self.bounds, 0, 0) xRadius:6 yRadius:6] fill];
     }
 }
 
 - (void)mouseEntered:(NSEvent*)event
 {
-    self.onMouseHoverStateChange(YES);
+    if (self.onMouseHoverStateChange != nil) {
+        self.onMouseHoverStateChange(YES);
+    }
 }
 
 - (void)mouseExited:(NSEvent*)event
 {
-    self.onMouseHoverStateChange(NO);
+    if (self.onMouseHoverStateChange != nil) {
+        self.onMouseHoverStateChange(NO);
+    }
 }
 
 @end

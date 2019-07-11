@@ -56,7 +56,7 @@
         }
 
         self.strength = 0.5f;
-        self.sampleRadius = 1.0f;
+        self.sampleSize = NMSampleSize3x3;
         self.clampToEdge = NO;
     }
 
@@ -114,28 +114,16 @@
 
 #pragma mark -
 
-@synthesize strength, sampleRadius, clampToEdge;
+@synthesize strength, sampleSize, clampToEdge;
 
 - (void)setStrength:(CGFloat)s
 {
     strength = MIN(MAX(s, 0.0f), 1.0f);
 }
 
-- (void)setSampleRadius:(NSUInteger)r
+- (void)setSampleSize:(NMSampleSize)sampleSize
 {
-    switch (r) {
-    case NORMAL_MAP_5X5: {
-        sampleRadius = NORMAL_MAP_5X5;
-        break;
-    }
-
-    default:
-    case NORMAL_MAP_3X3: {
-        sampleRadius = NORMAL_MAP_3X3;
-        break;
-    }
-    }
-
+    self->sampleSize = sampleSize;
     currentKernel = nil;
 }
 
@@ -151,17 +139,13 @@
 - (void)selectKernel
 {
     NSString* kernelName = nil;
-    switch (sampleRadius) {
-    case NORMAL_MAP_5X5: {
-        kernelName = @"normalMap5x5";
-        break;
-    }
-
-    default:
-    case NORMAL_MAP_3X3: {
+    switch (sampleSize) {
+    case NMSampleSize3x3:
         kernelName = @"normalMap3x3";
         break;
-    }
+    case NMSampleSize5x5:
+        kernelName = @"normalMap5x5";
+        break;
     }
 
     if (self.clampToEdge) {

@@ -153,7 +153,7 @@
             }
 
             [self setStrength:50];
-            [self setSampleRadius:1];
+            [self setSampleSize:0];
             [self fitWindowToContents];
         } else if (outError) {
             *outError = [NSError errorWithDomain:@"NormalMapprErrorDomain"
@@ -183,15 +183,22 @@
     return _normalmapper.strength * 100.0f;
 }
 
-- (void)setSampleRadius:(int)sampleRadius
+- (void)setSampleSize:(int)sampleSize
 {
-    _normalmapper.sampleRadius = sampleRadius;
+    switch (sampleSize) {
+    case 0:
+        _normalmapper.sampleSize = NMSampleSize3x3;
+        break;
+    case 1:
+        _normalmapper.sampleSize = NMSampleSize5x5;
+        break;
+    }
     [self update];
 }
 
-- (int)sampleRadius
+- (int)sampleSize
 {
-    return _normalmapper.sampleRadius;
+    return (int)_normalmapper.sampleSize;
 }
 
 - (void)setClampToEdge:(BOOL)cte
