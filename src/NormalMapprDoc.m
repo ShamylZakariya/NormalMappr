@@ -352,9 +352,6 @@
 - (void)reload
 {
     NSURL* url = [self fileURL];
-    NSString* pretty = [[url path] lastPathComponent];
-
-    DebugLog(@"reloading image %@", pretty);
     NSData* data = [NSData dataWithContentsOfURL:url];
     if (data) {
         NSBitmapImageRep* image = [[NSBitmapImageRep alloc] initWithData:data];
@@ -363,10 +360,10 @@
             _normalmapper.size = _outputSize;
             [self update];
         } else {
-            DebugLog(@"Unable to load image from %@", pretty);
+            DebugLog(@"Unable to load image from %@", [[url path] lastPathComponent]);
         }
     } else {
-        DebugLog(@"Unable to reload image data from %@", pretty);
+        DebugLog(@"Unable to reload image data from %@", [[url path] lastPathComponent]);
     }
 }
 
@@ -442,9 +439,8 @@
                     [strongSelf reload];
                 });
             } else {
-                NSTimeInterval difference = [timestamp timeIntervalSinceReferenceDate] - [_fileTimestamp timeIntervalSinceReferenceDate];
                 DebugLog(@"timestamp difference %.2f on %@ doesn't show difference: not reloading",
-                    difference, [[[self fileURL] path] lastPathComponent]);
+                    ([timestamp timeIntervalSinceReferenceDate] - [_fileTimestamp timeIntervalSinceReferenceDate]), [[[self fileURL] path] lastPathComponent]);
             }
         }
     }
