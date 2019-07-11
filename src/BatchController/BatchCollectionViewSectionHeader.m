@@ -26,10 +26,12 @@
 {
     if (animated) {
         self.addToBatchButton.animator.hidden = contentHidden;
+        self.discardItems.animator.hidden = contentHidden;
         self.sectionTitle.animator.hidden = contentHidden;
         self.backgroundView.animator.hidden = contentHidden;
     } else {
         self.addToBatchButton.hidden = contentHidden;
+        self.discardItems.hidden = contentHidden;
         self.sectionTitle.hidden = contentHidden;
         self.backgroundView.hidden = contentHidden;
     }

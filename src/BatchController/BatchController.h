@@ -28,6 +28,7 @@
     NSString* sheetMessage;
     NSInteger previousSaveLocationPopupTag;
     BatchCollectionViewSectionHeader* excludedFromBatchSectionHeader;
+    NSSet<NSIndexPath*>* indexPathsOfDraggingItems;
 
     __weak IBOutlet NSWindow* batchWindow;
     IBOutlet NSPanel* progressSheet; // intentionally strong to keep it alive when not visible

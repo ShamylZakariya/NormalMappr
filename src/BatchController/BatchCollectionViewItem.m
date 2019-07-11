@@ -98,6 +98,9 @@
 
 - (void)drawRect:(NSRect)rect
 {
+//    [[NSColor redColor] set];
+//    NSRectFill(self.bounds);
+
     if (selected) {
         if (@available(macOS 10.14, *)) {
             [[NSColor selectedContentBackgroundColor] set];
@@ -105,7 +108,7 @@
             [[NSColor alternateSelectedControlColor] set];
         }
 
-        [[NSBezierPath bezierPathWithRoundedRect:NSInsetRect(self.bounds, 5, 5) xRadius:6 yRadius:6] fill];
+        [[NSBezierPath bezierPathWithRoundedRect:NSInsetRect(self.bounds, 0, 0) xRadius:6 yRadius:6] fill];
     }
 }
 

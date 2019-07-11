@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setContentHidden:(BOOL)contentHidden animated:(BOOL)animated;
 
+@property (weak) IBOutlet NSButton* discardItems;
 @property (weak) IBOutlet NSButton* addToBatchButton;
 @property (weak) IBOutlet NSTextField* sectionTitle;
 @property (weak) IBOutlet BatchCollectionViewSectionHeaderBackground* backgroundView;

@@ -27,6 +27,7 @@ const NSSize kItemSize = { 200, 140 };
 - (void)loadDroppedFiles:(NSArray<NSURL*>*)fileURLs;
 - (void)removeItems:(NSSet<NSIndexPath*>*)items;
 - (void)addExcludedItemsToBatch:(id)sender;
+- (void)discardExcludedItems:(id)sender;
 - (void)updateExcludedSectionHeaderAnimated:(BOOL)animated;
 - (void)moveEntry:(BatchEntry*)batchEntry toBatch:(BOOL)includedInBatch;
 - (void)prepareItem:(BatchCollectionViewItem*)item forBatchEntry:(BatchEntry*)entry inBatch:(BOOL)inBatch;
@@ -71,9 +72,9 @@ const NSSize kItemSize = { 200, 140 };
     NSNib* headerNib = [[NSNib alloc] initWithNibNamed:@"BatchCollectionViewSectionHeader" bundle:[NSBundle mainBundle]];
     [batchCollectionView registerNib:headerNib forSupplementaryViewOfKind:NSCollectionElementKindSectionHeader withIdentifier:kBatchCollectionViewSectionHeaderIdentifier];
 
+    // set up DnD - specify we accept file drops, and dragging internally (not dragging out to other apps)
     [batchCollectionView registerForDraggedTypes:@[ NSURLPboardType ]];
     [batchCollectionView setDraggingSourceOperationMask:NSDragOperationEvery forLocal:YES];
-    [batchCollectionView setDraggingSourceOperationMask:NSDragOperationEvery forLocal:NO];
 
     //
     // sync up user save dir popup
@@ -298,6 +299,9 @@ const NSSize kItemSize = { 200, 140 };
         [excludedFromBatchSectionHeader.addToBatchButton setTarget:self];
         [excludedFromBatchSectionHeader.addToBatchButton setAction:@selector(addExcludedItemsToBatch:)];
 
+        [excludedFromBatchSectionHeader.discardItems setTarget:self];
+        [excludedFromBatchSectionHeader.discardItems setAction:@selector(discardExcludedItems:)];
+
         [self updateExcludedSectionHeaderAnimated:NO];
 
         return excludedFromBatchSectionHeader;
@@ -325,15 +329,56 @@ const NSSize kItemSize = { 200, 140 };
     return indexPaths;
 }
 
+- (BOOL)collectionView:(NSCollectionView *)collectionView canDragItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths withEvent:(NSEvent *)event
+{
+    return YES;
+}
+
+- (id<NSPasteboardWriting>)collectionView:(NSCollectionView *)collectionView pasteboardWriterForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    BatchCollectionViewItem* item = (BatchCollectionViewItem*)[batchCollectionView itemAtIndexPath:indexPath];
+    return item.batchEntry.fileURL;
+}
+
+- (void)collectionView:(NSCollectionView *)collectionView draggingSession:(NSDraggingSession *)session willBeginAtPoint:(NSPoint)screenPoint forItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths
+{
+    indexPathsOfDraggingItems = indexPaths;
+}
+
+- (NSDragOperation)collectionView:(NSCollectionView *)collectionView validateDrop:(id<NSDraggingInfo>)draggingInfo proposedIndexPath:(NSIndexPath * _Nonnull *)proposedDropIndexPath dropOperation:(NSCollectionViewDropOperation *)proposedDropOperation
+{
+    if (indexPathsOfDraggingItems != nil) {
+        if (*proposedDropOperation == NSCollectionViewDropOn) {
+            *proposedDropOperation = NSCollectionViewDropBefore;
+        }
+        return NSDragOperationMove;
+    }
+    return NSDragOperationNone;
+}
+
+- (BOOL)collectionView:(NSCollectionView *)collectionView acceptDrop:(id<NSDraggingInfo>)draggingInfo indexPath:(NSIndexPath *)indexPath dropOperation:(NSCollectionViewDropOperation)dropOperation;
+{
+    if (indexPathsOfDraggingItems != nil) {
+        
+    }
+    return NO;
+}
+
+- (void)collectionView:(NSCollectionView *)collectionView draggingSession:(NSDraggingSession *)session endedAtPoint:(NSPoint)screenPoint dragOperation:(NSDragOperation)operation
+{
+    // we're done
+    indexPathsOfDraggingItems = nil;
+}
+
 #pragma mark - NSCollectionViewDelegateFlowLayout
 
 - (NSSize)collectionView:(NSCollectionView*)collectionView layout:(NSCollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
     switch (section) {
     case 0:
-        return NSMakeSize(0, 20);
+        return NSMakeSize(0, 0);
     case 1:
-        return NSMakeSize(0, 80);
+        return NSMakeSize(0, 40);
     }
     return NSZeroSize;
 }
@@ -545,6 +590,25 @@ const NSSize kItemSize = { 200, 140 };
         }];
 }
 
+- (void)discardExcludedItems:(id)sender
+{
+    int count = [excludedFromBatch count];
+    [excludedFromBatch removeAllObjects];
+    
+    [[batchCollectionView animator]
+     performBatchUpdates:^{
+         NSMutableSet<NSIndexPath*> *itemsToDelete = [NSMutableSet set];
+         for (int i = 0; i < count; i++) {
+             [itemsToDelete addObject:[NSIndexPath indexPathForItem:i inSection:1]];
+         }
+         [batchCollectionView deleteItemsAtIndexPaths:itemsToDelete];
+     }
+     completionHandler:^(BOOL finished) {
+         [self updateExcludedSectionHeaderAnimated:YES];
+     }];
+}
+
+
 - (void)updateExcludedSectionHeaderAnimated:(BOOL)animated
 {
     if (excludedFromBatchSectionHeader != nil) {
@@ -552,9 +616,11 @@ const NSSize kItemSize = { 200, 140 };
         if (animated) {
             [excludedFromBatchSectionHeader setContentHidden:self.isEmpty animated:YES];
             excludedFromBatchSectionHeader.addToBatchButton.animator.hidden = hidden;
+            excludedFromBatchSectionHeader.discardItems.animator.hidden = hidden;
         } else {
             [excludedFromBatchSectionHeader setContentHidden:self.isEmpty animated:NO];
             excludedFromBatchSectionHeader.addToBatchButton.hidden = hidden;
+            excludedFromBatchSectionHeader.discardItems.hidden = hidden;
         }
     }
 }
