@@ -295,9 +295,9 @@ DQ
                                         <collectionView selectable="YES" allowsMultipleSelection="YES" id="dmv-IW-L03" customClass="BatchCollectionView">
                                             <rect key="frame" x="0.0" y="0.0" width="1022" height="428"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                                            <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="9cb-4W-j73">
+                                            <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="20" minimumLineSpacing="10" id="9cb-4W-j73">
                                                 <size key="itemSize" width="50" height="50"/>
-                                                <edgeInsets key="sectionInset" left="0.0" right="0.0" top="0.0" bottom="40"/>
+                                                <edgeInsets key="sectionInset" left="20" right="20" top="20" bottom="20"/>
                                             </collectionViewFlowLayout>
                                             <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </collectionView>
