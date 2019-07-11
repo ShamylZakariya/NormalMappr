@@ -347,8 +347,12 @@ const NSSize kItemSize = { 200, 140 };
 
 - (id<NSPasteboardWriting>)collectionView:(NSCollectionView*)collectionView pasteboardWriterForItemAtIndexPath:(NSIndexPath*)indexPath
 {
-    BatchCollectionViewItem* item = (BatchCollectionViewItem*)[batchCollectionView itemAtIndexPath:indexPath];
-    return item.batchEntry.fileURL;
+    NSUInteger count = indexPath.section == 0 ? batch.count : excludedFromBatch.count;
+    if (indexPath.item < count) {
+        BatchCollectionViewItem* item = (BatchCollectionViewItem*)[batchCollectionView itemAtIndexPath:indexPath];
+        return item.batchEntry.fileURL;
+    }
+    return nil;
 }
 
 - (void)collectionView:(NSCollectionView*)collectionView draggingSession:(NSDraggingSession*)session willBeginAtPoint:(NSPoint)screenPoint forItemsAtIndexPaths:(NSSet<NSIndexPath*>*)indexPaths
