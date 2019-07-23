@@ -12,7 +12,6 @@
 
 #import "CINormalMapper.h"
 #import "ImageView.h"
-#import "TemplateInDarkModeButton.h"
 #import "TilingImageView.h"
 
 #define kJPEG2000Format @"JPEG-2000"
@@ -43,7 +42,7 @@
     __weak IBOutlet NSView* savePanelDialog;
     __weak IBOutlet NSBox* savePanelQualityControls;
     __weak IBOutlet NSView* controlPanelView;
-    __weak IBOutlet TemplateInDarkModeButton* linkWidthHeightToggleButton;
+    __weak IBOutlet NSButton* linkWidthHeightToggleButton;
 }
 
 @property (readwrite) int strength;
