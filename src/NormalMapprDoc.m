@@ -98,7 +98,7 @@
 
 - (NSData*)dataOfType:(NSString*)typeName error:(NSError**)outError
 {
-    NSBitmapFormat format;
+    NSBitmapImageFileType format;
     NSDictionary* props = nil;
 
     if ([_saveFormat isEqualToString:kJPEG2000Format]) {
@@ -379,10 +379,12 @@
     [_currentSavePanel setDirectoryURL:[[self fileURL] URLByDeletingLastPathComponent]];
     [_currentSavePanel setNameFieldStringValue:[[[[self fileURL] path] lastPathComponent] stringByDeletingPathExtension]];
 
+    WEAK_SELF;
     [_currentSavePanel beginSheetModalForWindow:docWindow
                               completionHandler:^(NSModalResponse result) {
-                                  if (result == NSModalResponseOK) {
-                                      [[self dataOfType:@"Export Type Or Something" error:nil] writeToURL:[_currentSavePanel URL] atomically:NO];
+                                  STRONG_SELF;
+                                  if (strongSelf && result == NSModalResponseOK) {
+                                      [[strongSelf dataOfType:@"Export Type Or Something" error:nil] writeToURL:[strongSelf->_currentSavePanel URL] atomically:NO];
                                   }
                               }];
 }
@@ -435,6 +437,8 @@
                 WEAK_SELF;
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     STRONG_SELF;
+                    if (!strongSelf) return;
+
                     DebugLog(@"Reloading %@", [[strongSelf fileURL] path]);
                     [strongSelf reload];
                 });

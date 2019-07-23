@@ -170,6 +170,8 @@ const NSSize kItemSize = { 200, 140 };
         return;
     self.sheetProcessRunning = YES;
 
+    WEAK_SELF;
+
     //
     // Mark indeterminate progress until we've gathered up the file listing
     // and know how many files we actually need to process.
@@ -179,16 +181,20 @@ const NSSize kItemSize = { 200, 140 };
     self.sheetMessage = @"Searching dropped files for bumpmaps...";
     [batchWindow beginSheet:progressSheet
           completionHandler:^(NSModalResponse returnCode) {
-              [progressSheet orderOut:self];
+              STRONG_SELF;
+              if (!strongSelf) return;
+              
+              [strongSelf->progressSheet orderOut:strongSelf];
           }];
 
     //
     // Image analysis is expensive, so we'll spawn a thread
     //
 
-    WEAK_SELF;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         STRONG_SELF;
+        if (!strongSelf) return;
+        
         [strongSelf loadDroppedFiles:fileURLs];
     });
 }
@@ -207,21 +213,25 @@ const NSSize kItemSize = { 200, 140 };
     //
 
     self.sheetProcessIndeterminate = YES;
-
     self.sheetMessage = @"Normalmapping...";
+
+    WEAK_SELF;
     [batchWindow beginSheet:progressSheet
           completionHandler:^(NSModalResponse returnCode) {
-              [progressSheet orderOut:nil];
+              STRONG_SELF;
+              if (!strongSelf) return;
+              [strongSelf->progressSheet orderOut:nil];
           }];
 
     //
     // Image processing is expensive, so we'll spawn a thread
     //
 
-    WEAK_SELF;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         STRONG_SELF;
-        [strongSelf normalmapFiles:batch];
+        if (!strongSelf) return;
+        
+        [strongSelf normalmapFiles:strongSelf->batch];
     });
 }
 
@@ -404,28 +414,35 @@ const NSSize kItemSize = { 200, 140 };
         [batch removeObjectsAtIndexes:indexesToRemoveFromBatch];
         [excludedFromBatch removeObjectsAtIndexes:indexesToRemoveFromExcluded];
 
+        WEAK_SELF;
         [[batchCollectionView animator]
             performBatchUpdates:^{
+                STRONG_SELF;
+                if (!strongSelf) return;
+                
                 // 2) remove the index paths from the collection view
-                [batchCollectionView deleteItemsAtIndexPaths:indexPathsOfDraggingItems];
+                [strongSelf->batchCollectionView deleteItemsAtIndexPaths:strongSelf->indexPathsOfDraggingItems];
 
                 // 3) add draggingItems to the right position in batch or excludedFromBatch
                 // note 1: dropOperation will always be NSCollectionViewDropBefore here
                 // note 2: adding items using reverse object enumerator so they land in same order as collected
-                NSMutableArray<BatchEntry*>* destination = dropIndexPath.section == 0 ? batch : excludedFromBatch;
+                NSMutableArray<BatchEntry*>* destination = dropIndexPath.section == 0 ? strongSelf->batch : strongSelf->excludedFromBatch;
                 NSIndexPath* destIndexPath = [NSIndexPath indexPathForItem:MIN(dropIndexPath.item, destination.count) inSection:dropIndexPath.section];
 
-                for (BatchEntry* entry in draggingItems.reverseObjectEnumerator) {
+                for (BatchEntry* entry in strongSelf->draggingItems.reverseObjectEnumerator) {
                     [destination insertObject:entry atIndex:destIndexPath.item];
                 }
 
                 // 4) add the iems to the collection view
-                for (int i = 0; i < draggingItems.count; i++) {
-                    [batchCollectionView insertItemsAtIndexPaths:[NSSet setWithObject:[NSIndexPath indexPathForItem:destIndexPath.item + i inSection:destIndexPath.section]]];
+                for (int i = 0; i < strongSelf->draggingItems.count; i++) {
+                    [strongSelf->batchCollectionView insertItemsAtIndexPaths:[NSSet setWithObject:[NSIndexPath indexPathForItem:destIndexPath.item + i inSection:destIndexPath.section]]];
                 }
             }
             completionHandler:^(BOOL finished) {
-                [self updateExcludedSectionHeaderAnimated:YES];
+                STRONG_SELF;
+                if (!strongSelf) return;
+                
+                [strongSelf updateExcludedSectionHeaderAnimated:YES];
             }];
 
         // approve the drop
@@ -485,25 +502,29 @@ const NSSize kItemSize = { 200, 140 };
     panel.canChooseDirectories = YES;
     panel.allowsMultipleSelection = NO;
 
+    WEAK_SELF;
     [panel beginSheetModalForWindow:self.batchWindow
                   completionHandler:^(NSModalResponse result) {
+                      STRONG_SELF;
+                      if (!strongSelf) return;
+                      
                       switch (result) {
-                      case NSFileHandlingPanelOKButton:
-                          DebugLog(@"user selected OK, urls: %@", panel.URLs.firstObject);
-                          self.batchSettings.userSaveDestination = panel.URLs.firstObject;
-                          [self addUserSaveDestination:self.batchSettings.userSaveDestination];
-                          break;
-                      default:
-                          // user cancelled, select the previously selected item
-                          [saveLocationPopup selectItemWithTag:previousSaveLocationPopupTag];
-                          break;
+                          case NSFileHandlingPanelOKButton:
+                              DebugLog(@"user selected OK, urls: %@", panel.URLs.firstObject);
+                              strongSelf.batchSettings.userSaveDestination = panel.URLs.firstObject;
+                              [strongSelf addUserSaveDestination:strongSelf.batchSettings.userSaveDestination];
+                              break;
+                          default:
+                              // user cancelled, select the previously selected item
+                              [strongSelf->saveLocationPopup selectItemWithTag:strongSelf->previousSaveLocationPopupTag];
+                              break;
                       }
                   }];
 }
 
 - (void)addUserSaveDestination:(NSURL*)destination
 {
-    int existingIndex = [saveLocationPopup indexOfItemWithTag:kUserSaveLocationTag];
+    NSInteger existingIndex = [saveLocationPopup indexOfItemWithTag:kUserSaveLocationTag];
     if (existingIndex >= 0) {
         [saveLocationPopup removeItemAtIndex:existingIndex];
     }
@@ -570,7 +591,8 @@ const NSSize kItemSize = { 200, 140 };
 
     dispatch_sync(dispatch_get_main_queue(), ^{
         STRONG_SELF;
-
+        if (!strongSelf) return;
+        
         strongSelf.sheetProcessStepTotal = fileURLs.count;
         strongSelf.sheetProcessStep = 0;
         strongSelf.sheetProcessIndeterminate = NO;
@@ -588,6 +610,8 @@ const NSSize kItemSize = { 200, 140 };
 
         dispatch_sync(dispatch_get_main_queue(), ^{
             STRONG_SELF;
+            if (!strongSelf) return;
+            
             strongSelf.sheetProcessStep = strongSelf.sheetProcessStep + 1;
             strongSelf.sheetProcessProgress = (float)strongSelf.sheetProcessStep / (float)strongSelf.sheetProcessStepTotal;
         });
@@ -599,6 +623,8 @@ const NSSize kItemSize = { 200, 140 };
 
     dispatch_async(dispatch_get_main_queue(), ^{
         STRONG_SELF;
+        if (!strongSelf) return;
+        
         [strongSelf fileAddingAnalysisComplete:entries];
     });
 }
@@ -629,54 +655,75 @@ const NSSize kItemSize = { 200, 140 };
         [excludedFromBatch removeObjectsAtIndexes:excludedFromBatchIndices];
     }
 
+    WEAK_SELF;
     [[batchCollectionView animator]
         performBatchUpdates:^{
-            [batchCollectionView deleteItemsAtIndexPaths:items];
+            STRONG_SELF;
+            if (!strongSelf) return;
+            
+            [strongSelf->batchCollectionView deleteItemsAtIndexPaths:items];
         }
         completionHandler:^(BOOL finished) {
-            self.showDropMessage = self.isEmpty;
-            [self updateExcludedSectionHeaderAnimated:YES];
+            STRONG_SELF;
+            if (!strongSelf) return;
+            
+            strongSelf.showDropMessage = strongSelf.isEmpty;
+            [strongSelf updateExcludedSectionHeaderAnimated:YES];
         }];
 }
 
 - (void)addExcludedItemsToBatch:(id)sender
 {
-    int startIndex = [batch count];
-    int count = [excludedFromBatch count];
+    NSUInteger startIndex = [batch count];
+    NSUInteger count = [excludedFromBatch count];
     [batch addObjectsFromArray:excludedFromBatch];
     [excludedFromBatch removeAllObjects];
 
+    WEAK_SELF;
     [[batchCollectionView animator]
         performBatchUpdates:^{
+            STRONG_SELF;
+            if (!strongSelf) return;
+            
             for (int i = 0; i < count; i++) {
                 NSIndexPath* source = [NSIndexPath indexPathForItem:i inSection:1];
                 NSIndexPath* dest = [NSIndexPath indexPathForItem:startIndex + i inSection:0];
 
-                BatchCollectionViewItem* item = (BatchCollectionViewItem*)[batchCollectionView itemAtIndexPath:source];
-                [self prepareItem:item forBatchEntry:item.batchEntry inBatch:YES];
-                [batchCollectionView moveItemAtIndexPath:source toIndexPath:dest];
+                BatchCollectionViewItem* item = (BatchCollectionViewItem*)[strongSelf->batchCollectionView itemAtIndexPath:source];
+                [strongSelf prepareItem:item forBatchEntry:item.batchEntry inBatch:YES];
+                [strongSelf->batchCollectionView moveItemAtIndexPath:source toIndexPath:dest];
             }
         }
         completionHandler:^(BOOL finished) {
-            [self updateExcludedSectionHeaderAnimated:YES];
+            STRONG_SELF;
+            if (!strongSelf) return;
+            
+            [strongSelf updateExcludedSectionHeaderAnimated:YES];
         }];
 }
 
 - (void)discardExcludedItems:(id)sender
 {
-    int count = [excludedFromBatch count];
+    NSUInteger count = [excludedFromBatch count];
     [excludedFromBatch removeAllObjects];
 
+    WEAK_SELF;
     [[batchCollectionView animator]
         performBatchUpdates:^{
+            STRONG_SELF;
+            if (!strongSelf) return;
+            
             NSMutableSet<NSIndexPath*>* itemsToDelete = [NSMutableSet set];
             for (int i = 0; i < count; i++) {
                 [itemsToDelete addObject:[NSIndexPath indexPathForItem:i inSection:1]];
             }
-            [batchCollectionView deleteItemsAtIndexPaths:itemsToDelete];
+            [strongSelf->batchCollectionView deleteItemsAtIndexPaths:itemsToDelete];
         }
         completionHandler:^(BOOL finished) {
-            [self updateExcludedSectionHeaderAnimated:YES];
+            STRONG_SELF;
+            if (!strongSelf) return;
+            
+            [strongSelf updateExcludedSectionHeaderAnimated:YES];
         }];
 }
 
@@ -716,14 +763,21 @@ const NSSize kItemSize = { 200, 140 };
 
     if (source != nil && dest != nil) {
 
+        WEAK_SELF;
         [[batchCollectionView animator]
             performBatchUpdates:^{
-                [batchCollectionView moveItemAtIndexPath:source toIndexPath:dest];
+                STRONG_SELF;
+                if (!strongSelf) return;
+                
+                [strongSelf->batchCollectionView moveItemAtIndexPath:source toIndexPath:dest];
             }
             completionHandler:^(BOOL finished) {
-                BatchCollectionViewItem* item = (BatchCollectionViewItem*)[batchCollectionView itemAtIndexPath:dest];
-                [self prepareItem:item forBatchEntry:batchEntry inBatch:includedInBatch];
-                [self updateExcludedSectionHeaderAnimated:YES];
+                STRONG_SELF;
+                if (!strongSelf) return;
+                
+                BatchCollectionViewItem* item = (BatchCollectionViewItem*)[strongSelf->batchCollectionView itemAtIndexPath:dest];
+                [strongSelf prepareItem:item forBatchEntry:batchEntry inBatch:includedInBatch];
+                [strongSelf updateExcludedSectionHeaderAnimated:YES];
             }];
 
     } else {
@@ -740,11 +794,15 @@ const NSSize kItemSize = { 200, 140 };
     if (inBatch) {
         item.onAddRemoveButtonTapped = ^() {
             STRONG_SELF;
+            if (!strongSelf) return;
+            
             [strongSelf moveEntry:entry toBatch:NO];
         };
     } else {
         item.onAddRemoveButtonTapped = ^() {
             STRONG_SELF;
+            if (!strongSelf) return;
+            
             [strongSelf moveEntry:entry toBatch:YES];
         };
     }
@@ -775,6 +833,8 @@ const NSSize kItemSize = { 200, 140 };
 
     dispatch_sync(dispatch_get_main_queue(), ^{
         STRONG_SELF;
+        if (!strongSelf) return;
+        
         strongSelf.sheetProcessStepTotal = entries.count;
         strongSelf.sheetProcessStep = 0;
         strongSelf.sheetProcessIndeterminate = NO;
@@ -790,6 +850,8 @@ const NSSize kItemSize = { 200, 140 };
 
         dispatch_sync(dispatch_get_main_queue(), ^{
             STRONG_SELF;
+            if (!strongSelf) return;
+            
             strongSelf.sheetProcessStep = strongSelf.sheetProcessStep + 1;
             strongSelf.sheetProcessProgress = (float)strongSelf.sheetProcessStep / (float)strongSelf.sheetProcessStepTotal;
         });
@@ -800,8 +862,11 @@ const NSSize kItemSize = { 200, 140 };
     //
 
     dispatch_async(dispatch_get_main_queue(), ^{
-        self.sheetProcessRunning = NO;
-        [NSApp endSheet:progressSheet];
+        STRONG_SELF;
+        if (!strongSelf) return;
+        
+        strongSelf.sheetProcessRunning = NO;
+        [NSApp endSheet:strongSelf->progressSheet];
     });
 }
 

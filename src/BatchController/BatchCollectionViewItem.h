@@ -25,7 +25,7 @@
 @property (readwrite, nonatomic) BatchEntry* batchEntry;
 @property (readwrite, nonatomic) BOOL isIncludedInBumpmapsBatch;
 
-@property (nonatomic, copy) void (^onAddRemoveButtonTapped)();
+@property (nonatomic, copy) void (^onAddRemoveButtonTapped)(void);
 
 @end
 
