@@ -27,7 +27,6 @@
 		36F951710F64A0590003C8EF /* CGImageCreateWithFileURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F951700F64A0590003C8EF /* CGImageCreateWithFileURL.m */; };
 		632A312B2299E17C00A9D01A /* BatchCollectionViewSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 632A312A2299E17C00A9D01A /* BatchCollectionViewSectionHeader.xib */; };
 		632A312E2299E25700A9D01A /* BatchCollectionViewSectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 632A312D2299E25700A9D01A /* BatchCollectionViewSectionHeader.m */; };
-		63608AEA2288D0CF0062CD4C /* TemplateInDarkModeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 63608AE92288D0CF0062CD4C /* TemplateInDarkModeButton.m */; };
 		63608AEC2288D3F80062CD4C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63608AEB2288D3F80062CD4C /* Media.xcassets */; };
 		63608AFB228B068F0062CD4C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 63608AF9228B068F0062CD4C /* README.md */; };
 		63608AFC228B068F0062CD4C /* VDKQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 63608AFA228B068F0062CD4C /* VDKQueue.m */; };
@@ -106,8 +105,6 @@
 		632A312A2299E17C00A9D01A /* BatchCollectionViewSectionHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BatchCollectionViewSectionHeader.xib; sourceTree = "<group>"; };
 		632A312C2299E25700A9D01A /* BatchCollectionViewSectionHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BatchCollectionViewSectionHeader.h; sourceTree = "<group>"; };
 		632A312D2299E25700A9D01A /* BatchCollectionViewSectionHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BatchCollectionViewSectionHeader.m; sourceTree = "<group>"; };
-		63608AE82288D0CF0062CD4C /* TemplateInDarkModeButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TemplateInDarkModeButton.h; sourceTree = "<group>"; };
-		63608AE92288D0CF0062CD4C /* TemplateInDarkModeButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TemplateInDarkModeButton.m; sourceTree = "<group>"; };
 		63608AEB2288D3F80062CD4C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		63608AF8228B068F0062CD4C /* VDKQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDKQueue.h; sourceTree = "<group>"; };
 		63608AF9228B068F0062CD4C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -269,8 +266,6 @@
 				36A586130F8F68DE00AC6E58 /* DebugLog.m */,
 				36F9516F0F64A0590003C8EF /* CGImageCreateWithFileURL.h */,
 				36F951700F64A0590003C8EF /* CGImageCreateWithFileURL.m */,
-				63608AE82288D0CF0062CD4C /* TemplateInDarkModeButton.h */,
-				63608AE92288D0CF0062CD4C /* TemplateInDarkModeButton.m */,
 			);
 			name = "Extensions, etc";
 			sourceTree = "<group>";
@@ -495,7 +490,6 @@
 				8D15AC320486D014006FF6A4 /* main.m in Sources */,
 				3617DFDC0C312FDF00276C8A /* NormalMapprDoc.m in Sources */,
 				63F367FB22CE9F440044D921 /* BatchCollectionViewRoot.m in Sources */,
-				63608AEA2288D0CF0062CD4C /* TemplateInDarkModeButton.m in Sources */,
 				3617E5470C32828200276C8A /* ImageView.m in Sources */,
 				63F1D27222D78AA500BC0CEF /* BatchCollectionViewItemDropPlaceholder.m in Sources */,
 				3617E87D0C332D9700276C8A /* AppDelegate.m in Sources */,

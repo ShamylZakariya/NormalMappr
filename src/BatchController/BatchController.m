@@ -182,8 +182,9 @@ const NSSize kItemSize = { 200, 140 };
     [batchWindow beginSheet:progressSheet
           completionHandler:^(NSModalResponse returnCode) {
               STRONG_SELF;
-              if (!strongSelf) return;
-              
+              if (!strongSelf)
+                  return;
+
               [strongSelf->progressSheet orderOut:strongSelf];
           }];
 
@@ -193,8 +194,9 @@ const NSSize kItemSize = { 200, 140 };
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         STRONG_SELF;
-        if (!strongSelf) return;
-        
+        if (!strongSelf)
+            return;
+
         [strongSelf loadDroppedFiles:fileURLs];
     });
 }
@@ -219,7 +221,8 @@ const NSSize kItemSize = { 200, 140 };
     [batchWindow beginSheet:progressSheet
           completionHandler:^(NSModalResponse returnCode) {
               STRONG_SELF;
-              if (!strongSelf) return;
+              if (!strongSelf)
+                  return;
               [strongSelf->progressSheet orderOut:nil];
           }];
 
@@ -229,8 +232,9 @@ const NSSize kItemSize = { 200, 140 };
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         STRONG_SELF;
-        if (!strongSelf) return;
-        
+        if (!strongSelf)
+            return;
+
         [strongSelf normalmapFiles:strongSelf->batch];
     });
 }
@@ -418,8 +422,9 @@ const NSSize kItemSize = { 200, 140 };
         [[batchCollectionView animator]
             performBatchUpdates:^{
                 STRONG_SELF;
-                if (!strongSelf) return;
-                
+                if (!strongSelf)
+                    return;
+
                 // 2) remove the index paths from the collection view
                 [strongSelf->batchCollectionView deleteItemsAtIndexPaths:strongSelf->indexPathsOfDraggingItems];
 
@@ -440,8 +445,9 @@ const NSSize kItemSize = { 200, 140 };
             }
             completionHandler:^(BOOL finished) {
                 STRONG_SELF;
-                if (!strongSelf) return;
-                
+                if (!strongSelf)
+                    return;
+
                 [strongSelf updateExcludedSectionHeaderAnimated:YES];
             }];
 
@@ -506,18 +512,19 @@ const NSSize kItemSize = { 200, 140 };
     [panel beginSheetModalForWindow:self.batchWindow
                   completionHandler:^(NSModalResponse result) {
                       STRONG_SELF;
-                      if (!strongSelf) return;
-                      
+                      if (!strongSelf)
+                          return;
+
                       switch (result) {
-                          case NSFileHandlingPanelOKButton:
-                              DebugLog(@"user selected OK, urls: %@", panel.URLs.firstObject);
-                              strongSelf.batchSettings.userSaveDestination = panel.URLs.firstObject;
-                              [strongSelf addUserSaveDestination:strongSelf.batchSettings.userSaveDestination];
-                              break;
-                          default:
-                              // user cancelled, select the previously selected item
-                              [strongSelf->saveLocationPopup selectItemWithTag:strongSelf->previousSaveLocationPopupTag];
-                              break;
+                      case NSFileHandlingPanelOKButton:
+                          DebugLog(@"user selected OK, urls: %@", panel.URLs.firstObject);
+                          strongSelf.batchSettings.userSaveDestination = panel.URLs.firstObject;
+                          [strongSelf addUserSaveDestination:strongSelf.batchSettings.userSaveDestination];
+                          break;
+                      default:
+                          // user cancelled, select the previously selected item
+                          [strongSelf->saveLocationPopup selectItemWithTag:strongSelf->previousSaveLocationPopupTag];
+                          break;
                       }
                   }];
 }
@@ -591,8 +598,9 @@ const NSSize kItemSize = { 200, 140 };
 
     dispatch_sync(dispatch_get_main_queue(), ^{
         STRONG_SELF;
-        if (!strongSelf) return;
-        
+        if (!strongSelf)
+            return;
+
         strongSelf.sheetProcessStepTotal = fileURLs.count;
         strongSelf.sheetProcessStep = 0;
         strongSelf.sheetProcessIndeterminate = NO;
@@ -610,8 +618,9 @@ const NSSize kItemSize = { 200, 140 };
 
         dispatch_sync(dispatch_get_main_queue(), ^{
             STRONG_SELF;
-            if (!strongSelf) return;
-            
+            if (!strongSelf)
+                return;
+
             strongSelf.sheetProcessStep = strongSelf.sheetProcessStep + 1;
             strongSelf.sheetProcessProgress = (float)strongSelf.sheetProcessStep / (float)strongSelf.sheetProcessStepTotal;
         });
@@ -623,8 +632,9 @@ const NSSize kItemSize = { 200, 140 };
 
     dispatch_async(dispatch_get_main_queue(), ^{
         STRONG_SELF;
-        if (!strongSelf) return;
-        
+        if (!strongSelf)
+            return;
+
         [strongSelf fileAddingAnalysisComplete:entries];
     });
 }
@@ -659,14 +669,16 @@ const NSSize kItemSize = { 200, 140 };
     [[batchCollectionView animator]
         performBatchUpdates:^{
             STRONG_SELF;
-            if (!strongSelf) return;
-            
+            if (!strongSelf)
+                return;
+
             [strongSelf->batchCollectionView deleteItemsAtIndexPaths:items];
         }
         completionHandler:^(BOOL finished) {
             STRONG_SELF;
-            if (!strongSelf) return;
-            
+            if (!strongSelf)
+                return;
+
             strongSelf.showDropMessage = strongSelf.isEmpty;
             [strongSelf updateExcludedSectionHeaderAnimated:YES];
         }];
@@ -683,8 +695,9 @@ const NSSize kItemSize = { 200, 140 };
     [[batchCollectionView animator]
         performBatchUpdates:^{
             STRONG_SELF;
-            if (!strongSelf) return;
-            
+            if (!strongSelf)
+                return;
+
             for (int i = 0; i < count; i++) {
                 NSIndexPath* source = [NSIndexPath indexPathForItem:i inSection:1];
                 NSIndexPath* dest = [NSIndexPath indexPathForItem:startIndex + i inSection:0];
@@ -696,8 +709,9 @@ const NSSize kItemSize = { 200, 140 };
         }
         completionHandler:^(BOOL finished) {
             STRONG_SELF;
-            if (!strongSelf) return;
-            
+            if (!strongSelf)
+                return;
+
             [strongSelf updateExcludedSectionHeaderAnimated:YES];
         }];
 }
@@ -711,8 +725,9 @@ const NSSize kItemSize = { 200, 140 };
     [[batchCollectionView animator]
         performBatchUpdates:^{
             STRONG_SELF;
-            if (!strongSelf) return;
-            
+            if (!strongSelf)
+                return;
+
             NSMutableSet<NSIndexPath*>* itemsToDelete = [NSMutableSet set];
             for (int i = 0; i < count; i++) {
                 [itemsToDelete addObject:[NSIndexPath indexPathForItem:i inSection:1]];
@@ -721,8 +736,9 @@ const NSSize kItemSize = { 200, 140 };
         }
         completionHandler:^(BOOL finished) {
             STRONG_SELF;
-            if (!strongSelf) return;
-            
+            if (!strongSelf)
+                return;
+
             [strongSelf updateExcludedSectionHeaderAnimated:YES];
         }];
 }
@@ -767,14 +783,16 @@ const NSSize kItemSize = { 200, 140 };
         [[batchCollectionView animator]
             performBatchUpdates:^{
                 STRONG_SELF;
-                if (!strongSelf) return;
-                
+                if (!strongSelf)
+                    return;
+
                 [strongSelf->batchCollectionView moveItemAtIndexPath:source toIndexPath:dest];
             }
             completionHandler:^(BOOL finished) {
                 STRONG_SELF;
-                if (!strongSelf) return;
-                
+                if (!strongSelf)
+                    return;
+
                 BatchCollectionViewItem* item = (BatchCollectionViewItem*)[strongSelf->batchCollectionView itemAtIndexPath:dest];
                 [strongSelf prepareItem:item forBatchEntry:batchEntry inBatch:includedInBatch];
                 [strongSelf updateExcludedSectionHeaderAnimated:YES];
@@ -794,15 +812,17 @@ const NSSize kItemSize = { 200, 140 };
     if (inBatch) {
         item.onAddRemoveButtonTapped = ^() {
             STRONG_SELF;
-            if (!strongSelf) return;
-            
+            if (!strongSelf)
+                return;
+
             [strongSelf moveEntry:entry toBatch:NO];
         };
     } else {
         item.onAddRemoveButtonTapped = ^() {
             STRONG_SELF;
-            if (!strongSelf) return;
-            
+            if (!strongSelf)
+                return;
+
             [strongSelf moveEntry:entry toBatch:YES];
         };
     }
@@ -833,8 +853,9 @@ const NSSize kItemSize = { 200, 140 };
 
     dispatch_sync(dispatch_get_main_queue(), ^{
         STRONG_SELF;
-        if (!strongSelf) return;
-        
+        if (!strongSelf)
+            return;
+
         strongSelf.sheetProcessStepTotal = entries.count;
         strongSelf.sheetProcessStep = 0;
         strongSelf.sheetProcessIndeterminate = NO;
@@ -850,8 +871,9 @@ const NSSize kItemSize = { 200, 140 };
 
         dispatch_sync(dispatch_get_main_queue(), ^{
             STRONG_SELF;
-            if (!strongSelf) return;
-            
+            if (!strongSelf)
+                return;
+
             strongSelf.sheetProcessStep = strongSelf.sheetProcessStep + 1;
             strongSelf.sheetProcessProgress = (float)strongSelf.sheetProcessStep / (float)strongSelf.sheetProcessStepTotal;
         });
@@ -863,8 +885,9 @@ const NSSize kItemSize = { 200, 140 };
 
     dispatch_async(dispatch_get_main_queue(), ^{
         STRONG_SELF;
-        if (!strongSelf) return;
-        
+        if (!strongSelf)
+            return;
+
         strongSelf.sheetProcessRunning = NO;
         [NSApp endSheet:strongSelf->progressSheet];
     });

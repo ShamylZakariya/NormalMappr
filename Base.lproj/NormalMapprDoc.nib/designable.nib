@@ -79,7 +79,7 @@
                                     </binding>
                                 </connections>
                             </textField>
-                            <button verticalHuggingPriority="750" imageHugsTitle="YES" id="106" customClass="TemplateInDarkModeButton">
+                            <button verticalHuggingPriority="750" imageHugsTitle="YES" id="106">
                                 <rect key="frame" x="697" y="5" width="19" height="52"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="smallSquare" alternateTitle="Synchronize width and height" bezelStyle="smallSquare" image="LinkWidthHeight-Button" imagePosition="only" alignment="center" inset="2" id="150">
