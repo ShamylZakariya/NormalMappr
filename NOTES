@@ -1,8 +1,9 @@
 PRESENTLY:
-- dnd between sections works, so long as the sections have elements in them
-    - now sure how to drag from populated section to non-populated - we don't get a drop indicator
 
 TODO:
+- Fork VDKQueue
+    - Redirect my remote from the previous one to my fork
+    - Fix the compiler warnings in the fork
 
 KNOWN BUGS:
 
