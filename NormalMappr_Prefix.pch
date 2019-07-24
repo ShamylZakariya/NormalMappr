@@ -9,3 +9,7 @@
 
 #define WEAK_SELF __weak typeof(self) weakSelf = self;
 #define STRONG_SELF __strong __typeof__(weakSelf) strongSelf = weakSelf;
+#define STRONG_SELF_OR_BAIL                              \
+__strong __typeof__(weakSelf) strongSelf = weakSelf; \
+if (!strongSelf)                                     \
+return;

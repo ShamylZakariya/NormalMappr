@@ -414,9 +414,9 @@
 #pragma mark -
 #pragma mark VDKQueueDelegate
 
-- (void)VDKQueue:(VDKQueue*)queue receivedNotification:(NSString*)noteName forPath:(NSString*)fpath
+- (void)queue:(VDKQueue *)queue didReceiveNotification:(NSString *)notificationName forPath:(NSString *)fpath
 {
-    if ([noteName isEqualToString:VDKQueueWriteNotification]) {
+    if ([notificationName isEqualToString:VDKQueueWriteNotification]) {
         //
         //    We know that a file in the folder containing this file was written to.
         //    It may or may not have been our file. So we're going to do a timestamp check.
@@ -436,9 +436,7 @@
 
                 WEAK_SELF;
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    STRONG_SELF;
-                    if (!strongSelf)
-                        return;
+                    STRONG_SELF_OR_BAIL;
 
                     DebugLog(@"Reloading %@", [[strongSelf fileURL] path]);
                     [strongSelf reload];

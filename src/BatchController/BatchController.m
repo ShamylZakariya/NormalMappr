@@ -181,9 +181,7 @@ const NSSize kItemSize = { 200, 140 };
     self.sheetMessage = @"Searching dropped files for bumpmaps...";
     [batchWindow beginSheet:progressSheet
           completionHandler:^(NSModalResponse returnCode) {
-              STRONG_SELF;
-              if (!strongSelf)
-                  return;
+              STRONG_SELF_OR_BAIL;
 
               [strongSelf->progressSheet orderOut:strongSelf];
           }];
@@ -193,9 +191,7 @@ const NSSize kItemSize = { 200, 140 };
     //
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        STRONG_SELF;
-        if (!strongSelf)
-            return;
+        STRONG_SELF_OR_BAIL;
 
         [strongSelf loadDroppedFiles:fileURLs];
     });
@@ -220,9 +216,8 @@ const NSSize kItemSize = { 200, 140 };
     WEAK_SELF;
     [batchWindow beginSheet:progressSheet
           completionHandler:^(NSModalResponse returnCode) {
-              STRONG_SELF;
-              if (!strongSelf)
-                  return;
+              STRONG_SELF_OR_BAIL;
+              
               [strongSelf->progressSheet orderOut:nil];
           }];
 
@@ -231,9 +226,7 @@ const NSSize kItemSize = { 200, 140 };
     //
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        STRONG_SELF;
-        if (!strongSelf)
-            return;
+        STRONG_SELF_OR_BAIL;
 
         [strongSelf normalmapFiles:strongSelf->batch];
     });
@@ -421,9 +414,7 @@ const NSSize kItemSize = { 200, 140 };
         WEAK_SELF;
         [[batchCollectionView animator]
             performBatchUpdates:^{
-                STRONG_SELF;
-                if (!strongSelf)
-                    return;
+                STRONG_SELF_OR_BAIL;
 
                 // 2) remove the index paths from the collection view
                 [strongSelf->batchCollectionView deleteItemsAtIndexPaths:strongSelf->indexPathsOfDraggingItems];
@@ -444,9 +435,7 @@ const NSSize kItemSize = { 200, 140 };
                 }
             }
             completionHandler:^(BOOL finished) {
-                STRONG_SELF;
-                if (!strongSelf)
-                    return;
+                STRONG_SELF_OR_BAIL;
 
                 [strongSelf updateExcludedSectionHeaderAnimated:YES];
             }];
@@ -511,9 +500,7 @@ const NSSize kItemSize = { 200, 140 };
     WEAK_SELF;
     [panel beginSheetModalForWindow:self.batchWindow
                   completionHandler:^(NSModalResponse result) {
-                      STRONG_SELF;
-                      if (!strongSelf)
-                          return;
+                      STRONG_SELF_OR_BAIL;
 
                       switch (result) {
                       case NSFileHandlingPanelOKButton:
@@ -597,9 +584,7 @@ const NSSize kItemSize = { 200, 140 };
     //
 
     dispatch_sync(dispatch_get_main_queue(), ^{
-        STRONG_SELF;
-        if (!strongSelf)
-            return;
+        STRONG_SELF_OR_BAIL;
 
         strongSelf.sheetProcessStepTotal = fileURLs.count;
         strongSelf.sheetProcessStep = 0;
@@ -617,9 +602,7 @@ const NSSize kItemSize = { 200, 140 };
         }
 
         dispatch_sync(dispatch_get_main_queue(), ^{
-            STRONG_SELF;
-            if (!strongSelf)
-                return;
+            STRONG_SELF_OR_BAIL;
 
             strongSelf.sheetProcessStep = strongSelf.sheetProcessStep + 1;
             strongSelf.sheetProcessProgress = (float)strongSelf.sheetProcessStep / (float)strongSelf.sheetProcessStepTotal;
@@ -631,9 +614,7 @@ const NSSize kItemSize = { 200, 140 };
     //
 
     dispatch_async(dispatch_get_main_queue(), ^{
-        STRONG_SELF;
-        if (!strongSelf)
-            return;
+        STRONG_SELF_OR_BAIL;
 
         [strongSelf fileAddingAnalysisComplete:entries];
     });
@@ -668,16 +649,12 @@ const NSSize kItemSize = { 200, 140 };
     WEAK_SELF;
     [[batchCollectionView animator]
         performBatchUpdates:^{
-            STRONG_SELF;
-            if (!strongSelf)
-                return;
+            STRONG_SELF_OR_BAIL;
 
             [strongSelf->batchCollectionView deleteItemsAtIndexPaths:items];
         }
         completionHandler:^(BOOL finished) {
-            STRONG_SELF;
-            if (!strongSelf)
-                return;
+            STRONG_SELF_OR_BAIL;
 
             strongSelf.showDropMessage = strongSelf.isEmpty;
             [strongSelf updateExcludedSectionHeaderAnimated:YES];
@@ -694,9 +671,7 @@ const NSSize kItemSize = { 200, 140 };
     WEAK_SELF;
     [[batchCollectionView animator]
         performBatchUpdates:^{
-            STRONG_SELF;
-            if (!strongSelf)
-                return;
+            STRONG_SELF_OR_BAIL;
 
             for (int i = 0; i < count; i++) {
                 NSIndexPath* source = [NSIndexPath indexPathForItem:i inSection:1];
@@ -708,9 +683,7 @@ const NSSize kItemSize = { 200, 140 };
             }
         }
         completionHandler:^(BOOL finished) {
-            STRONG_SELF;
-            if (!strongSelf)
-                return;
+            STRONG_SELF_OR_BAIL;
 
             [strongSelf updateExcludedSectionHeaderAnimated:YES];
         }];
@@ -724,9 +697,7 @@ const NSSize kItemSize = { 200, 140 };
     WEAK_SELF;
     [[batchCollectionView animator]
         performBatchUpdates:^{
-            STRONG_SELF;
-            if (!strongSelf)
-                return;
+            STRONG_SELF_OR_BAIL;
 
             NSMutableSet<NSIndexPath*>* itemsToDelete = [NSMutableSet set];
             for (int i = 0; i < count; i++) {
@@ -735,9 +706,7 @@ const NSSize kItemSize = { 200, 140 };
             [strongSelf->batchCollectionView deleteItemsAtIndexPaths:itemsToDelete];
         }
         completionHandler:^(BOOL finished) {
-            STRONG_SELF;
-            if (!strongSelf)
-                return;
+            STRONG_SELF_OR_BAIL;
 
             [strongSelf updateExcludedSectionHeaderAnimated:YES];
         }];
@@ -782,16 +751,12 @@ const NSSize kItemSize = { 200, 140 };
         WEAK_SELF;
         [[batchCollectionView animator]
             performBatchUpdates:^{
-                STRONG_SELF;
-                if (!strongSelf)
-                    return;
+                STRONG_SELF_OR_BAIL;
 
                 [strongSelf->batchCollectionView moveItemAtIndexPath:source toIndexPath:dest];
             }
             completionHandler:^(BOOL finished) {
-                STRONG_SELF;
-                if (!strongSelf)
-                    return;
+                STRONG_SELF_OR_BAIL;
 
                 BatchCollectionViewItem* item = (BatchCollectionViewItem*)[strongSelf->batchCollectionView itemAtIndexPath:dest];
                 [strongSelf prepareItem:item forBatchEntry:batchEntry inBatch:includedInBatch];
@@ -811,17 +776,13 @@ const NSSize kItemSize = { 200, 140 };
     WEAK_SELF;
     if (inBatch) {
         item.onAddRemoveButtonTapped = ^() {
-            STRONG_SELF;
-            if (!strongSelf)
-                return;
+            STRONG_SELF_OR_BAIL;
 
             [strongSelf moveEntry:entry toBatch:NO];
         };
     } else {
         item.onAddRemoveButtonTapped = ^() {
-            STRONG_SELF;
-            if (!strongSelf)
-                return;
+            STRONG_SELF_OR_BAIL;
 
             [strongSelf moveEntry:entry toBatch:YES];
         };
@@ -852,9 +813,7 @@ const NSSize kItemSize = { 200, 140 };
     WEAK_SELF;
 
     dispatch_sync(dispatch_get_main_queue(), ^{
-        STRONG_SELF;
-        if (!strongSelf)
-            return;
+        STRONG_SELF_OR_BAIL;
 
         strongSelf.sheetProcessStepTotal = entries.count;
         strongSelf.sheetProcessStep = 0;
@@ -870,9 +829,7 @@ const NSSize kItemSize = { 200, 140 };
         [op run];
 
         dispatch_sync(dispatch_get_main_queue(), ^{
-            STRONG_SELF;
-            if (!strongSelf)
-                return;
+            STRONG_SELF_OR_BAIL;
 
             strongSelf.sheetProcessStep = strongSelf.sheetProcessStep + 1;
             strongSelf.sheetProcessProgress = (float)strongSelf.sheetProcessStep / (float)strongSelf.sheetProcessStepTotal;
@@ -884,9 +841,7 @@ const NSSize kItemSize = { 200, 140 };
     //
 
     dispatch_async(dispatch_get_main_queue(), ^{
-        STRONG_SELF;
-        if (!strongSelf)
-            return;
+        STRONG_SELF_OR_BAIL;
 
         strongSelf.sheetProcessRunning = NO;
         [NSApp endSheet:strongSelf->progressSheet];
