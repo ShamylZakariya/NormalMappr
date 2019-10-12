@@ -111,19 +111,19 @@
 - (void)savePrefs
 {
     NSMutableDictionary* settings = [NSMutableDictionary dictionary];
-    [settings setObject:[NSNumber numberWithInt:self.strength] forKey:kPrefStrength];
-    [settings setObject:[NSNumber numberWithInt:self.outputWidth] forKey:kPrefOutputWidth];
-    [settings setObject:[NSNumber numberWithInt:self.outputHeight] forKey:kPrefOutputHeight];
-    [settings setObject:[NSNumber numberWithInt:self.sampleSize] forKey:kPrefSampleSize];
-    [settings setObject:[NSNumber numberWithBool:self.resizeWidth] forKey:kPrefResizeWidth];
-    [settings setObject:[NSNumber numberWithBool:self.resizeHeight] forKey:kPrefResizeHeight];
+    [settings setObject:@(self.strength) forKey:kPrefStrength];
+    [settings setObject:@(self.outputWidth) forKey:kPrefOutputWidth];
+    [settings setObject:@(self.outputHeight) forKey:kPrefOutputHeight];
+    [settings setObject:@(self.sampleSize) forKey:kPrefSampleSize];
+    [settings setObject:@(self.resizeWidth) forKey:kPrefResizeWidth];
+    [settings setObject:@(self.resizeHeight) forKey:kPrefResizeHeight];
 
     [settings setObject:self.nameDecoration forKey:kPrefNameDecoration];
-    [settings setObject:[NSNumber numberWithInt:self.nameDecorationStyle] forKey:kPrefNameDecorationStyle];
-    [settings setObject:[NSNumber numberWithInt:self.saveFormat] forKey:kPrefSaveFormat];
-    [settings setObject:[NSNumber numberWithFloat:self.saveQuality] forKey:kPrefSaveQuality];
+    [settings setObject:@(self.nameDecorationStyle) forKey:kPrefNameDecorationStyle];
+    [settings setObject:@(self.saveFormat) forKey:kPrefSaveFormat];
+    [settings setObject:@(self.saveQuality) forKey:kPrefSaveQuality];
 
-    [settings setObject:[NSNumber numberWithInt:self.saveDestinationType] forKey:kSaveDestinationType];
+    [settings setObject:@(self.saveDestinationType) forKey:kSaveDestinationType];
     if (self.userSaveDestination != nil) {
         [settings setObject:[self.userSaveDestination absoluteString] forKey:kUserSaveDestination];
     }

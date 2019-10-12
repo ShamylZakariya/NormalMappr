@@ -88,6 +88,7 @@
 		632A312A2299E17C00A9D01A /* BatchCollectionViewSectionHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BatchCollectionViewSectionHeader.xib; sourceTree = "<group>"; };
 		632A312C2299E25700A9D01A /* BatchCollectionViewSectionHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BatchCollectionViewSectionHeader.h; sourceTree = "<group>"; };
 		632A312D2299E25700A9D01A /* BatchCollectionViewSectionHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BatchCollectionViewSectionHeader.m; sourceTree = "<group>"; };
+		633D34A92352803B001CF7FD /* NormalMappr.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NormalMappr.entitlements; sourceTree = "<group>"; };
 		63608AEB2288D3F80062CD4C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		63608AF8228B068F0062CD4C /* VDKQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDKQueue.h; sourceTree = "<group>"; };
 		63608AF9228B068F0062CD4C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -161,6 +162,7 @@
 		2A37F4AAFDCFA73011CA2CEA /* NormalMappr */ = {
 			isa = PBXGroup;
 			children = (
+				633D34A92352803B001CF7FD /* NormalMappr.entitlements */,
 				63608ADB228895630062CD4C /* 3rd-party */,
 				3617DFD90C312FDF00276C8A /* src */,
 				2A37F4AFFDCFA73011CA2CEA /* Other Sources */,
@@ -325,7 +327,12 @@
 		2A37F4A9FDCFA73011CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1030;
+				LastUpgradeCheck = 1110;
+				TargetAttributes = {
+					8D15AC270486D014006FF6A4 = {
+						DevelopmentTeam = F7D98JTW78;
+					};
+				};
 			};
 			buildConfigurationList = C05733CB08A9546B00998B17 /* Build configuration list for PBXProject "NormalMappr" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -461,7 +468,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4FAB9D7CD1B343986157129D /* Pods-NormalMappr.debug.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = NormalMappr.entitlements;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = F7D98JTW78;
+				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -471,6 +483,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_BUNDLE_IDENTIFIER = org.zakariya.NormalMappr;
 				PRODUCT_NAME = NormalMappr;
+				PROVISIONING_PROFILE_SPECIFIER = "Normal Mappr App";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
 			};
@@ -480,6 +493,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9CD6004B36F4077F238209AE /* Pods-NormalMappr.release.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = NormalMappr.entitlements;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				DEVELOPMENT_TEAM = F7D98JTW78;
+				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -488,6 +506,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_BUNDLE_IDENTIFIER = org.zakariya.NormalMappr;
 				PRODUCT_NAME = NormalMappr;
+				PROVISIONING_PROFILE_SPECIFIER = "Normal Mappr App";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
